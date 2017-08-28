@@ -1,0 +1,14 @@
+﻿
+@using FrontendSecure.Models
+@model IEnumerable<BaseHistoryVM>
+@{
+    ViewBag.Title = "History";
+}
+
+<h2>History</h2>
+<div class="history-block">
+    <div id="historyList">
+        @Html.DisplayForModel()
+    </div>
+</div>
+

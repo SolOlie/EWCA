@@ -1,0 +1,269 @@
+﻿
+
+#sideBarTypes {
+    border-right: thin solid dimgray;
+    display: block;
+    float: left;
+    position: sticky;
+    top: 1%;
+    background: #f9f9f9;
+}
+
+#customerDiv {
+    display: inline-block;
+}
+
+#addBtn, #addUsersBtn {
+    margin-bottom: 10px;
+    margin-top: -2%;
+    margin-right: 20px;
+    float: left;
+}
+#typeListitems {
+    display: inline-block;
+    color: #777777;
+}
+#popup {
+    width: 250px;
+    height: 175px;
+    position: fixed;
+    top: 40%;
+    left: 40%;
+    border: solid gray 2px;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    text-align: center;
+    display: none;
+    z-index: 50;
+    
+}
+#name {
+    text-align: center;
+}
+#popupPTag {
+    margin-top: 15%;
+}
+#stylingTypes, #stylingTypesbtn {
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    padding: 5px;
+    margin-bottom: 5px;
+
+}
+#stylingTypes:hover,#stylingTypesbtn:hover{
+    cursor: pointer;
+    font-weight: bold; 
+}
+#popupBackground {
+    height: 1000px;
+    width: 4000px;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    display: none;
+    z-index: 49;
+    background: rgba(255, 255, 255, 0.60);
+}
+table, #assetTableMidle, #sideBarTypes {
+    max-width: 100%;
+     border: 1px solid lightgray;
+}
+#goBack {
+    margin-left: 1.5%;
+}
+
+/*This is for small screens on laptops*/
+@media (max-width: 979px) and (min-width: 768px) {
+    .container-fluid {
+        width: 100%;
+        border: 1px solid lightgray;
+    }
+
+    table, thead, tbody, th, td, tr {
+        display: block;
+        width: 100%;
+    }
+   
+    #sideBarTypes {
+        display: none;
+        
+    }
+
+    #hideHeaders {
+        display: none;
+    }
+
+    #alignBtn {
+        display: inline-block;
+    }
+
+    #hideHeadersUsers {
+        display: none;
+    }
+
+    #alignBtnUsers {
+        display: inline-block;
+    }
+
+    #addUsersBtn {
+        position: relative;
+    }
+
+    #addAssetBtnOnSmallerDevices {
+        position: relative;
+        margin-left: 5%;
+    }
+
+    #addBtn, #addUsersBtn {
+         position: inherit;
+         display: inline-block;
+         margin-left: 40%;
+         top: 50%;
+     }
+    #goBack {
+    margin-left: 0%;
+}
+    #tdDisable8, #tdDisable9, #tdDisable10, #tdDisable11, #tdDisable12, #tdDisable13 {
+        display: none;
+    }
+    #addUsersBtn {
+        position: inherit;
+    }
+    #tdForAddUser {
+        padding: 3.5%;
+    }
+    #tdDisable14, #tdDisable15, #tdDisable16, #tdDisable17, #tdDisable18, #tdDisable19, #tdDisable20 {
+        display: none;
+    }
+    #tdForAddAsset {
+        position: inherit;
+        padding: 4%;
+    }
+
+}
+
+/*This is for intermediate devices such as vertical iPads, or smaller tablets*/
+@media (max-width: 767px) {
+     .container-fluid {
+        width: 100%;
+        border: 1px solid lightgray;
+    }
+
+    table, thead, tbody, th, td, tr {
+        display: block;
+        border: 10px lightgray;
+        width: 100%;
+    }
+
+    #sideBarTypes {
+        display: none;
+    }
+
+    #hideHeaders {
+        display: none;
+    }
+
+    #alignBtn {
+        display: inline-block;
+    }
+
+    #hideHeadersUsers {
+        display: none;
+    }
+
+    #alignBtnUsers {
+        display: inline-block;
+    }
+
+    #addUsersBtn {
+        position: relative;
+    }
+
+    #addAssetBtnOnSmallerDevices {
+        position: relative;
+        margin-left: 5%;
+    }
+
+     #addBtn, #addUsersBtn {
+         position: inherit;
+         display: inline-block;
+         margin-left: 40%;
+         top: 50%;
+     }
+     #goBack {
+         margin-left: 1px;
+     }
+      #tdDisable8, #tdDisable9, #tdDisable10, #tdDisable11, #tdDisable12, #tdDisable13 {
+        display: none;
+    }
+    #addUsersBtn {
+        position: inherit;
+    }
+    #tdForAddUser {
+        padding: 4%;
+    }
+     #tdDisable14, #tdDisable15, #tdDisable16, #tdDisable17, #tdDisable18, #tdDisable19, #tdDisable20 {
+        display: none;
+    }
+     #tdForAddAsset {
+        position: inherit;
+        padding: 4%;
+    }
+}
+
+/*This is for smaller devices. From iPhone 6Plus to iPhone 3 width of 320px*/
+@media (max-width: 480px){
+    .container-fluid{
+        width: 100%;
+        border: 1px solid lightgray;
+    }
+     table, thead, tbody, th, td, tr {
+         display: block;
+         border: 10px lightgray;
+         width: 100%;
+         
+     }
+     #sideBarTypes {
+         display: none;
+     }
+     #hideHeaders {
+         display: none;
+     }
+     #alignBtn {
+         display: inline-block;
+     }
+     #hideHeadersUsers {
+         display: none;
+     }
+     #alignBtnUsers {
+         display: inline-block;
+     }
+     
+     #addBtn, #addUsersBtn {
+         position: inherit;
+         display: inline-block;
+         margin-left: 40%;
+         top: 50%;
+     }
+     #goBack {
+    margin-left: 1%;
+}
+      #tdDisable8, #tdDisable9, #tdDisable10, #tdDisable11, #tdDisable12, #tdDisable13 {
+        display: none;
+    }
+    #addUsersBtn {
+        margin-top: -4.5%;
+        position: inherit;
+        
+    }
+    #tdForAddUser {
+        padding: 5%;
+    }
+     #tdDisable14, #tdDisable15, #tdDisable16, #tdDisable17, #tdDisable18, #tdDisable19, #tdDisable20 {
+        display: none;
+    }
+     #tdForAddAsset {
+        position: inherit;
+        padding: 4%;
+    }
+}

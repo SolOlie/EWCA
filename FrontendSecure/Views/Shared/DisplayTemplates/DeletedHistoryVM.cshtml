@@ -1,0 +1,16 @@
+﻿@model FrontendSecure.Models.ChangedHistoryVM
+
+    <div class="deleted">
+        @Model.UserName deleted
+        <span class="historySpan deletedHistoySpan tooltipper" title="<div>
+        @foreach (var item in Model.Details)
+        {
+            <div>
+                @item.PropertyName : @item.OldValue
+            </div>
+        }
+        </div>">
+@Model.TypeFullName # @Model.RecordId
+</span>
+        on @(Model.Date.ToString(Constants.DateFormat)).
+    </div>

@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @RenderSection("styles", false)
+
+</head>
+<body>
+    <div class="loader"></div>
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            @Html.ActionLink("EWCA", "Index", "Customers", new { area = "" }, new { @class = "navbar-brand" })
+
+            @Html.ActionLink("History", "Index", "History", new { area = "" }, new { @class = "navbar-brand" })
+        </div>
+        <div class="navbar-collapse collapse">
+            <div class="navbar-right">
+                <form id="searchForm" action="/users/search">
+                    <input id="search" name="searchString" />
+                    <input type="hidden" name="activeTab" id="activeTab" />
+                    <a class="searchButton"><span class="glyphicon glyphicon-search"></span></a>
+                </form>
+
+            </div>
+            @Html.Partial("_LoginPartial")
+        </div>
+    </div>
+</div>
+<div class="container body-content">
+    @RenderBody()
+    <hr/>
+    <footer>
+        <p>&copy; @DateTime.Now.Year - EliteWeb Denmark</p>
+    </footer>
+</div>
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+@RenderSection("scripts", required: false)
+<script type="text/javascript">
+    $("#searchForm")
+        .on('submit',
+            function(e) { 
+                var paneselected = localStorage.getItem('paneactive');
+                $("#activeTab").val(paneselected);
+                var url = window.location.pathname;
+                if (url.toLowerCase().indexOf("details") >= 0) {
+                    $(this).attr('action', url);
+                } else if (url.toLowerCase().indexOf("customers") >= 0) {
+                    $(this).attr('action', '/Customers/');
+                } else {
+                    $(this).attr('action', '/Search/');
+                }
+            });
+
+    function showPageLoadingSpinner() {
+        $('.loader').show();
+
+    }
+
+    function hidePageLoadingSpinner() {
+        setTimeout(function() {
+                $('.loader').hide();
+            },
+            20000);
+    }
+</script>
+</body>
+</html>
