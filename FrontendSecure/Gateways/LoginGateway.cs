@@ -22,7 +22,7 @@ namespace FrontendSecure.Gateways
             //Request token
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://localhost:9447/");
+                client.BaseAddress = new Uri("http://ewcustomeraccountingbackend20170828013231.azurewebsites.net/EWCustomerAccountingBackend");
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 

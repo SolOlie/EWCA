@@ -95,7 +95,7 @@ namespace FrontendSecure.Gateways
 
         private HttpClient Setup(HttpClient client)
         {
-            client.BaseAddress = new Uri("http://localhost:9447/");
+            client.BaseAddress = new Uri("http://ewcustomeraccountingbackend20170828013231.azurewebsites.net/EWCustomerAccountingBackend");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             if (HttpContext.Current.Session["token"] != null)
