@@ -1,7 +1,7 @@
 ﻿@model FrontendSecure.Models.UndeletedHistoryVM
 
 <div class="changed">
-    @Model.UserName changed
+    @Model.UserName Genoprettede
     <span class="historySpan changedHistoySpan tooltipper" title="<div>
     @foreach (var item in Model.Details)
     {
@@ -12,6 +12,6 @@
 </div>">
 @Model.TypeFullName # @Model.RecordId
 </span>
-    on @(Model.Date.ToString(Constants.DateFormat)).
+    d. @(Model.Date.ToString(Constants.DateFormat)).
 </div>
 

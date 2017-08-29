@@ -1,7 +1,7 @@
 ﻿@model FrontendSecure.Models.DeletedHistoryVM
 
     <div class="deleted">
-        @Model.UserName deleted
+        @Model.UserName Slettede
         <span class="historySpan deletedHistoySpan tooltipper" title="<div>
         @foreach (var item in Model.Details)
         {
@@ -12,5 +12,5 @@
         </div>">
 @Model.TypeFullName # @Model.RecordId
 </span>
-        on @(Model.Date.ToString(Constants.DateFormat)).
+        d. @(Model.Date.ToString(Constants.DateFormat)).
     </div>

@@ -21,27 +21,6 @@ namespace FrontendSecure.Controllers
             this.applicationDbContext = new ApplicationDbContext();
             this.userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(this.applicationDbContext));
         }
-        // GET: Users
-        public ActionResult Index()
-        {
-            return View(db.ReadAll());
-        }
-
-        // GET: Users/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            User user = db.Read(id.Value);
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
-            return View(user);
-        }
-
         // GET: Users/Create
         public ActionResult Create(int? CustomerId)
         {
@@ -98,9 +77,6 @@ namespace FrontendSecure.Controllers
                     }
                     throw;
                 }
-
-              
-                
                 
             }
             var Model = new CreateUserWithCustomModel()
@@ -152,31 +128,6 @@ namespace FrontendSecure.Controllers
             }
             return View(user);
         }
-
-        // GET: Users/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            User user = db.Read(id.Value);
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
-            return View(user);
-        }
-
-        // POST: Users/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            User user = db.Read(id);
-            db.Delete(user);
-            return RedirectToAction("Index");
-        }
         [HttpPost]
         public bool AjaxCreateConfirmed(User users)
         {
@@ -198,9 +149,6 @@ namespace FrontendSecure.Controllers
                     return false;
                 }
             }
-            
-            
-            //db.Delete(user);
             return true;
         }
     }

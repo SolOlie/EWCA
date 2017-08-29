@@ -123,7 +123,9 @@ table, #assetTableMidle, #sideBarTypes {
     #goBack {
     margin-left: 0%;
 }
-    #tdDisable8, #tdDisable9, #tdDisable10, #tdDisable11, #tdDisable12, #tdDisable13 {
+    #tdDisable8, #tdDisable9, #tdDisable10, #tdDisable11, 
+    #tdDisable12, #tdDisable13, #tdDisable14, #tdDisable15,
+     #tdDisable16, #tdDisable17, #tdDisable18, #tdDisable19, #tdDisable20{
         display: none;
     }
     #addUsersBtn {
@@ -132,9 +134,8 @@ table, #assetTableMidle, #sideBarTypes {
     #tdForAddUser {
         padding: 3.5%;
     }
-    #tdDisable14, #tdDisable15, #tdDisable16, #tdDisable17, #tdDisable18, #tdDisable19, #tdDisable20 {
-        display: none;
-    }
+     
+    
     #tdForAddAsset {
         position: inherit;
         padding: 4%;

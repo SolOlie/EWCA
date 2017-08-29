@@ -88,7 +88,7 @@
             <a href="#Changelog" data-toggle="tab" id="idChangelog">Changelog</a>
         </li>
         <li role="presentation" onclick="TabShift()" id="FilePane">
-            <a href="#Files" data-toggle="tab" id="idFile">Files</a>
+            <a href="#Files" data-toggle="tab" id="idFile">Filer</a>
         </li>
     </ul>
     <div class="tab-content">
@@ -98,16 +98,16 @@
                 <table class="table table-striped table-hover">
                     <tr id="hideHeaders">
                         <th>
-                            User
+                            Bruger
                         </th>
                         <th>
-                            Hours
+                            Timer
                         </th>
                         <th>
-                            Description
+                            Beskrivelse
                         </th>
                         <th>
-                            Date
+                            Dato
                         </th>
                         <th>
 
@@ -184,10 +184,10 @@
             <table class="table table-striped table-hover">
                 <tr id="hideHeadersFiles">
                     <th>
-                        Filename
+                        Filnavn
                     </th>
                     <th>
-                        File type
+                        Filtype
                     </th>
                     <th></th>
                 </tr>
@@ -221,7 +221,7 @@
                             <a id="addFileBtn" class="btn btn-default align-right" onclick="toggleAddFile()">
                                 <span class="glyphicon glyphicon-plus"
                                       aria-hidden="true">
-                                    <b>File</b>
+                                    <b>Fil</b>
                                 </span>
                             </a>
                         </td>
@@ -268,7 +268,7 @@
 <div id="deletepopup">
 
     <p id="popupPTag">
-        Do you want to delete
+        Ønsker du at slette?
     <p id="name">
 
     </p>
@@ -279,7 +279,7 @@
 
 
 <p onclick="showPageLoadingSpinner()">
-    @Html.ActionLink("Back to details", "Details", new { id = Model.Asset.Customer.Id })
+    @Html.ActionLink("Tilbage", "Details", new { id = Model.Asset.Customer.Id })
 </p>
 <script>
     $globalurl = '';
@@ -359,8 +359,7 @@
     $("#addChangelogBtn")
         .click(function() {
             $globalurl = '@Url.Action("ModifiedAdd", "Changelogs")';
-            $globalurl2 = '@Url.Action("CreateBackup", "Customers")';
-            $globalid = 0;
+           $globalid = 0;
             console.log($globalurl);
 
             showHidePopup();

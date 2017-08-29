@@ -107,7 +107,7 @@
                         Value = m.Id.ToString(),
                         Text = m.Firm
                     }),
-                    "Select Customer")
+                    "Vælg kunde")
                 @Html.ValidationMessageFor(model => model.Asset.Customer, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -124,11 +124,11 @@
                             Value = m.Id.ToString(),
                             Text = m.Description
                         }),
-                        "Select type", new {id = "select"})
+                        "Vælg type", new {id = "select"})
                     <div style="position: absolute; left: 0; right: 0; top: 0; bottom: 0; display: none;" id="clearDropdown"></div>
                 </div>
                 <div style="display: inline-block; position: relative;">
-                    <input placeholder="New asset type" name="atInput" id="assetTypeInput"/>
+                    <input placeholder="Ny type" name="atInput" id="assetTypeInput"/>
                     <div style="position: absolute; left: 0; right: 0; top: 0; bottom: 0;" id="clearInput"></div>
                 </div>
                    
@@ -139,7 +139,7 @@
 
 
         <div class="form-group">
-            @Html.Label("File", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Fil", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <input type="file" id="attachment" name="upload" />
             </div>
@@ -147,14 +147,14 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Opret" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Details", "Customers", new { id = Model.customerId }, null)
+    @Html.ActionLink("Tilbage", "Details", "Customers", new { id = Model.customerId }, null)
 </div>
 
 @section Scripts {

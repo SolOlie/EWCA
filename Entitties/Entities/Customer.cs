@@ -9,9 +9,12 @@ namespace Entities.Entities
     {
         [Key]
         public int Id { get; set; }
+        [Display(Name = "Firma")]
         public string Firm { get; set; }
+        [Display(Name = "Adresse")]
         public string Address { get; set; }
         public List<User> ContactPersons{ get; set; }
+        [Display(Name = "Dato")]
         [DataType(DataType.Date)]
         public DateTime Date { get; set; }//Create date for customer
         [SkipTracking]

@@ -18,6 +18,7 @@ namespace Entities.Entities
         [SkipTracking]
         public int AssetId { get; set; }
         public Asset Asset { get; set; }
+        [Display(Name = "Filnavn")]
         public string Name { get; set; }
         [SkipTracking]
         public string ContentType { get; set; }

@@ -127,49 +127,6 @@ namespace FrontendSecure.Controllers
                 throw;
             }
         }
-
-       
-        ////
-        //// GET: /Account/Register
-        //[AllowAnonymous]
-        //public ActionResult Register()
-        //{
-        //    return View();
-        //}
-
-        ////
-        //// POST: /Account/Register
-        //[HttpPost]
-        //[AllowAnonymous]
-        //[ValidateAntiForgeryToken]
-        //public async Task<ActionResult> Register(RegisterViewModel model)
-        //{
-
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return View(model);
-        //    }
-        //    try
-        //    {
-        //        await WebapiService.instance.PostAsync("/api/Account/Register", model);
-        //        return View("SignIn");
-        //    }
-        //    catch (ApiException ex)
-        //    {
-        //        HandleBadRequest(ex);
-        //        if (!ModelState.IsValid)
-        //        {
-        //            return View(model);
-        //        }
-        //        throw;
-        //    }
-           
-
-        //}
-       
-
-
-
         [Authorize]
         public ActionResult SingOut()
         {
@@ -186,9 +143,5 @@ namespace FrontendSecure.Controllers
             Session["loggedInCustomerId"] = null;
             return RedirectToAction("Index", "Home");
         }
-
-        
-
-       
     }
 }

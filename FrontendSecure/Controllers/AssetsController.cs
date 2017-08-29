@@ -16,13 +16,7 @@ namespace FrontendSecure.Controllers
         private IServiceGateway<AssetType> dba = new BllFacade().GetAssetTypeGateway();
         private IServiceGateway<Customer>dbc = new BllFacade().GetCustomerGateway();
         private IServiceGateway<File>dbf = new BllFacade().GetFileGateway();
-
-        // GET: Assets
-        public ActionResult Index()
-        {
-            
-            return View(db.ReadAll());
-        }
+        
 
         // GET: Assets/Details/5
         public ActionResult Details(int? id)
@@ -42,29 +36,6 @@ namespace FrontendSecure.Controllers
             
             return View(asset);
         }
-
-        // GET: Assets/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Assets/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include ="Id,Name,Description,Address,Usedby,Location,InstallationDate,FileAttachmentUrl,Login,Password,IpAddress,OS")] Asset asset)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Create(asset);
-                return RedirectToAction("Index");
-            }
-
-            return View(asset);
-        }
-
         // GET: Assets/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -99,31 +70,6 @@ namespace FrontendSecure.Controllers
                 return RedirectToAction("Details", "Customers", new {id = asset.Customer.Id});
             }
             return View(new CreateAssetModel());
-        }
-
-        // GET: Assets/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Asset asset = db.Read(id.Value);
-            if (asset == null)
-            {
-                return HttpNotFound();
-            }
-            return View(asset);
-        }
-
-        // POST: Assets/Delete/5
-        [HttpPost, ActionName("DeleteAsset")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Asset asset = db.Read(id);
-            db.Delete(asset);
-            return RedirectToAction("Index");
         }
         [HttpPost]
         public bool ModifiedDelete(int id) 

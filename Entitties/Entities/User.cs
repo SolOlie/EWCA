@@ -10,8 +10,11 @@ namespace Entities.Entities
         [Key]
         public int Id { get; set; }
         public string Email { get; set; }
+        [Display(Name = "Fornavn")]
         public string FirstName { get; set; }
+        [Display(Name = "Efternavn")]
         public string LastName { get; set; }
+        [Display(Name = "Telefon nr.")]
         public string PhoneNumber { get; set; }
         [SkipTracking]
         public string Password { get; set; }
