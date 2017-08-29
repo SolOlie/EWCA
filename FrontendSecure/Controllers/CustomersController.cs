@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Entities.Entities;
 using FrontendSecure.Gateways;
 using FrontendSecure.Models;
+using WebGrease;
 
 namespace FrontendSecure.Controllers
 {
@@ -234,7 +235,7 @@ namespace FrontendSecure.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateAsset(Asset asset, HttpPostedFileBase upload)
+        public ActionResult CreateAsset(Asset asset, HttpPostedFileBase upload, string atInput)
         {
             if (!isAuthorized(asset.Customer.Id))
             {
@@ -242,6 +243,13 @@ namespace FrontendSecure.Controllers
             }
             if (ModelState.IsValid)
             {
+                if (!string.IsNullOrEmpty(atInput))
+                {
+                    asset.Type = new AssetType
+                    {
+                        Description = atInput
+                    };
+                }
                 if (upload != null && upload.ContentLength > 0)
                 {
                     var attachment = new File()

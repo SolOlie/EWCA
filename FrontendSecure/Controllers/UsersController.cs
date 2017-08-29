@@ -135,8 +135,19 @@ namespace FrontendSecure.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Update(user);
                 User u = db.Read(user.Id);
+                var model = new SetPasswordViewModel
+                {
+                    Email = u.Email,
+                    Password = user.Password
+                };
+                var s = WebapiService.instance.PostAsync("/api/Account/SetPassword",model, System.Web.HttpContext.Current.User.Identity.Name).Result;
+                user.IsContactForCustomer = u.IsContactForCustomer;
+                user.Changelogs = u.Changelogs;
+                user.Email = u.Email;
+                
+                db.Update(user);
+                
                 return RedirectToAction("Details", "Customers", new {id = u.IsContactForCustomer.Id});
             }
             return View(user);
@@ -175,9 +186,21 @@ namespace FrontendSecure.Controllers
         [HttpPost]
         public bool AjaxDeleteConfirmed(int id)
         {
-            User user = db.Read(id);
 
-            db.Delete(user);
+            User user = db.Read(id);
+            user.Password = "";
+            var deleted = db.Update(user);
+            if (deleted)
+            {
+                var s = WebapiService.instance.DeleteAsync<User>("/api/Account/RemoveLogin?email=" + user.Email, System.Web.HttpContext.Current.User.Identity.Name).Result;
+                if (!s)
+                {
+                    return false;
+                }
+            }
+            
+            
+            //db.Delete(user);
             return true;
         }
     }

@@ -1,17 +1,17 @@
-﻿@model FrontendSecure.Models.ChangedHistoryVM
+﻿@model FrontendSecure.Models.UndeletedHistoryVM
 
 <div class="changed">
     @Model.UserName changed
-    <span class="historySpan changedHistorySpan tooltipper" title="<div>
-        @foreach (var item in Model.Details)
-        {
-            <div>
-                @item.PropertyName : @item.OldValue -> @item.NewValue
-            </div>
-        }
-        </div>">
+    <span class="historySpan changedHistoySpan tooltipper" title="<div>
+    @foreach (var item in Model.Details)
+    {
+        <div>
+            @item.PropertyName : @item.OldValue -> @item.NewValue
+        </div>
+    }
+</div>">
 @Model.TypeFullName # @Model.RecordId
 </span>
-    on @(Model.Date.ToString())
+    on @(Model.Date.ToString(Constants.DateFormat)).
 </div>
 

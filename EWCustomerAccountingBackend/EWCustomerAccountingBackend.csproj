@@ -263,16 +263,17 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AccountBackendController.cs" />
     <Compile Include="Controllers\Assets1Controller.cs" />
     <Compile Include="Controllers\AssetsController.cs" />
     <Compile Include="Controllers\AssetTypesController.cs" />
     <Compile Include="Controllers\ChangelogsController.cs" />
     <Compile Include="Controllers\ApiCustomersController.cs" />
     <Compile Include="Controllers\FilesController.cs" />
+    <Compile Include="Controllers\HelperController.cs" />
     <Compile Include="Controllers\HistoryBackendController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="Controllers\UsersBackendController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -362,6 +363,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.1.1.min.map" />
+    <Content Include="Views\Helper\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

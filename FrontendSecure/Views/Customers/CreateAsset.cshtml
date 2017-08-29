@@ -1,10 +1,13 @@
 ﻿@model  FrontendSecure.Models.CreateAssetModel
 
+@{
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+}
 
-@using (Html.BeginForm("CreateAsset", "Customers", FormMethod.Post, new {enctype = "multipart/form-data"})) 
+@using (Html.BeginForm("CreateAsset", "Customers", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Asset</h4>
         <hr />
@@ -18,10 +21,10 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Asset.Description, htmlAttributes: new {@class = "control-label col-md-2"})
+            @Html.LabelFor(model => model.Asset.Description, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Asset.Description, new {htmlAttributes = new {@class = "form-control"}})
-                @Html.ValidationMessageFor(model => model.Asset.Description, "", new {@class = "text-danger"})
+                @Html.EditorFor(model => model.Asset.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Asset.Description, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group">
@@ -96,7 +99,7 @@
             </div>
         </div>
         <div class="form-group">
-            @Html.LabelFor(model => model.Asset.Customer, htmlAttributes: new {@class = "control-label col-md-2"})
+            @Html.LabelFor(model => model.Asset.Customer, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownListFor(m => m.Asset.Customer.Id,
                     Model.Customers.Select(m => new SelectListItem()
@@ -105,27 +108,40 @@
                         Text = m.Firm
                     }),
                     "Select Customer")
-                @Html.ValidationMessageFor(model => model.Asset.Customer, "", new {@class = "text-danger"})
+                @Html.ValidationMessageFor(model => model.Asset.Customer, "", new { @class = "text-danger" })
             </div>
         </div>
+
+
         <div class="form-group">
+
             @Html.LabelFor(model => model.Asset.Type, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(m => m.Asset.Type.Id,
-                   Model.AssetTypes.Select(m => new SelectListItem()
-                   {
-                       Value = m.Id.ToString(),
-                       Text = m.Description
-                   }),
-                    "Select type")
-                @Html.ValidationMessageFor(model => model.Asset.Type, "", new { @class = "text-danger" })
+                <div style="display: inline-block; position: relative;">
+                    @Html.DropDownListFor(m => m.Asset.Type.Id,
+                        Model.AssetTypes.Select(m => new SelectListItem()
+                        {
+                            Value = m.Id.ToString(),
+                            Text = m.Description
+                        }),
+                        "Select type", new {id = "select"})
+                    <div style="position: absolute; left: 0; right: 0; top: 0; bottom: 0; display: none;" id="clearDropdown"></div>
+                </div>
+                <div style="display: inline-block; position: relative;">
+                    <input placeholder="New asset type" name="atInput" id="assetTypeInput"/>
+                    <div style="position: absolute; left: 0; right: 0; top: 0; bottom: 0;" id="clearInput"></div>
+                </div>
+                   
+                
+
             </div>
         </div>
+
 
         <div class="form-group">
             @Html.Label("File", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <input type="file" id="attachment" name="upload"/>
+                <input type="file" id="attachment" name="upload" />
             </div>
         </div>
 
@@ -138,9 +154,40 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Details", "Customers", new { id = Model.customerId },null)
+    @Html.ActionLink("Back to List", "Details", "Customers", new { id = Model.customerId }, null)
 </div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+<script type="text/javascript">
+    $(document)
+        .ready(function () {
+            $("#select").removeAttr("required");
+        });
+    $("#select")
+        .on('change',
+            function () {
+                var selected = $(this).val().index;
+                if (selected != 0) {
+                    $("#assetTypeInput").prop("disabled", true);
+                    $("#clearInput").show();
+
+                }
+            });
+
+    $("#clearInput")
+        .on('click', function () {
+            if (!$("#assetTypeInput").val()) {
+                $("#select").prop("disabled", true);
+                $(this).hide().prev("input[disabled]").prop("disabled", false).focus();
+                $("#clearDropdown").show();
+            }
+        });
+    $("#clearDropdown")
+        .click(function() {
+            $(this).hide().prev("select[disabled]").prop("disabled", false);
+            $("#clearInput").show();
+        });
+
+</script>

@@ -21,16 +21,16 @@ namespace EWCustomerAccountingBackend.Controllers
 {
     [Authorize]
     [RoutePrefix("api/Account")]
-    public class AccountController : ApiController
+    public class AccountBackendController : ApiController
     {
         private const string LocalLoginProvider = "Local";
         private ApplicationUserManager _userManager;
 
-        public AccountController()
+        public AccountBackendController()
         {
         }
 
-        public AccountController(ApplicationUserManager userManager,
+        public AccountBackendController(ApplicationUserManager userManager,
             ISecureDataFormat<AuthenticationTicket> accessTokenFormat)
         {
             UserManager = userManager;
@@ -122,7 +122,7 @@ namespace EWCustomerAccountingBackend.Controllers
             {
                 return BadRequest(ModelState);
             }
-
+            
             IdentityResult result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword,
                 model.NewPassword);
             
@@ -142,8 +142,17 @@ namespace EWCustomerAccountingBackend.Controllers
             {
                 return BadRequest(ModelState);
             }
-
-            IdentityResult result = await UserManager.AddPasswordAsync(User.Identity.GetUserId(), model.NewPassword);
+            var user = UserManager.FindByEmailAsync(model.Email).Result;
+            if (user == null)
+            {
+                return GetErrorResult(IdentityResult.Failed());
+            }
+            var resultRemove = UserManager.RemovePasswordAsync(user.Id).Result;
+            if (!resultRemove.Succeeded)
+            {
+                return GetErrorResult(resultRemove);
+            }
+            IdentityResult result = await UserManager.AddPasswordAsync(user.Id, model.Password);
 
             if (!result.Succeeded)
             {
@@ -193,25 +202,20 @@ namespace EWCustomerAccountingBackend.Controllers
 
         // POST api/Account/RemoveLogin
         [Route("RemoveLogin")]
-        public async Task<IHttpActionResult> RemoveLogin(RemoveLoginBindingModel model)
+        [HttpDelete]
+        public async Task<IHttpActionResult> RemoveLogin(string email)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
-            IdentityResult result;
-
-            if (model.LoginProvider == LocalLoginProvider)
+            var user = UserManager.FindByEmailAsync(email).Result;
+            if (user == null)
             {
-                result = await UserManager.RemovePasswordAsync(User.Identity.GetUserId());
-            }
-            else
-            {
-                result = await UserManager.RemoveLoginAsync(User.Identity.GetUserId(),
-                    new UserLoginInfo(model.LoginProvider, model.ProviderKey));
+                return BadRequest();
             }
 
+            IdentityResult result = await UserManager.DeleteAsync(user);
             if (!result.Succeeded)
             {
                 return GetErrorResult(result);
@@ -219,6 +223,7 @@ namespace EWCustomerAccountingBackend.Controllers
 
             return Ok();
         }
+        
 
         // GET api/Account/ExternalLogin
         [OverrideAuthentication]

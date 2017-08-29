@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web;
@@ -95,7 +96,7 @@ namespace FrontendSecure.Gateways
 
         private HttpClient Setup(HttpClient client)
         {
-            client.BaseAddress = new Uri("http://ewcustomeraccountingbackend20170828013231.azurewebsites.net/EWCustomerAccountingBackend");
+            client.BaseAddress = new Uri(ConfigurationManager.AppSettings["WebApiUri"]);
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             if (HttpContext.Current.Session["token"] != null)

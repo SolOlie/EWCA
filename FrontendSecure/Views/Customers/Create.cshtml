@@ -42,45 +42,9 @@
                 @Html.ValidationMessageFor(model => model.Customer.Date, "", new { @class = "text-danger" })
             </div>
         </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.Customer.ContactPersons, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <select class="selectpicker show-menu-arrow" multiple id="selectableUsers" name="ids">
-                    @if (Model.Users != null && Model.Users.Count > 0)
-                    {
-                        foreach (var c in Model.Users)
-                        {
-                            <option data-id="@c.Id" value="@c.Id">@c.FirstName</option>
-                        }
-                    }
-                </select>
+      
 
-                <a class="btn btn-default" id="addContactPerson" onclick="AddClick()">
-                    <span class="glyphicon glyphicon-plus"></span>
-                </a>
-                <ul>
-                    @if (Model.Customer.ContactPersons != null && Model.Customer.ContactPersons.Count > 0)
-                    {
-                        foreach (var c in Model.Customer.ContactPersons)
-                        {
-                            <li>@c.FirstName</li>
-                        }
-                    }
-                </ul>
-            </div>
-
-        </div>
-
-        <div id="popupAddContact">
-            <input id="firstName" placeholder="First name" />
-            <input id="lastName" placeholder="Last name" />
-            <input id="email" placeholder="Email" />
-            <input id="phoneNumber" placeholder="Phone number" />
-            <input id="password" placeholder="Password" />
-            <a id="btnAddContact" class="btn btn-success"onclick="AddContactClick()">Add</a>
-            <a id="addContactPersonCancel" class="btn btn-danger" onclick="CancelClick()">Cancel</a>
-
-        </div>
+       
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-default" />
@@ -92,57 +56,3 @@
 <div onclick="showPageLoadingSpinner()">
     @Html.ActionLink("Back to List", "Index")
 </div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
-<script type="text/javascript">
-    function AddClick() {
-        $("#popupAddContact")
-            .toggle("fast", function () {
-
-            });
-    };
-    function CancelClick() {
-        $("#popupAddContact")
-            .toggle("fast", function () {
-
-            });
-    };
-
-    function AddContactClick() {
-        $("#popupAddContact")
-             .toggle("fast", function () {
-                var FName = $("#firstName").val();
-                var LName = $("#lastName").val();
-                var Email = $("#email").val();
-                var Pass = $("#password").val();
-                 $.ajax({
-                     type: "POST",
-                     url: '@Url.Action("AjaxCreateConfirmed", "Users")',
-                     data: {
-                         Email: Email,
-                         FirstName: FName,
-                         LastName: LName,
-                         Password: Pass 
-                     },
-                     success: function (data) {
-                         if (data) {
-                             location.reload();
-                             showPageLoadingSpinner();
-                         }
-                         else {
-                             alert("Something went wrong")
-                         }
-                     },
-                     failure: function (data) {
-                         alert("Try reloading the page");
-                     },
-
-                     error: function (data) {
-                         console.log("ERROR");
-                     }
-                 });
-             });
-    }
-</script>

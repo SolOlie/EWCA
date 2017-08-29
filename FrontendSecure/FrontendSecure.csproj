@@ -216,6 +216,11 @@
     <Content Include="Content\CustomerIndexStyles.css" />
     <Content Include="Content\HistoryStyles.css" />
     <Content Include="Content\SearchStyleSheet.css" />
+    <Content Include="Content\Tooltipster\css\themes\tooltipster-light.css" />
+    <Content Include="Content\Tooltipster\css\themes\tooltipster-noir.css" />
+    <Content Include="Content\Tooltipster\css\themes\tooltipster-punk.css" />
+    <Content Include="Content\Tooltipster\css\themes\tooltipster-shadow.css" />
+    <Content Include="Content\Tooltipster\css\tooltipster.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -238,6 +243,7 @@
     <Content Include="Scripts\jquery-3.1.1.slim.js" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.tooltipster.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -273,10 +279,8 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Account\SignIn.cshtml" />
     <Content Include="Views\Assets\Create.cshtml" />
-    <Content Include="Views\Assets\Delete.cshtml" />
     <Content Include="Views\Assets\Details.cshtml" />
     <Content Include="Views\Assets\Edit.cshtml" />
-    <Content Include="Views\Assets\Index.cshtml" />
     <Content Include="Views\AssetTypes\Create.cshtml" />
     <Content Include="Views\AssetTypes\Delete.cshtml" />
     <Content Include="Views\AssetTypes\Details.cshtml" />

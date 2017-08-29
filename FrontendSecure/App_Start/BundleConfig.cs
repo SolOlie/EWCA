@@ -21,12 +21,19 @@ namespace FrontendSecure
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
-                      "~/Scripts/respond.js"));
+                      "~/Scripts/respond.js", "~/Scripts/jquery.tooltipster.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
-            bundles.Add(new StyleBundle("~/Content/css/bootstrap").Include("~/Content/bootstrap.min.css", new CssRewriteUrlTransform()));
+            bundles.Add(new StyleBundle("~/Content/css/bootstrap").Include(
+                "~/Content/bootstrap.min.css",
+                new CssRewriteUrlTransform()));
+            bundles.Add(new StyleBundle("~/Content/css").Include(
+                     "~/Content/Tooltipster/css/tooltipster.css",
+                     "~/Content/Bootstrap.css", 
+                     "~/Content/Site.css", 
+                     "~/Content/HistoryStyles.css"));
         }
     }
 }
