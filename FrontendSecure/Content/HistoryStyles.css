@@ -48,3 +48,27 @@
     padding: 3px;
     padding-left: 6px;
 }
+.historyHover  {
+    position: relative;
+    display: inline-block;
+    
+}
+.historyHover:hover .tooltiptext {
+    visibility: visible;
+
+}
+.historyHover .tooltiptext {
+    visibility: hidden;
+    width: 300px;
+    background-color: grey;
+    color: white;
+    text-align: center;
+    border-radius: 5px;
+    padding: 5px 0;
+
+    position: absolute;
+    z-index: 10;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -150px;
+}

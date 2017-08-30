@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -12,15 +13,22 @@ namespace EWCustomerAccountingBackend.Controllers
 {
     public class HistoryBackendController : ApiController
     {
-        private CADBContext db = new CADBContext();
+
         public IQueryable<AuditLog> GetAuditsLogs()
         {
-            return db.AuditLog;
+            using (var ctx = new CADBContext())
+            {
+                var a = ctx.AuditLog.Include(x=> x.LogDetails);
+                return a;
+            }
         }
+
         public IQueryable<AuditLog> GetLogs(string TypeFullName, object entityId)
         {
-            
-            return db.GetLogs(TypeFullName, entityId);
+            using (var ctx = new CADBContext())
+            {
+                return ctx.GetLogs(TypeFullName, entityId);
+            }
         }
     }
 }

@@ -2,16 +2,18 @@
 
 <div class="changed">
     @Model.UserName Ændrede
-    <span class="historySpan changedHistoySpan tooltipper" title="<div>
-        @foreach (var item in Model.Details)
-        {
-            <div>
-                @item.PropertyName : @item.OldValue -> @item.NewValue
-            </div>
-        }
-        </div>">
-@Model.TypeFullName # @Model.RecordId
-</span>
+    <div class="historySpan changedHistoySpan historyHover" style="display: inline-block; width: 250px">
+
+        <div class="tooltiptext">
+            @foreach (var item in Model.Details)
+            {
+                <div>
+                    @item.PropertyName : @item.OldValue -> @item.NewValue
+                </div>
+            }
+        </div>
+        @Model.TypeFullName # @Model.RecordId
+    </div>
     d. @(Model.Date.ToString(Constants.DateFormat)).
 </div>
 

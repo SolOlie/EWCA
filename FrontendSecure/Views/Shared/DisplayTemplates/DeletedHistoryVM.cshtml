@@ -2,15 +2,17 @@
 
     <div class="deleted">
         @Model.UserName Slettede
-        <span class="historySpan deletedHistoySpan tooltipper" title="<div>
+        <div class="historySpan deletedHistoySpan" style="display: inline-block; width: 250px">
+
+            <div>
         @foreach (var item in Model.Details)
         {
             <div>
                 @item.PropertyName : @item.OldValue
             </div>
         }
-        </div>">
+        </div>
 @Model.TypeFullName # @Model.RecordId
-</span>
+</div>
         d. @(Model.Date.ToString(Constants.DateFormat)).
     </div>
