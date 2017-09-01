@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using DevExpress.Web.Mvc;
+using System.Collections.Generic;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
@@ -109,5 +111,98 @@ namespace FrontendSecure.Controllers
             return deleted;
         }
 
+
+        [ValidateInput(false)]
+        public ActionResult AssetTableExpressPartial(int? customerid)
+        {
+            var model = new AssetListPartialModel();
+            if (customerid.HasValue)
+            {
+                model.Assets = db.ReadAllWithFk(customerid.Value);
+                model.CustomerId = customerid.Value;
+            }
+            return PartialView("~/Views/Customers/_AssetTableExpressPartial.cshtml", model);
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult AssetTableExpressPartialAddNew([ModelBinder(typeof(DevExpressEditorsBinder))] Entities.Entities.Asset item)
+        {
+            var model = new AssetListPartialModel();
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                  
+                }
+                catch (Exception e)
+                {
+                    ViewData["EditError"] = e.Message;
+                }
+            }
+            else
+                ViewData["EditError"] = "Please, correct all errors.";
+            return PartialView("~/Views/Customers/_AssetTableExpressPartial.cshtml", model);
+        }
+        [HttpPost, ValidateInput(false)]
+        public ActionResult AssetTableExpressPartialUpdate([ModelBinder(typeof(DevExpressEditorsBinder))] Entities.Entities.Asset item)
+        {
+            var model = new AssetListPartialModel();
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var a = db.Read(item.Id);
+                    item.Customer = a.Customer;
+                    item.CustomerId = a.Customer.Id;
+                    item.Changelogs = a.Changelogs;
+                    item.FileAttachments = a.FileAttachments;
+                    item.InstallationDate = a.InstallationDate;
+                    item.Type = a.Type;
+                    item.TypeId = a.Type.Id;
+                    var b = db.Update(item);
+                    if (b)
+                    {
+                        
+                        model.CustomerId = a.Customer.Id;
+                        model.Assets = db.ReadAllWithFk(a.Customer.Id);
+                    }
+                }
+                catch (Exception e)
+                {
+                    ViewData["EditError"] = e.Message;
+                }
+            }
+            else
+                ViewData["EditError"] = "Please, correct all errors.";
+            return PartialView("~/Views/Customers/_AssetTableExpressPartial.cshtml", model);
+        }
+        [HttpPost, ValidateInput(false)]
+        public ActionResult AssetTableExpressPartialDelete(string Id)
+        {
+            Id = Id.Replace("\"", "");
+            if (string.IsNullOrEmpty(Id))
+            {
+                Id = "0";
+            }
+            int id = Int32.Parse(Id);
+            var model = new AssetListPartialModel();
+            if (id > 0)
+            {
+                try
+                {
+                   var a = db.Read(id);
+                    db.Delete(a);
+
+                    model.Assets = db.ReadAllWithFk(a.Customer.Id);
+                    model.CustomerId = a.Customer.Id;
+
+                }
+                catch (Exception e)
+                {
+                    ViewData["EditError"] = e.Message;
+                }
+            }
+            return PartialView("~/Views/Customers/_AssetTableExpressPartial.cshtml", model);
+        }
     }
 }

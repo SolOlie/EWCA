@@ -1,6 +1,17 @@
 ﻿@model IEnumerable<Entities.Entities.Customer>
 @{
-    ViewBag.Title = "Index";
+    @Html.DevExpress().GetStyleSheets(
+        new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+        new StyleSheet { ExtensionSuite = ExtensionSuite.Editors },
+        new StyleSheet { ExtensionSuite = ExtensionSuite.GridView }
+    )
+    @Html.DevExpress().GetScripts(
+        new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+        new Script { ExtensionSuite = ExtensionSuite.Editors },
+        new Script { ExtensionSuite = ExtensionSuite.GridView }
+    )
+
+
 }
 
 <h2>Index</h2>
@@ -9,3 +20,10 @@
   <p>@asset.Firm</p>
 }
 
+
+@Html.Action("CustomerTestTablePartial")
+
+<br/>
+
+
+@Html.Action("tabletestwithoutDBPartial")

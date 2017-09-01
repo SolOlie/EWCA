@@ -23,7 +23,7 @@ namespace EWCustomerAccountingBackend
             user.Email = "EliteWeb@dk.dk";
             string userPWD = "EW1234";
 
-            var succes = UserManager.Create(user, userPWD);
+           // var succes = UserManager.Create(user, userPWD);
             ConfigureAuth(app);
         }
     }
