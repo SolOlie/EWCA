@@ -1,11 +1,14 @@
-@using DevExpress.XtraReports.Configuration
-@model  FrontendSecure.Models.AssetListPartialModel
 @{
     var grid = Html.DevExpress().GridView(settings => {
-        settings.Name = "AssetTableExpress";
-        settings.CallbackRouteValues = new { Controller = "Assets", Action = "AssetTableExpressPartial", customerid = Model.CustomerId};
+        settings.Name = "CustomerTableExpress";
+        settings.CallbackRouteValues = new { Controller = "Customers", Action = "CustomerTableExpressPartial" };
 
-        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Assets", Action = "AssetTableExpressPartialAddNew" };
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Customers", Action = "CustomerTableExpressPartialAddNew" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Customers", Action = "CustomerTableExpressPartialUpdate" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Customers", Action = "CustomerTableExpressPartialDelete" };
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+        settings.SettingsBehavior.ConfirmDelete = true;
+
         settings.Columns.Add(column =>
         {
             column.Caption = "#";
@@ -22,31 +25,28 @@
                 col.SetDataItemTemplateContent(c =>
                 {
                     ViewContext.Writer.Write(
-                        Html.ActionLink("Details", "AssetDetails", "Customers", new { id = DataBinder.Eval(c.DataItem, "Id"), customerId = Model.CustomerId}, null)
+                        Html.ActionLink("Details", "Details", "Customers", new { id = DataBinder.Eval(c.DataItem, "Id")}, null)
                     );
                 });
                 col.SetHeaderTemplateContent(c =>
                 {
                     ViewContext.Writer.Write(
-                        Html.ActionLink("New", "CreateAsset", "Customers", new { id = Model.CustomerId }, null).ToHtmlString()
+                        Html.ActionLink("New", "Create", "Customers").ToHtmlString()
                     );
                 });
-
+                col.Width = 50;
             });
             column.Settings.AllowDragDrop = DefaultBoolean.False;
             column.Settings.AllowSort = DefaultBoolean.False;
-            column.Width = 70;
+            column.Width = 50;
+            
         });
-
-        //settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Assets", Action = "Edit" };
-        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Assets", Action = "AssetTableExpressPartialDelete" };
-        settings.SettingsEditing.Mode = GridViewEditingMode.PopupEditForm;
-        settings.SettingsBehavior.ConfirmDelete = true;
 
         settings.CommandColumn.Visible = true;
         settings.CommandColumn.ShowNewButton = false;
         settings.CommandColumn.ShowDeleteButton = true;
         settings.CommandColumn.ShowEditButton = false;
+                                                          settings.CommandColumn.Width = 50;
 
         settings.KeyFieldName = "Id";
 
@@ -65,26 +65,12 @@
         settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
         settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
 
-        settings.Columns.Add("Name");
-        settings.Columns.Add(c =>
-        {
-            c.FieldName = "Type.Description";
-            c.Caption = "Type";
-
-        });
-        settings.Columns.Add("Usedby");
-        settings.Columns.Add("Note");
-        settings.Columns.Add("Login");
-        settings.Columns.Add(column =>
-        {
-            column.FieldName = "Password";
-            var prop = (column.PropertiesEdit as TextBoxProperties);
-            prop.Password = true;
-        });
-
+        settings.Columns.Add("Firm");
+        settings.Columns.Add("Address");
+        settings.Columns.Add("Date");
     });
     if (ViewData["EditError"] != null){
         grid.SetEditErrorText((string)ViewData["EditError"]);
     }
 }
-@grid.Bind(Model.Assets).GetHtml()
+@grid.Bind(Model).GetHtml()
