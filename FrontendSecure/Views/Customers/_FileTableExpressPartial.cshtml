@@ -1,33 +1,15 @@
-@model FrontendSecure.Models.UsersListPartialModel
+@model FrontendSecure.Models.FileListPartialModel
 @{
     var grid = Html.DevExpress().GridView(settings => {
-        settings.Name = "UsersTableExpress";
-        settings.CallbackRouteValues = new { Controller = "Users", Action = "UsersTableExpressPartial" , customerid = Model.CustomerId};
+        settings.Name = "FileTableExpress";
+        settings.CallbackRouteValues = new { Controller = "Changelogs", Action = "FileTableExpressPartial", assetid = Model.assetid };
 
-
-        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Users", Action = "UsersTableExpressPartialDelete" };
-        settings.Columns.Add(col =>
-        {
-            col.Caption = "#";
-            col.SetDataItemTemplateContent(c =>
-            {
-                ViewContext.Writer.Write(
-                    Html.ActionLink("Edit", "Edit", "Users", new { id = DataBinder.Eval(c.DataItem, "Id")}, null)
-                );
-            });
-            col.SetHeaderTemplateContent(c =>
-            {
-                ViewContext.Writer.Write(
-                    Html.ActionLink("New", "Create", "Users", new { CustomerId = Model.CustomerId }, null).ToHtmlString()
-                );
-            });
-            col.Settings.AllowDragDrop = DefaultBoolean.False;
-            col.Settings.AllowSort = DefaultBoolean.False;
-            col.Width = 70;
-        });
-
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Changelogs", Action = "FileTableExpressPartialAddNew" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Changelogs", Action = "FileTableExpressPartialUpdate" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Changelogs", Action = "FileTableExpressPartialDelete" };
         settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
         settings.SettingsBehavior.ConfirmDelete = true;
+
         settings.CommandColumn.Visible = true;
         settings.CommandColumn.ShowNewButton = false;
         settings.CommandColumn.ShowDeleteButton = true;
@@ -45,20 +27,18 @@
 
         settings.SettingsBehavior.AllowSelectByRowClick = true;
         settings.Settings.ShowHeaderFilterButton = true;
+
         settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
         settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
         settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
         settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
         settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
 
-        settings.Columns.Add("Email");
-        settings.Columns.Add("FirstName");
-        settings.Columns.Add("LastName");
-        settings.Columns.Add("PhoneNumber");
-        settings.Columns.Add("Password");
+        settings.Columns.Add("Name");
+        settings.Columns.Add("ContentType");
     });
     if (ViewData["EditError"] != null){
         grid.SetEditErrorText((string)ViewData["EditError"]);
     }
 }
-@grid.Bind(Model.Users).GetHtml()
+@grid.Bind(Model.Files).GetHtml()

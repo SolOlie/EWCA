@@ -5,10 +5,19 @@
 @{
     ViewBag.Title = "AssetDetails";
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    @Html.DevExpress().GetStyleSheets(
+        new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+        new StyleSheet { ExtensionSuite = ExtensionSuite.Editors },
+        new StyleSheet { ExtensionSuite = ExtensionSuite.GridView }
+    )
+    @Html.DevExpress().GetScripts(
+        new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+        new Script { ExtensionSuite = ExtensionSuite.Editors },
+        new Script { ExtensionSuite = ExtensionSuite.GridView }
+    )
 
 }
-@section styles {<link href="~/Content/AssetDetails.css" rel="stylesheet" />}
+
 <h2>
     @Html.DisplayFor(model => model.Asset.Name)
 </h2>
@@ -93,149 +102,182 @@
     </ul>
     <div class="tab-content">
         <div class="tab-pane active" id="Changelog">
+            <div style="display: none;">
+                @*<div style="overflow-x: visible">
+                    <table class="table table-striped table-hover">
+                        <tr id="hideHeaders">
+                            <th>
+                                Bruger
+                            </th>
+                            <th>
+                                Timer
+                            </th>
+                            <th>
+                                Beskrivelse
+                            </th>
+                            <th>
+                                Dato
+                            </th>
+                            <th>
 
-            <div style="overflow-x: visible">
-                <table class="table table-striped table-hover">
-                    <tr id="hideHeaders">
-                        <th>
-                            Bruger
-                        </th>
-                        <th>
-                            Timer
-                        </th>
-                        <th>
-                            Beskrivelse
-                        </th>
-                        <th>
-                            Dato
-                        </th>
-                        <th>
-
-                        </th>
-                    </tr>
-                    <tbody>
-                        @foreach (var cl in Model.Asset.Changelogs)
-                        {
-                            <tr>
-                                <td>@cl.User.FirstName @cl.User.LastName</td>
-                                <td>@cl.Hours</td>
-                                <td>
-                                    <div id="descriptionHover">
-                                        Hold over for mere...
-                                        <span class="tooltiptext">
-                                            @cl.Description
-                                        </span>
-
-                                    </div>
-
-
-                                </td>
-                                <td>@cl.ChangedDate.ToShortDateString()</td>
-                                <td>
-                                    <a class="btn btn-default" id="editChangelogBtn" onclick="editChangelogBtn(this)" data-id="@cl.Id" data-name="@cl.Description" data-hour="@cl.Hours" data-userId="@cl.User.Id" data-year="@cl.ChangedDate.Year" data-month="@cl.ChangedDate.Month" data-day="@cl.ChangedDate.Day">
-                                        <span class="glyphicon glyphicon-pencil">
-
-                                        </span>
-                                    </a>
-                                    <a class="btn btn-danger" id="removeChangelogBtn" onclick="deleteClick(this)" data-id="@cl.Id" data-name="@cl.User.FirstName">
-                                        <span class="glyphicon glyphicon-trash" aria-hidden="true">
-
-                                        </span>
-                                    </a>
-                                </td>
-                            </tr>
-                        }
-                        <tr>
-                            <td id="tdForAddChangelog">
-                                <a id="addChangelogBtn" class="btn btn-default align-right">
-                                    <span class="glyphicon glyphicon-plus"
-                                          aria-hidden="true">
-                                        <b>Changelog</b>
-                                    </span>
-                                </a>
-                            </td>
-                            <td id="tdDisable3"></td>
-                            <td id="tdDisable4"></td>
-                            <td id="tdDisable5"></td>
-                            <td id="tdDisable6"></td>
+                            </th>
                         </tr>
-                    </tbody>
-                </table>
+                        <tbody>
+                            @foreach (var cl in Model.Asset.Changelogs)
+                        {
+                                <tr>
+                                    <td>@cl.User.FirstName @cl.User.LastName</td>
+                                    <td>@cl.Hours</td>
+                                    <td>
+                                        <div id="descriptionHover">
+                                            Hold over for mere...
+                                            <span class="tooltiptext">
+                                                @cl.Description
+                                            </span>
 
+                                        </div>
+
+
+                                    </td>
+                                    <td>@cl.ChangedDate.ToShortDateString()</td>
+                                    <td>
+                                        <a class="btn btn-default" id="editChangelogBtn" onclick="editChangelogBtn(this)" data-id="@cl.Id" data-name="@cl.Description" data-hour="@cl.Hours" data-userId="@cl.User.Id" data-year="@cl.ChangedDate.Year" data-month="@cl.ChangedDate.Month" data-day="@cl.ChangedDate.Day">
+                                            <span class="glyphicon glyphicon-pencil">
+
+                                            </span>
+                                        </a>
+                                        <a class="btn btn-danger" id="removeChangelogBtn" onclick="deleteClick(this)" data-id="@cl.Id" data-name="@cl.User.FirstName">
+                                            <span class="glyphicon glyphicon-trash" aria-hidden="true">
+
+                                            </span>
+                                        </a>
+                                    </td>
+                                </tr>
+                        }
+                            <tr>
+                                <td id="tdForAddChangelog">
+                                    <a id="addChangelogBtn" class="btn btn-default align-right">
+                                        <span class="glyphicon glyphicon-plus"
+                                              aria-hidden="true">
+                                            <b>Changelog</b>
+                                        </span>
+                                    </a>
+                                </td>
+                                <td id="tdDisable3"></td>
+                                <td id="tdDisable4"></td>
+                                <td id="tdDisable5"></td>
+                                <td id="tdDisable6"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>*@
             </div>
+
+                        @Html.Action("ChangelogTableExpressPartial", "Changelogs", new {assetid = Model.Asset.Id})
+                       
+
+
+
+            
         </div>
         <div id="Files" class="tab-pane">
-            <div id="addFilePopup">
-                @using (Html.BeginForm("AddFile", "Assets", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            <a id="addFileBtn" class="btn btn-default align-right" onclick="toggleAddFile()">
+                <span class="glyphicon glyphicon-plus"
+                      aria-hidden="true">
+                    <b>Fil</b>
+                </span>
+            </a>
+                <div id="addFilePopup" style=" height: 150px;
+    width: 300px;
+    position: fixed;
+    background-color: lightgray;
+    top: 50%;
+    left: 50%;
+    margin-left: -150px;
+    margin-top: -75px;
+    border-radius: 5px;
+    padding: 20px;
+    padding-left: 30px;
+    display: none;">
+                    @using (Html.BeginForm("AddFile", "Assets", FormMethod.Post, new {enctype = "multipart/form-data"}))
                 {
-                    <input type="hidden" name="assetId" value="@Model.Asset.Id" />
-                    <input type="File" id="fileUpload" name="Upload" />
-                    <div class="form-group" id="buttons">
-                        <input type="submit" class="btn btn-success" value="submit" onclick="fileSubmitted()" />
-                        <a class="btn btn-danger" id="cancelBtn" onclick="toggleAddFile()">
-                            Cancel
-                        </a>
-                    </div>
+                        <input type="hidden" name="assetId" value="@Model.Asset.Id" />
+                        <input type="File" id="fileUpload" name="Upload" />
+                        <div class="form-group" id="buttons">
+                            <input type="submit" class="btn btn-success" value="submit" onclick="fileSubmitted()" />
+                            <a class="btn btn-danger" id="cancelBtn" onclick="toggleAddFile()">
+                                Cancel
+                            </a>
+                        </div>
 
                 }
 
+                </div>
+            <div style="display: none;">
+                @*<table class="table table-striped table-hover">
+                    <tr id="hideHeadersFiles">
+                        <th>
+                            Filnavn
+                        </th>
+                        <th>
+                            Filtype
+                        </th>
+                        <th></th>
+                    </tr>
+                    <tbody>
+                        @if (Model.Asset.FileAttachments != null)
+                        {
+                            foreach (var files in Model.Asset.FileAttachments)
+                            {
+                                <tr>
+                                    <td>
+                                        @files.Name
+                                    </td>
+                                    <td>
+                                        @files.ContentType
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-default" id="downloadBtn" data-id="@files.Id" onclick="downloadFile(this)">
+                                            <span class="glyphicon glyphicon-download-alt"></span>
+                                        </a>
+
+                                        <a class="btn btn-danger" id="deleteFileBtn" onclick="deleteFile(this)" data-id="@files.Id">
+                                            <span class="glyphicon glyphicon-trash"></span>
+                                        </a>
+                                    </td>
+                                </tr>
+
+                            }
+                        }
+                        <tr>
+                            <td id="tdDisable7">
+                                <a id="addFileBtn" class="btn btn-default align-right" onclick="toggleAddFile()">
+                                    <span class="glyphicon glyphicon-plus"
+                                          aria-hidden="true">
+                                        <b>Fil</b>
+                                    </span>
+                                </a>
+                            </td>
+                            <td id="tdDisable1"></td>
+                            <td id="tdDisable2"></td>
+                        </tr>
+
+                    </tbody>
+                </table>*@
             </div>
 
-            <table class="table table-striped table-hover">
-                <tr id="hideHeadersFiles">
-                    <th>
-                        Filnavn
-                    </th>
-                    <th>
-                        Filtype
-                    </th>
-                    <th></th>
-                </tr>
-                <tbody>
-                    @if (Model.Asset.FileAttachments != null)
-                    {
-                        foreach (var files in Model.Asset.FileAttachments)
-                        {
-                            <tr>
-                                <td>
-                                    @files.Name
-                                </td>
-                                <td>
-                                    @files.ContentType
-                                </td>
-                                <td>
-                                    <a class="btn btn-default" id="downloadBtn" data-id="@files.Id" onclick="downloadFile(this)">
-                                        <span class="glyphicon glyphicon-download-alt"></span>
-                                    </a>
 
-                                    <a class="btn btn-danger" id="deleteFileBtn" onclick="deleteFile(this)" data-id="@files.Id">
-                                        <span class="glyphicon glyphicon-trash"></span>
-                                    </a>
-                                </td>
-                            </tr>
+            @Html.Action("FileTableExpressPartial", "Changelogs", new { assetid = Model.Asset.Id })
 
-                        }
-                    }
-                    <tr>
-                        <td id="tdDisable7">
-                            <a id="addFileBtn" class="btn btn-default align-right" onclick="toggleAddFile()">
-                                <span class="glyphicon glyphicon-plus"
-                                      aria-hidden="true">
-                                    <b>Fil</b>
-                                </span>
-                            </a>
-                        </td>
-                        <td id="tdDisable1"></td>
-                        <td id="tdDisable2"></td>
-                    </tr>
 
-                </tbody>
-            </table>
+
+
         </div>
     </div>
 </div>
-<div id="popupBackgroundChangelog"></div>
-<div id="addChangelogPopup">
+<div id="popupBackgroundChangelog" style="display: none;"></div>
+<div id="addChangelogPopup" style="display: none;">
     <div id="addChangelogStyle">
         <div class="form-group">
             <select id="dropdownSelect">
@@ -264,8 +306,8 @@
         </a>
     </div>
 </div>
-<div id="popupBackground"></div>
-<div id="deletepopup">
+<div id="popupBackground" style="display: none;"></div>
+<div id="deletepopup" style="display: none;">
 
     <p id="popupPTag">
         Ønsker du at slette?

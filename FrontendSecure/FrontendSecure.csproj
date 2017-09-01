@@ -204,6 +204,8 @@
     <Compile Include="Gateways\SecureGateways\UserGatewaySecure.cs" />
     <Compile Include="Gateways\UnsecureGateways\UserGateway.cs" />
     <Compile Include="Models\AssetListPartialModel.cs" />
+    <Compile Include="Models\ChangelogsListPartialModel.cs" />
+    <Compile Include="Models\FileListPartialModel.cs" />
     <Compile Include="Models\LogDetails.cs" />
     <Compile Include="Models\BaseHistoryVM.cs" />
     <Compile Include="Models\CreateAssetModel.cs" />
@@ -395,6 +397,8 @@
     <Content Include="Views\Customers\_AssetTableExpressPartial.cshtml" />
     <Content Include="Views\Customers\_CustomerTableExpressPartial.cshtml" />
     <Content Include="Views\Customers\_UsersTableExpressPartial.cshtml" />
+    <Content Include="Views\Customers\_ChangelogTableExpressPartial.cshtml" />
+    <Content Include="Views\Customers\_FileTableExpressPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -406,10 +410,6 @@
     <Content Include="Scripts\jquery-3.1.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DAL\DAL.csproj">
-      <Project>{c3f177f8-d8b2-4579-b408-789f0e02bac6}</Project>
-      <Name>DAL</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Entitties\Entities.csproj">
       <Project>{e88b6418-05d9-4e0a-b13a-670e26eaf4a8}</Project>
       <Name>Entities</Name>

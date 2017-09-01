@@ -167,15 +167,21 @@ namespace FrontendSecure.Controllers
         }
 
         [HttpPost, ValidateInput(false)]
-        public ActionResult UsersTableExpressPartialDelete(System.Int32 Id)
+        public ActionResult UsersTableExpressPartialDelete(string Id)
         {
+            Id = Id.Replace("\"", "");
+            if (string.IsNullOrEmpty(Id))
+            {
+                Id = "0";
+            }
+            int id = Int32.Parse(Id);
             var model = new UsersListPartialModel();
-            if (Id > 0)
+            if (id > 0)
             {
                 
                 try
                 {
-                    var a = db.Read(Id);
+                    var a = db.Read(id);
                     db.Delete(a);
                     model.Users = db.ReadAllWithFk(a.IsContactForCustomer.Id);
                     model.CustomerId = a.IsContactForCustomer.Id;

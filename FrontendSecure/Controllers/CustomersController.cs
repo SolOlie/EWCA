@@ -69,7 +69,7 @@ namespace FrontendSecure.Controllers
             }
             else
             {
-                searchList = db.ReadAll();
+                //searchList = db.ReadAll();
             }
 
             return View(searchList);

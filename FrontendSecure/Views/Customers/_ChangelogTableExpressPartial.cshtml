@@ -1,0 +1,47 @@
+@model FrontendSecure.Models.ChangelogsListPartialModel
+@{
+    var grid = Html.DevExpress().GridView(settings => {
+        settings.Name = "ChangelogTableExpress";
+        settings.CallbackRouteValues = new { Controller = "Changelogs", Action = "ChangelogTableExpressPartial" , assetid = Model.assetid };
+
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Changelogs", Action = "ChangelogTableExpressPartialAddNew" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Changelogs", Action = "ChangelogTableExpressPartialUpdate" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Changelogs", Action = "ChangelogTableExpressPartialDelete" };
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+        settings.SettingsBehavior.ConfirmDelete = true;
+
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowNewButton = true;
+        settings.CommandColumn.ShowDeleteButton = true;
+        settings.CommandColumn.ShowEditButton = true;
+        settings.CommandColumn.Width = 70;
+
+        settings.KeyFieldName = "Id";
+
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = true;
+        settings.Settings.ShowFilterRow = false;
+        settings.SettingsSearchPanel.Visible = true;
+        settings.SettingsSearchPanel.ShowApplyButton = true;
+
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+        settings.Settings.ShowHeaderFilterButton = true;
+
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+
+        settings.Columns.Add("User.FirstName");
+        settings.Columns.Add("User.Email");
+        settings.Columns.Add("Description");
+        settings.Columns.Add("Hours");
+        settings.Columns.Add("ChangedDate");
+    });
+    if (ViewData["EditError"] != null){
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model.Changelogs).GetHtml()
