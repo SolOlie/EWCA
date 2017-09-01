@@ -1,4 +1,6 @@
-﻿using System.Net;
+﻿using System;
+using DevExpress.Web.Mvc;
+using System.Net;
 using System.Web.Mvc;
 using Entities.Entities;
 using FrontendSecure.Filters;
@@ -150,6 +152,41 @@ namespace FrontendSecure.Controllers
                 }
             }
             return true;
+        }
+
+        [ValidateInput(false)]
+        public ActionResult UsersTableExpressPartial(int? customerid)
+        {
+            var model = new UsersListPartialModel();
+            if (customerid.HasValue)
+            {
+                model.Users = db.ReadAllWithFk(customerid.Value);
+                model.CustomerId = customerid.Value;
+            }
+            return PartialView("~/Views/Customers/_UsersTableExpressPartial.cshtml", model);
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult UsersTableExpressPartialDelete(System.Int32 Id)
+        {
+            var model = new UsersListPartialModel();
+            if (Id > 0)
+            {
+                
+                try
+                {
+                    var a = db.Read(Id);
+                    db.Delete(a);
+                    model.Users = db.ReadAllWithFk(a.IsContactForCustomer.Id);
+                    model.CustomerId = a.IsContactForCustomer.Id;
+
+                }
+                catch (Exception e)
+                {
+                    ViewData["EditError"] = e.Message;
+                }
+            }
+            return PartialView("~/Views/Customers/_UsersTableExpressPartial.cshtml", model);
         }
     }
 }

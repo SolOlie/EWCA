@@ -234,7 +234,11 @@
                 </table>*@
             </div>
         
-        
+
+            @Html.Action("UsersTableExpressPartial", "Users", new { customerId = Model.Customer.Id})
+
+
+
         
         </div>
     </div>
