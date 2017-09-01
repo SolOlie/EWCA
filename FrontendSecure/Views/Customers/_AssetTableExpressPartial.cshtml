@@ -1,0 +1,89 @@
+@using DevExpress.XtraReports.Configuration
+@model  FrontendSecure.Models.AssetListPartialModel
+@{
+    var grid = Html.DevExpress().GridView(settings => {
+        settings.Name = "AssetTableExpress";
+        settings.CallbackRouteValues = new { Controller = "Assets", Action = "AssetTableExpressPartial", customerid = Model.CustomerId};
+
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Assets", Action = "AssetTableExpressPartialAddNew" };
+        settings.Columns.Add(column =>
+        {
+            column.Caption = "#";
+            column.SetDataItemTemplateContent(c =>
+            {
+                ViewContext.Writer.Write(
+                    Html.ActionLink("Edit", "Edit", new { id = DataBinder.Eval(c.DataItem, "Id") })
+                );
+            });
+
+            settings.Columns.Add(col =>
+            {
+                col.Caption = "#";
+                col.SetDataItemTemplateContent(c =>
+                {
+                    ViewContext.Writer.Write(
+                        Html.ActionLink("Details", "AssetDetails", "Customers", new { id = DataBinder.Eval(c.DataItem, "Id"), customerId = Model.CustomerId}, null)
+                    );
+                });
+                col.SetHeaderTemplateContent(c =>
+                {
+                    ViewContext.Writer.Write(
+                        Html.ActionLink("New", "CreateAsset", "Customers", new { id = Model.CustomerId }, null).ToHtmlString()
+                    );
+                });
+
+            });
+            column.Settings.AllowDragDrop = DefaultBoolean.False;
+            column.Settings.AllowSort = DefaultBoolean.False;
+            column.Width = 70;
+        });
+
+        //settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Assets", Action = "Edit" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Assets", Action = "AssetTableExpressPartialDelete" };
+        settings.SettingsEditing.Mode = GridViewEditingMode.PopupEditForm;
+        settings.SettingsBehavior.ConfirmDelete = true;
+
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowNewButton = false;
+        settings.CommandColumn.ShowDeleteButton = true;
+        settings.CommandColumn.ShowEditButton = false;
+
+        settings.KeyFieldName = "Id";
+
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = true;
+        settings.Settings.ShowFilterRow = false;
+        settings.SettingsSearchPanel.Visible = true;
+        settings.SettingsSearchPanel.ShowApplyButton = true;
+
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+        settings.Settings.ShowHeaderFilterButton = true;
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+
+        settings.Columns.Add("Name");
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Type.Description";
+            c.Caption = "Type";
+
+        });
+        settings.Columns.Add("Usedby");
+        settings.Columns.Add("Note");
+        settings.Columns.Add("Login");
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Password";
+            var prop = (column.PropertiesEdit as TextBoxProperties);
+            prop.Password = true;
+        });
+   
+    });
+    if (ViewData["EditError"] != null){
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model.Assets).GetHtml()

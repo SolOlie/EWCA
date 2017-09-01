@@ -4,9 +4,10 @@
     border-right: thin solid dimgray;
     display: block;
     float: left;
-    position: sticky;
-    top: 1%;
+    position: fixed;
+    top: 280px;
     background: #f9f9f9;
+    margin-left: -100px;
 }
 
 #customerDiv {
@@ -14,10 +15,10 @@
 }
 
 #addBtn, #addUsersBtn {
-    margin-bottom: 10px;
-    margin-top: -2%;
+    margin-top: -1%;
     margin-right: 20px;
-    float: left;
+    float: right;
+    margin-bottom: 1%;
 }
 #typeListitems {
     display: inline-block;
@@ -64,14 +65,26 @@
     z-index: 49;
     background: rgba(255, 255, 255, 0.60);
 }
-table, #assetTableMidle, #sideBarTypes {
+table, #sideBarTypes {
     max-width: 100%;
      border: 1px solid lightgray;
+ 
 }
 #goBack {
     margin-left: 1.5%;
 }
 
+/*This is for small screens on laptops*/
+@media (max-width: 1199px) and (min-width: 1099px) {
+#sideBarTypes {
+    margin-left: -70px;
+}
+}
+@media (max-width: 1099px) and (min-width: 979px) {
+#sideBarTypes {
+    display: none;
+}
+}
 /*This is for small screens on laptops*/
 @media (max-width: 979px) and (min-width: 768px) {
     .container-fluid {
@@ -82,6 +95,9 @@ table, #assetTableMidle, #sideBarTypes {
     table, thead, tbody, th, td, tr {
         display: block;
         width: 100%;
+    }
+    table {
+        margin-top: 30px;
     }
    
     #sideBarTypes {
@@ -108,18 +124,7 @@ table, #assetTableMidle, #sideBarTypes {
     #addUsersBtn {
         position: relative;
     }
-
-    #addAssetBtnOnSmallerDevices {
-        position: relative;
-        margin-left: 5%;
-    }
-
-    #addBtn, #addUsersBtn {
-         position: inherit;
-         display: inline-block;
-         margin-left: 40%;
-         top: 50%;
-     }
+    
     #goBack {
     margin-left: 0%;
 }
@@ -135,11 +140,6 @@ table, #assetTableMidle, #sideBarTypes {
         padding: 3.5%;
     }
      
-    
-    #tdForAddAsset {
-        position: inherit;
-        padding: 4%;
-    }
 
 }
 
@@ -154,6 +154,9 @@ table, #assetTableMidle, #sideBarTypes {
         display: block;
         border: 10px lightgray;
         width: 100%;
+    }
+     table {
+        margin-top: 40px;
     }
 
     #sideBarTypes {

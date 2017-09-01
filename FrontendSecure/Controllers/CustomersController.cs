@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using DevExpress.Web.Mvc;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -69,7 +71,7 @@ namespace FrontendSecure.Controllers
             {
                 searchList = db.ReadAll();
             }
-            
+
             return View(searchList);
         }
 
@@ -358,7 +360,5 @@ namespace FrontendSecure.Controllers
             var file = dbFile.Read(Id);
             return File(file.ContentFile.Content,file.ContentType, file.Name);
         }
-
-      
     }
 }
