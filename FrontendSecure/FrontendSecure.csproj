@@ -393,6 +393,7 @@
     <Content Include="Views\Shared\DisplayTemplates\DeletedHistoryVM.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\SoftDeletedHistoryVM.cshtml" />
     <Content Include="Views\Customers\_AssetTableExpressPartial.cshtml" />
+    <Content Include="Views\Customers\_CustomerTableExpressPartial.cshtml" />
     <Content Include="Views\Customers\_UsersTableExpressPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>

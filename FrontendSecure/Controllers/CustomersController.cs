@@ -360,5 +360,45 @@ namespace FrontendSecure.Controllers
             var file = dbFile.Read(Id);
             return File(file.ContentFile.Content,file.ContentType, file.Name);
         }
+
+
+        /// <summary>
+        /// partialmethods
+        /// </summary>
+        /// <returns></returns>
+
+        [ValidateInput(false)]
+        public ActionResult CustomerTableExpressPartial()
+        {
+            var model = db.ReadAll();
+            return PartialView("_CustomerTableExpressPartial", model);
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult CustomerTableExpressPartialDelete(string Id)
+        {
+
+            Id = Id.Replace("\"", "");
+            if (string.IsNullOrEmpty(Id))
+            {
+                Id = "0";
+            }
+            int id = Int32.Parse(Id);
+            var model = new List<Customer>();
+            if (id >= 0)
+            {
+                try
+                {
+                    var c = db.Read(id);
+                    db.Delete(c);
+                    model = db.ReadAll();
+                }
+                catch (Exception e)
+                {
+                    ViewData["EditError"] = e.Message;
+                }
+            }
+            return PartialView("_CustomerTableExpressPartial", model);
+        }
     }
 }
