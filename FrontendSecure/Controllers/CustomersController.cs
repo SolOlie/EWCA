@@ -247,10 +247,18 @@ namespace FrontendSecure.Controllers
             {
                 if (!string.IsNullOrEmpty(atInput))
                 {
-                    asset.Type = new AssetType
+                    var type = dbAssetType.Create(new AssetType
                     {
                         Description = atInput
-                    };
+                       
+                    });
+                    
+                    asset.Type = type;
+                    asset.TypeId = type.Id;
+                }
+                else
+                {
+                    asset.TypeId = asset.Type.Id;
                 }
                 if (upload != null && upload.ContentLength > 0)
                 {

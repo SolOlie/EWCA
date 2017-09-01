@@ -24,7 +24,7 @@ namespace DAL.Repositories
                 t.TypeId = t.Type.Id;
                 Asset a = ctx.Assets.Add(t);
                 ctx.Entry(t.Customer).State = EntityState.Unchanged;
-                //ctx.Entry(t.Type).State = EntityState.Unchanged;
+                ctx.Entry(t.Type).State = EntityState.Unchanged;
                 ctx.SaveChanges();
                 return a;
             }
