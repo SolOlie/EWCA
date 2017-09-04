@@ -16,12 +16,12 @@ namespace EWCustomerAccountingBackend
         public void Configuration(IAppBuilder app)
         {
             ApplicationDbContext context = new ApplicationDbContext();
-            var UserManager = new ApplicationUserManager(new UserStore<ApplicationUser>(context));
+            //var UserManager = new ApplicationUserManager(new UserStore<ApplicationUser>(context));
 
-            var user = new ApplicationUser();
-            user.UserName = "EliteWeb@dk.dk";
-            user.Email = "EliteWeb@dk.dk";
-            string userPWD = "EW1234";
+            //var user = new ApplicationUser();
+            //user.UserName = "EliteWeb@dk.dk";
+            //user.Email = "EliteWeb@dk.dk";
+            //string userPWD = "EW1234";
 
            // var succes = UserManager.Create(user, userPWD);
             ConfigureAuth(app);

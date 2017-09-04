@@ -13,6 +13,7 @@ namespace FrontendSecure.Controllers
         private IServiceGateway<Changelog> db = new BllFacade().GetChangelogGateway();
         private IServiceGateway<Asset> adb = new BllFacade().GetAssetGateway();
         private IServiceGateway<File> fdb = new BllFacade().GetFileGateway();
+        private IServiceGateway<User> udb = new BllFacade().GetUserGateway();
         
         [HttpPost]
         public bool ModifiedAdd(string Description, int userId,  double Hours, DateTime Date, int assetId, int? id)
@@ -144,44 +145,7 @@ namespace FrontendSecure.Controllers
             return PartialView("~/Views/Customers/_FileTableExpressPartial.cshtml", model);
         }
 
-        [HttpPost, ValidateInput(false)]
-        public ActionResult FileTableExpressPartialAddNew([ModelBinder(typeof(DevExpressEditorsBinder))] Entities.Entities.File item)
-        {
-            var model = new object[0];
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    // Insert here a code to insert the new item in your model
-                }
-                catch (Exception e)
-                {
-                    ViewData["EditError"] = e.Message;
-                }
-            }
-            else
-                ViewData["EditError"] = "Please, correct all errors.";
-            return PartialView("~/Views/Customers/_FileTableExpressPartial.cshtml", model);
-        }
-        [HttpPost, ValidateInput(false)]
-        public ActionResult FileTableExpressPartialUpdate([ModelBinder(typeof(DevExpressEditorsBinder))] Entities.Entities.File item)
-        {
-            var model = new object[0];
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    // Insert here a code to update the item in your model
-                }
-                catch (Exception e)
-                {
-                    ViewData["EditError"] = e.Message;
-                }
-            }
-            else
-                ViewData["EditError"] = "Please, correct all errors.";
-            return PartialView("~/Views/Customers/_FileTableExpressPartial.cshtml", model);
-        }
+       
         [HttpPost, ValidateInput(false)]
         public ActionResult FileTableExpressPartialDelete(string Id)
         {
@@ -208,5 +172,83 @@ namespace FrontendSecure.Controllers
             }
             return PartialView("~/Views/Customers/_FileTableExpressPartial.cshtml", model);
         }
+
+        [HttpGet]
+        public ActionResult Edit(int id)
+        {
+            Changelog c = db.Read(id);
+
+            if (c == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(c);
+        }
+        [HttpPost]
+        public ActionResult Edit(Changelog c)
+        {
+            c.UserId = c.User.Id;
+            var isupdated = db.Update(c);
+            
+
+            if (!isupdated)
+            {
+                return View(c);
+            }
+
+            return RedirectToAction("AssetDetails", "Customers", new {id = c.Asset.Id, customerId = c.Asset.CustomerId});
+        }
+
+        [HttpGet]
+        public ActionResult Create(int assetid)
+        {
+            Asset a =adb.Read(assetid);
+
+            var users = udb.ReadAllWithFk(a.Customer.Id);
+            if (a.Customer.Id != 1)
+            {
+            users.AddRange(udb.ReadAllWithFk(1));
+            }
+
+            var model = new CreateChangelogModel
+            {
+                Users = users,
+                AssetId = assetid
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Create(CreateChangelogModel ca, int AssetId)
+        {
+            Changelog c = ca.Changelog;
+            c.Asset = new Asset
+            {
+                Id = AssetId
+            };
+            c.User = new User()
+            {
+                Id = c.UserId
+            };
+            var iscreated = db.Create(c);
+            var a = adb.Read(AssetId);
+            if (iscreated == null)
+            {
+               
+                var users = udb.ReadAllWithFk(a.Customer.Id);
+                if (a.Customer.Id != 1)
+                {
+                    users.AddRange(udb.ReadAllWithFk(1));
+                }
+                return View(new CreateChangelogModel {Users = users, AssetId = AssetId});
+
+            }
+            return RedirectToAction("AssetDetails", "Customers", new {id = a.Id, customerId = a.Customer.Id});
+            
+            }
+
+        }
     }
-}
+

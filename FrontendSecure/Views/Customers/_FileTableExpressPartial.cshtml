@@ -8,6 +8,19 @@
         settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Changelogs", Action = "FileTableExpressPartialUpdate" };
         settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Changelogs", Action = "FileTableExpressPartialDelete" };
         settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+
+        settings.Columns.Add(col =>
+        {
+            col.Caption = "";
+            col.SetDataItemTemplateContent(c =>
+            {
+                ViewContext.Writer.Write(Html.ActionLink("Download", "Download", "Customers", new { id = DataBinder.Eval(c.DataItem, "Id")}, null));
+            });
+            col.Settings.AllowDragDrop = DefaultBoolean.False;
+            col.Settings.AllowSort = DefaultBoolean.False;
+            col.Width = 50;
+
+        });
         settings.SettingsBehavior.ConfirmDelete = true;
 
         settings.CommandColumn.Visible = true;
@@ -15,6 +28,7 @@
         settings.CommandColumn.ShowDeleteButton = true;
         settings.CommandColumn.ShowEditButton = false;
         settings.CommandColumn.Width = 50;
+
 
         settings.KeyFieldName = "Id";
 

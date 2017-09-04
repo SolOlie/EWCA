@@ -13,7 +13,7 @@ namespace DAL.Repositories
     class ChangelogRepo: IRepository<Changelog>
     {
         public Changelog Create(Changelog t)
-        {
+            {
             using (var ctx = new CADBContext())
             {
                 Changelog a = ctx.Changelogs.Add(t);
@@ -28,7 +28,7 @@ namespace DAL.Repositories
         {
             using (var ctx = new CADBContext())
             {
-                return ctx.Changelogs.Include(y => y.User).Include(x => x.Asset).FirstOrDefault(x => x.Id == id);
+                return ctx.Changelogs.Include(y => y.User).Include(x => x.Asset).Include(x=> x.Asset.CustomerId).FirstOrDefault(x => x.Id == id);
             }
         }
 

@@ -8,12 +8,29 @@
         settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Changelogs", Action = "ChangelogTableExpressPartialUpdate" };
         settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Changelogs", Action = "ChangelogTableExpressPartialDelete" };
         settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+
+        settings.Columns.Add(col =>
+        {
+            col.Caption = "";
+            col.SetDataItemTemplateContent(
+                c =>
+                {
+                    ViewContext.Writer.Write(Html.ActionLink("Edit", "Edit","Changelogs", new {id = DataBinder.Eval(c.DataItem, "Id")}, null));
+                });
+            col.SetHeaderTemplateContent(c =>
+            {
+                ViewContext.Writer.Write(Html.ActionLink("New", "Create", "Changelogs", new { assetid = Model.assetid}, null));
+            });
+
+        });
+
+
         settings.SettingsBehavior.ConfirmDelete = true;
 
         settings.CommandColumn.Visible = true;
-        settings.CommandColumn.ShowNewButton = true;
+        settings.CommandColumn.ShowNewButton = false;
         settings.CommandColumn.ShowDeleteButton = true;
-        settings.CommandColumn.ShowEditButton = true;
+        settings.CommandColumn.ShowEditButton = false;
         settings.CommandColumn.Width = 70;
 
         settings.KeyFieldName = "Id";
