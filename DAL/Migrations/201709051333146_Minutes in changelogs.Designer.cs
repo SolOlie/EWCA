@@ -7,13 +7,13 @@ namespace DAL.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class floattointhourstominutes : IMigrationMetadata
+    public sealed partial class Minutesinchangelogs : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(floattointhourstominutes));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Minutesinchangelogs));
         
         string IMigrationMetadata.Id
         {
-            get { return "201709051246213_float to int hours to minutes"; }
+            get { return "201709051333146_Minutes in changelogs"; }
         }
         
         string IMigrationMetadata.Source

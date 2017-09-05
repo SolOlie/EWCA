@@ -7,6 +7,7 @@
         settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Changelogs", Action = "FileTableExpressPartialAddNew" };
         settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Changelogs", Action = "FileTableExpressPartialUpdate" };
         settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Changelogs", Action = "FileTableExpressPartialDelete" };
+        settings.CommandColumn.Caption = " ";
         settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
 
         settings.Columns.Add(col =>
@@ -48,8 +49,16 @@
         settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
         settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
 
-        settings.Columns.Add("Name");
-        settings.Columns.Add("ContentType");
+        settings.Columns.Add(c =>
+        {
+            c.Caption = "Navn";
+            c.FieldName = "Name";
+        });
+        settings.Columns.Add(c =>
+        {
+            c.Caption = "Filtype";
+            c.FieldName = "ContentType";
+        });
     });
     if (ViewData["EditError"] != null){
         grid.SetEditErrorText((string)ViewData["EditError"]);

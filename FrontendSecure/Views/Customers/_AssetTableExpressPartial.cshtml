@@ -9,7 +9,7 @@
         settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Assets", Action = "AssetTableExpressPartialAddNew" };
         settings.Columns.Add(column =>
         {
-            column.Caption = "#";
+            column.Caption = "";
             column.SetDataItemTemplateContent(c =>
             {
                 ViewContext.Writer.Write(
@@ -19,7 +19,7 @@
 
             settings.Columns.Add(col =>
             {
-                col.Caption = "#";
+                col.Caption = "";
                 col.SetDataItemTemplateContent(c =>
                 {
                     ViewContext.Writer.Write(
@@ -42,7 +42,8 @@
 
 
         settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Assets", Action = "AssetTableExpressPartialDelete" };
-                                                          settings.CommandColumn.Width = 50;
+        settings.CommandColumn.Width = 50;
+        settings.CommandColumn.Caption = " ";
         settings.SettingsText.CommandDelete = "Slet";
 
         settings.SettingsBehavior.ConfirmDelete = true;

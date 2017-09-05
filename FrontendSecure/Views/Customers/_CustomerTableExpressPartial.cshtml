@@ -7,12 +7,13 @@
         settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Customers", Action = "CustomerTableExpressPartialUpdate" };
         settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Customers", Action = "CustomerTableExpressPartialDelete" };
                                                           settings.SettingsText.CommandDelete = "Slet";
+                                                          settings.CommandColumn.Caption =" ";
         settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
         settings.SettingsBehavior.ConfirmDelete = true;
 
         settings.Columns.Add(column =>
         {
-            column.Caption = "#";
+            column.Caption = "";
             column.SetDataItemTemplateContent(c =>
             {
                 ViewContext.Writer.Write(
@@ -22,7 +23,7 @@
 
             settings.Columns.Add(col =>
             {
-                col.Caption = "#";
+                col.Caption = "";
                 col.SetDataItemTemplateContent(c =>
                 {
                     ViewContext.Writer.Write(

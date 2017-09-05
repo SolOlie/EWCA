@@ -18,7 +18,7 @@ namespace Entities.Entities
         public string Name { get; set; }
         
         public int? CustomerId { get; set; }
-       
+       [Display(Name = "Kunde")]
         public Customer Customer { get; set; }
         [Display(Name = "Beskrivelse")]
         public string Description { get; set; }

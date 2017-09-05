@@ -3,7 +3,7 @@ namespace DAL.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class floattointhourstominutes : DbMigration
+    public partial class Minutesinchangelogs : DbMigration
     {
         public override void Up()
         {
@@ -13,7 +13,7 @@ namespace DAL.Migrations
         
         public override void Down()
         {
-            AddColumn("dbo.Changelogs", "Hours", c => c.Single(nullable: false));
+            AddColumn("dbo.Changelogs", "Hours", c => c.Double(nullable: false));
             DropColumn("dbo.Changelogs", "Minutes");
         }
     }

@@ -4,14 +4,14 @@
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit</h2>
+
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-    <h4>Changelog</h4>
+        <h2>Ændre <b>changelog</b> for udstyr: <b>@Model.Asset.Name</b></h2>
     <hr/>
     @Html.ValidationSummary(true, "", new {@class = "text-danger"})
     @Html.HiddenFor(model => model.Id)

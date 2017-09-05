@@ -1,86 +1,87 @@
 @model FrontendSecure.Models.ChangelogsListPartialModel
 @{
     var grid = Html.DevExpress().GridView(settings => {
-    settings.Name = "ChangelogTableExpress";
-    settings.CallbackRouteValues = new { Controller = "Changelogs", Action = "ChangelogTableExpressPartial" , assetid = Model.assetid };
+        settings.Name = "ChangelogTableExpress";
+        settings.CallbackRouteValues = new { Controller = "Changelogs", Action = "ChangelogTableExpressPartial" , assetid = Model.assetid };
 
-    settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Changelogs", Action = "ChangelogTableExpressPartialAddNew" };
-    settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Changelogs", Action = "ChangelogTableExpressPartialUpdate" };
-    settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Changelogs", Action = "ChangelogTableExpressPartialDelete" };
-    settings.SettingsText.CommandDelete = "Slet";
-    settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Changelogs", Action = "ChangelogTableExpressPartialAddNew" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Changelogs", Action = "ChangelogTableExpressPartialUpdate" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Changelogs", Action = "ChangelogTableExpressPartialDelete" };
+        settings.CommandColumn.Caption = " ";
+        settings.SettingsText.CommandDelete = "Slet";
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
 
-    settings.Columns.Add(col =>
-    {
-        col.Caption = "";
-        col.SetDataItemTemplateContent(
+        settings.Columns.Add(col =>
+        {
+            col.Caption = "";
+            col.SetDataItemTemplateContent(
+                c =>
+                {
+                    ViewContext.Writer.Write(Html.ActionLink("Ændre", "Edit","Changelogs", new {id = DataBinder.Eval(c.DataItem, "Id")}, null));
+                });
+            col.SetHeaderTemplateContent(c =>
+            {
+                ViewContext.Writer.Write(Html.ActionLink("Ny", "Create", "Changelogs", new { assetid = Model.assetid}, null));
+            });
+
+        });
+
+
+        settings.SettingsBehavior.ConfirmDelete = true;
+
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowNewButton = false;
+        settings.CommandColumn.ShowDeleteButton = true;
+        settings.CommandColumn.ShowEditButton = false;
+        settings.CommandColumn.Width = 70;
+
+        settings.KeyFieldName = "Id";
+
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = true;
+        settings.Settings.ShowFilterRow = false;
+        settings.SettingsSearchPanel.Visible = true;
+        settings.SettingsSearchPanel.ShowApplyButton = true;
+
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+        settings.Settings.ShowHeaderFilterButton = true;
+
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+
+        settings.Columns.Add(c =>
+        {
+            c.Caption = "Fornavn";
+            c.FieldName = "User.FirstName";
+        });
+        settings.Columns.Add(
             c =>
             {
-                ViewContext.Writer.Write(Html.ActionLink("Ændre", "Edit","Changelogs", new {id = DataBinder.Eval(c.DataItem, "Id")}, null));
+                c.Caption = "Emial";
+                c.FieldName = "User.Email";
             });
-        col.SetHeaderTemplateContent(c =>
-        {
-            ViewContext.Writer.Write(Html.ActionLink("Ny", "Create", "Changelogs", new { assetid = Model.assetid}, null));
-        });
-
-    });
-
-
-    settings.SettingsBehavior.ConfirmDelete = true;
-
-    settings.CommandColumn.Visible = true;
-    settings.CommandColumn.ShowNewButton = false;
-    settings.CommandColumn.ShowDeleteButton = true;
-    settings.CommandColumn.ShowEditButton = false;
-    settings.CommandColumn.Width = 70;
-
-    settings.KeyFieldName = "Id";
-
-    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-    settings.SettingsPager.Visible = true;
-    settings.Settings.ShowGroupPanel = true;
-    settings.Settings.ShowFilterRow = false;
-    settings.SettingsSearchPanel.Visible = true;
-    settings.SettingsSearchPanel.ShowApplyButton = true;
-
-    settings.SettingsBehavior.AllowSelectByRowClick = true;
-    settings.Settings.ShowHeaderFilterButton = true;
-
-    settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
-    settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
-    settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
-    settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
-    settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
-
-    settings.Columns.Add(c =>
-    {
-        c.Caption = "Fornavn";
-        c.FieldName = "User.FirstName";
-    });
-    settings.Columns.Add(
-        c =>
-        {
-            c.Caption = "Emial";
-            c.FieldName = "User.Email";
-        });
-    settings.Columns.Add(
-        c =>
-        {
-            c.Caption = "Beskrivelse";
-            c.FieldName = "Description";
-        });
-    settings.Columns.Add(
-        c =>
-        {
-            c.Caption = "Minutter";
-            c.FieldName = "Minutes";
-        }); 
-    settings.Columns.Add(
-        c =>
-        {
-            c.Caption = "Dato";
-            c.FieldName = "ChangedDate";
-        }); 
+        settings.Columns.Add(
+            c =>
+            {
+                c.Caption = "Beskrivelse";
+                c.FieldName = "Description";
+            });
+        settings.Columns.Add(
+            c =>
+            {
+                c.Caption = "Minutter";
+                c.FieldName = "Minutes";
+            });
+        settings.Columns.Add(
+            c =>
+            {
+                c.Caption = "Dato";
+                c.FieldName = "ChangedDate";
+            });
     });
     if (ViewData["EditError"] != null){
         grid.SetEditErrorText((string)ViewData["EditError"]);

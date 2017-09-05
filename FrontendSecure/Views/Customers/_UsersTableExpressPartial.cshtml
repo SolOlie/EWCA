@@ -7,10 +7,11 @@
 
 
         settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Users", Action = "UsersTableExpressPartialDelete" };
+        settings.CommandColumn.Caption = " ";
         settings.SettingsText.CommandDelete = "Slet";
         settings.Columns.Add(col =>
         {
-            col.Caption = "#";
+            col.Caption = "";
             col.SetDataItemTemplateContent(c =>
             {
                 ViewContext.Writer.Write(
