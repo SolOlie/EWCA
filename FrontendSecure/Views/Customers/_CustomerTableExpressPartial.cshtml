@@ -6,6 +6,7 @@
         settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Customers", Action = "CustomerTableExpressPartialAddNew" };
         settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Customers", Action = "CustomerTableExpressPartialUpdate" };
         settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Customers", Action = "CustomerTableExpressPartialDelete" };
+                                                          settings.SettingsText.CommandDelete = "Slet";
         settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
         settings.SettingsBehavior.ConfirmDelete = true;
 
@@ -15,7 +16,7 @@
             column.SetDataItemTemplateContent(c =>
             {
                 ViewContext.Writer.Write(
-                    Html.ActionLink("Edit", "Edit", new { id = DataBinder.Eval(c.DataItem, "Id") })
+                    Html.ActionLink("Ændre", "Edit", new { id = DataBinder.Eval(c.DataItem, "Id") })
                 );
             });
 
@@ -25,13 +26,13 @@
                 col.SetDataItemTemplateContent(c =>
                 {
                     ViewContext.Writer.Write(
-                        Html.ActionLink("Details", "Details", "Customers", new { id = DataBinder.Eval(c.DataItem, "Id")}, null)
+                        Html.ActionLink("Detaljer", "Details", "Customers", new { id = DataBinder.Eval(c.DataItem, "Id")}, null)
                     );
                 });
                 col.SetHeaderTemplateContent(c =>
                 {
                     ViewContext.Writer.Write(
-                        Html.ActionLink("New", "Create", "Customers").ToHtmlString()
+                        Html.ActionLink("Ny", "Create", "Customers").ToHtmlString()
                     );
                 });
                 col.Width = 50;
