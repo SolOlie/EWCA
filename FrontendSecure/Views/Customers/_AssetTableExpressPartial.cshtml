@@ -13,7 +13,7 @@
             column.SetDataItemTemplateContent(c =>
             {
                 ViewContext.Writer.Write(
-                    Html.ActionLink("Edit", "Edit", new { id = DataBinder.Eval(c.DataItem, "Id") })
+                    Html.ActionLink("Ændre", "Edit", new { id = DataBinder.Eval(c.DataItem, "Id") })
                 );
             });
 
@@ -23,13 +23,14 @@
                 col.SetDataItemTemplateContent(c =>
                 {
                     ViewContext.Writer.Write(
-                        Html.ActionLink("Details", "AssetDetails", "Customers", new { id = DataBinder.Eval(c.DataItem, "Id"), customerId = Model.CustomerId}, null)
+                        Html.ActionLink("Detaljer", "AssetDetails", "Customers", new { id = DataBinder.Eval(c.DataItem, "Id"), customerId = Model.CustomerId}, null)
                     );
                 });
+                col.Width = 50;
                 col.SetHeaderTemplateContent(c =>
                 {
                     ViewContext.Writer.Write(
-                        Html.ActionLink("New", "CreateAsset", "Customers", new { id = Model.CustomerId }, null).ToHtmlString()
+                        Html.ActionLink("Ny", "CreateAsset", "Customers", new { id = Model.CustomerId }, null).ToHtmlString()
                     );
                 });
 
@@ -41,6 +42,8 @@
 
 
         settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Assets", Action = "AssetTableExpressPartialDelete" };
+                                                          settings.CommandColumn.Width = 50;
+        settings.SettingsText.CommandDelete = "Slet";
 
         settings.SettingsBehavior.ConfirmDelete = true;
 
@@ -66,14 +69,23 @@
         settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
         settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
 
-        settings.Columns.Add("Name");
+        settings.Columns.Add(c =>
+        {
+            c.Caption = "Navn";
+            c.FieldName = "Name";
+        });
+
         settings.Columns.Add(c =>
         {
             c.FieldName = "Type.Description";
             c.Caption = "Type";
 
         });
-        settings.Columns.Add("Usedby");
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Usedby";
+            c.Caption = "Bruger";
+        });
         settings.Columns.Add("Note");
         settings.Columns.Add("Login");
         //settings.Columns.Add(column =>

@@ -7,19 +7,20 @@
 
 
         settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Users", Action = "UsersTableExpressPartialDelete" };
+        settings.SettingsText.CommandDelete = "Slet";
         settings.Columns.Add(col =>
         {
             col.Caption = "#";
             col.SetDataItemTemplateContent(c =>
             {
                 ViewContext.Writer.Write(
-                    Html.ActionLink("Edit", "Edit", "Users", new { id = DataBinder.Eval(c.DataItem, "Id")}, null)
+                    Html.ActionLink("Detaljer", "Edit", "Users", new { id = DataBinder.Eval(c.DataItem, "Id")}, null)
                 );
             });
             col.SetHeaderTemplateContent(c =>
             {
                 ViewContext.Writer.Write(
-                    Html.ActionLink("New", "Create", "Users", new { CustomerId = Model.CustomerId }, null).ToHtmlString()
+                    Html.ActionLink("Ny", "Create", "Users", new { CustomerId = Model.CustomerId }, null).ToHtmlString()
                 );
             });
             col.Settings.AllowDragDrop = DefaultBoolean.False;
@@ -53,15 +54,27 @@
         settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
 
         settings.Columns.Add("Email");
-        settings.Columns.Add("FirstName");
-        settings.Columns.Add("LastName");
-        settings.Columns.Add("PhoneNumber");
+        settings.Columns.Add(c =>
+        {
+            c.Caption = "Fornavn";
+            c.FieldName = "FirstName";
+        });
+        settings.Columns.Add(c =>
+        {
+            c.Caption = "Efternavn";
+            c.FieldName = "LastName";
+        });
+        settings.Columns.Add(c =>
+        {
+            c.Caption = "Telefon nr.";
+            c.FieldName = "PhoneNumber";
+        });
         settings.Columns.Add(c =>
         {
             c.Caption="Password";
             c.FieldName = "Password";
         });
-        
+
     });
     if (ViewData["EditError"] != null){
         grid.SetEditErrorText((string)ViewData["EditError"]);
