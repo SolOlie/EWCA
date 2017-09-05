@@ -76,14 +76,17 @@
         settings.Columns.Add("Usedby");
         settings.Columns.Add("Note");
         settings.Columns.Add("Login");
-        settings.Columns.Add(column =>
-        {
-            column.FieldName = "Password";
-            var prop = column.PropertiesEdit as TextBoxProperties;
-            prop.Password = true;
-        });
-      
+        //settings.Columns.Add(column =>
+        //{
+        //    column.FieldName = "Password";
+        //    var prop = column.PropertiesEdit as TextBoxProperties;
+        //    prop.Password = true;
+        //    column.ToolTip = DataBinder.Eval(column.Da)
+        //    settings.ToolTip
+        //});
+
     });
+
     if (ViewData["EditError"] != null){
         grid.SetEditErrorText((string)ViewData["EditError"]);
     }
