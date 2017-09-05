@@ -29,7 +29,7 @@ namespace DAL.Repositories
         {
             using (var ctx = new CADBContext())
             {
-                return ctx.Changelogs.Include(y => y.User).Include(x => x.Asset).Include(x=> x.Asset.CustomerId).FirstOrDefault(x => x.Id == id);
+                return ctx.Changelogs.Include(y => y.User).Include(x => x.Asset).Include(x=> x.Asset.Customer).FirstOrDefault(x => x.Id == id);
             }
         }
 
@@ -71,6 +71,8 @@ namespace DAL.Repositories
         {
             using (var ctx = new CADBContext())
             {
+                ctx.Entry(t.User).State = EntityState.Unchanged;
+                ctx.Entry(t.Asset).State = EntityState.Unchanged;
                 ctx.Entry(t).State = EntityState.Modified;
                 try
                 {

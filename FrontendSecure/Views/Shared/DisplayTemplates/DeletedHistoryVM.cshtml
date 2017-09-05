@@ -2,9 +2,9 @@
 
     <div class="deleted">
         @Model.UserName Slettede
-        <div class="historySpan deletedHistoySpan" style="display: inline-block; width: 250px">
+        <div class="historySpan deletedHistoySpan historyHover" style="display: inline-block; width: 250px">
 
-            <div>
+            <div  class="tooltiptext">
         @foreach (var item in Model.Details)
         {
             <div>

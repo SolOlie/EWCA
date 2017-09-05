@@ -127,7 +127,7 @@
                         {
                                 <tr>
                                     <td>@cl.User.FirstName @cl.User.LastName</td>
-                                    <td>@cl.Hours</td>
+                                    <td>@cl.Minutes</td>
                                     <td>
                                         <div id="descriptionHover">
                                             Hold over for mere...
@@ -141,7 +141,7 @@
                                     </td>
                                     <td>@cl.ChangedDate.ToShortDateString()</td>
                                     <td>
-                                        <a class="btn btn-default" id="editChangelogBtn" onclick="editChangelogBtn(this)" data-id="@cl.Id" data-name="@cl.Description" data-hour="@cl.Hours" data-userId="@cl.User.Id" data-year="@cl.ChangedDate.Year" data-month="@cl.ChangedDate.Month" data-day="@cl.ChangedDate.Day">
+                                        <a class="btn btn-default" id="editChangelogBtn" onclick="editChangelogBtn(this)" data-id="@cl.Id" data-name="@cl.Description" data-hour="@cl.Minutes" data-userId="@cl.User.Id" data-year="@cl.ChangedDate.Year" data-month="@cl.ChangedDate.Month" data-day="@cl.ChangedDate.Day">
                                             <span class="glyphicon glyphicon-pencil">
 
                                             </span>
@@ -291,7 +291,7 @@
             <input type="date" id="date" />
         </div>
         <div class="form-group">
-            <input type="number" id="hours" placeholder="Hours" />
+            <input type="number" id="hours" placeholder="Minutes" />
         </div>
 
         <div class="form-group">

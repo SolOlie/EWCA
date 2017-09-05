@@ -206,6 +206,14 @@
     <Compile Include="Migrations\201709050936327_required email and pw.Designer.cs">
       <DependentUpon>201709050936327_required email and pw.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709051214243_float.cs" />
+    <Compile Include="Migrations\201709051214243_float.Designer.cs">
+      <DependentUpon>201709051214243_float.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709051246213_float to int hours to minutes.cs" />
+    <Compile Include="Migrations\201709051246213_float to int hours to minutes.Designer.cs">
+      <DependentUpon>201709051246213_float to int hours to minutes.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AssetRepo.cs" />
@@ -322,6 +330,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201709050936327_required email and pw.resx">
       <DependentUpon>201709050936327_required email and pw.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709051214243_float.resx">
+      <DependentUpon>201709051214243_float.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709051246213_float to int hours to minutes.resx">
+      <DependentUpon>201709051246213_float to int hours to minutes.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
