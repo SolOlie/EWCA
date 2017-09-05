@@ -1,3 +1,4 @@
+@using TrackerEnabledDbContext.Common.Extensions
 @model FrontendSecure.Models.UsersListPartialModel
 @{
     var grid = Html.DevExpress().GridView(settings => {
@@ -55,7 +56,12 @@
         settings.Columns.Add("FirstName");
         settings.Columns.Add("LastName");
         settings.Columns.Add("PhoneNumber");
-        settings.Columns.Add("Password");
+        settings.Columns.Add(c =>
+        {
+            c.Caption="Password";
+            c.FieldName = "Password";
+        });
+        
     });
     if (ViewData["EditError"] != null){
         grid.SetEditErrorText((string)ViewData["EditError"]);

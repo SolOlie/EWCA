@@ -13,6 +13,7 @@ namespace Entities.Entities
         public User User { get; set; }
         [Display(Name = "Beskrivelse")]
         public string Description { get; set; }
+        public int  AssetId { get; set; }
         public Asset Asset { get; set; }
         [Display(Name = "Timer")]
         public double Hours { get; set; }

@@ -106,8 +106,8 @@
                     {
                         Value = m.Id.ToString(),
                         Text = m.Firm
-                    }),
-                    "Vælg kunde")
+                    })
+                    )
                 @Html.ValidationMessageFor(model => model.Asset.Customer, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -168,25 +168,26 @@
     $("#select")
         .on('change',
             function () {
-                var selected = $(this).val().index;
-                if (selected != 0) {
+                     $("#assetTypeInput").val("");
                     $("#assetTypeInput").prop("disabled", true);
                     $("#clearInput").show();
 
-                }
+                
             });
 
     $("#clearInput")
         .on('click', function () {
-            if (!$("#assetTypeInput").val()) {
+                $("#select").val(0);
                 $("#select").prop("disabled", true);
                 $(this).hide().prev("input[disabled]").prop("disabled", false).focus();
                 $("#clearDropdown").show();
-            }
+            
         });
     $("#clearDropdown")
-        .click(function() {
-            $(this).hide().prev("select[disabled]").prop("disabled", false);
+        .click(function () {
+            $("#assetTypeInput").val("");
+            $(this).hide().prev("select[disabled]").prop("disabled", false).focus();
+
             $("#clearInput").show();
         });
 

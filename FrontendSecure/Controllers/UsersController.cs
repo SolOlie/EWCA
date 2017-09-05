@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using DevExpress.Web.Mvc;
 using System.Net;
 using System.Web.Mvc;
@@ -32,6 +33,7 @@ namespace FrontendSecure.Controllers
             }
             var Model = new CreateUserWithCustomModel()
             {
+                Users = db.ReadAll().Select(e=> e.Email).ToList(),
                 CustomerId = CustomerId.Value,
                 User = new User()
             };
