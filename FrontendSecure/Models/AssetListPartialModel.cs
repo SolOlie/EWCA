@@ -10,5 +10,6 @@ namespace FrontendSecure.Models
     {
         public List<Asset> Assets { get; set; }
         public int CustomerId { get; set; }
+        public string AssetPassword { get; set; }
     }
 }

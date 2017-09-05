@@ -1,3 +1,4 @@
+@using System.Web.UI.WebControls
 @using DevExpress.XtraReports.Configuration
 @model  FrontendSecure.Models.AssetListPartialModel
 @{
@@ -38,9 +39,9 @@
             column.Width = 70;
         });
 
-    
+
         settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Assets", Action = "AssetTableExpressPartialDelete" };
-  
+
         settings.SettingsBehavior.ConfirmDelete = true;
 
         settings.CommandColumn.Visible = true;
@@ -50,7 +51,7 @@
 
         settings.KeyFieldName = "Id";
 
-        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100); 
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
         settings.SettingsPager.Visible = true;
         settings.Settings.ShowGroupPanel = true;
         settings.Settings.ShowFilterRow = false;
@@ -78,10 +79,10 @@
         settings.Columns.Add(column =>
         {
             column.FieldName = "Password";
-            var prop = (column.PropertiesEdit as TextBoxProperties);
+            var prop = column.PropertiesEdit as TextBoxProperties;
             prop.Password = true;
         });
-
+      
     });
     if (ViewData["EditError"] != null){
         grid.SetEditErrorText((string)ViewData["EditError"]);

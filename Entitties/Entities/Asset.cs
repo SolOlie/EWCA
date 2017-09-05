@@ -37,7 +37,7 @@ namespace Entities.Entities
         public List<File> FileAttachments{ get; set; }
 
         public string Login { get; set; }//login credentials for the asset
-        [DataType(DataType.Password)]
+        
         [SkipTracking]
         public string Password { get; set; }//login credentials for the asset
         [Display(Name = "IP Adresse")]

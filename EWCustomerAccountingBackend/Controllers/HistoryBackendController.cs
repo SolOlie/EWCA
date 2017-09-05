@@ -14,11 +14,11 @@ namespace EWCustomerAccountingBackend.Controllers
     public class HistoryBackendController : ApiController
     {
 
-        public IQueryable<AuditLog> GetAuditsLogs()
+        public List<AuditLog> GetAuditsLogs()
         {
             using (var ctx = new CADBContext())
             {
-                var a = ctx.AuditLog.Include(x=> x.LogDetails);
+                var a = ctx.AuditLog.Include(x=> x.LogDetails).ToList();
                 return a;
             }
         }
