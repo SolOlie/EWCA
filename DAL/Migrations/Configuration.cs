@@ -89,7 +89,7 @@ namespace DAL.Migrations
             //        ChangedDate = DateTime.Now,
             //        Description = "This assets was fixed" + i,
             //        User = users[0],
-            //        Hours = 10,
+            //        Minutes = 10,
             //        Asset = assets[i % 30]
             //    });
             //}

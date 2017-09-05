@@ -16,7 +16,7 @@ namespace FrontendSecure.Controllers
         private IServiceGateway<User> udb = new BllFacade().GetUserGateway();
         
         [HttpPost]
-        public bool ModifiedAdd(string Description, int userId,  double Hours, DateTime Date, int assetId, int? id)
+        public bool ModifiedAdd(string Description, int userId,  int Hours, DateTime Date, int assetId, int? id)
         {
             if (Description == null)
             {
@@ -33,7 +33,7 @@ namespace FrontendSecure.Controllers
                 {
                     Id = assetId
                 },
-                Hours = Hours,
+                Minutes = Hours,
                 ChangedDate = Date
             });
             return true;
@@ -47,7 +47,7 @@ namespace FrontendSecure.Controllers
         }
 
         [HttpPost]
-        public bool ModifiedEdit(string Description, int userId, double Hours, DateTime Date, int assetId, int id)
+        public bool ModifiedEdit(string Description, int userId, int Hours, DateTime Date, int assetId, int id)
         {
             var changelog = db.Read(id);
             changelog.UserId = userId;
@@ -55,7 +55,7 @@ namespace FrontendSecure.Controllers
             changelog.Asset.Id = assetId;
             changelog.ChangedDate = Date;
             changelog.Description = Description;
-            changelog.Hours = Hours;
+            changelog.Minutes = Hours;
             var updated = db.Update(changelog);
             return updated;
         }
@@ -177,11 +177,13 @@ namespace FrontendSecure.Controllers
         public ActionResult Edit(int id)
         {
             Changelog c = db.Read(id);
+           
 
             if (c == null)
             {
                 return HttpNotFound();
             }
+            c.Asset.CustomerId = c.Asset.Customer.Id;
 
             return View(c);
         }
@@ -189,6 +191,7 @@ namespace FrontendSecure.Controllers
         public ActionResult Edit(Changelog c)
         {
             c.UserId = c.User.Id;
+            c.AssetId = c.Asset.Id;
             var isupdated = db.Update(c);
             
 
@@ -214,7 +217,8 @@ namespace FrontendSecure.Controllers
             var model = new CreateChangelogModel
             {
                 Users = users,
-                AssetId = assetid
+                AssetId = assetid,
+                Asset =a
             };
 
             return View(model);

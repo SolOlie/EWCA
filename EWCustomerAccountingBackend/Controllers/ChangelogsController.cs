@@ -46,6 +46,10 @@ namespace EWCustomerAccountingBackend.Controllers
         [ResponseType(typeof(void))]
         public IHttpActionResult PutChangelog(int id, Changelog changelog)
         {
+            foreach (var key in ModelState.Keys)
+                if (key.Split('.').Length > 2)
+                    ModelState[key].Errors.Clear();
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
