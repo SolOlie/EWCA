@@ -39,6 +39,10 @@ namespace DAL.DB
         public DbSet<File> Files { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Changelog>().Property(e => e.ChangedDate).HasColumnType("datetime2");
+            modelBuilder.Entity<Asset>().Property(e => e.InstallationDate).HasColumnType("datetime2");
+            modelBuilder.Entity<Customer>().Property(e => e.Date).HasColumnType("datetime2");
+
             modelBuilder.Entity<Changelog>().HasRequired(c => c.User).WithMany(e => e.Changelogs);
             modelBuilder.Entity<Customer>().HasMany(x => x.ContactPersons).WithOptional(x => x.IsContactForCustomer);
             modelBuilder.Entity<Asset>().HasRequired(a => a.Customer).WithMany(c => c.Assets).WillCascadeOnDelete(true);

@@ -9,6 +9,7 @@ namespace Entities.Entities
     {
         [Key]
         public int Id { get; set; }
+        [Required]
         public string Email { get; set; }
         [Display(Name = "Fornavn")]
         public string FirstName { get; set; }
@@ -16,6 +17,7 @@ namespace Entities.Entities
         public string LastName { get; set; }
         [Display(Name = "Telefon nr.")]
         public string PhoneNumber { get; set; }
+        [Required]
         [SkipTracking]
         public string Password { get; set; }
         public List<Changelog> Changelogs { get; set; }

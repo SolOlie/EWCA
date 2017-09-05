@@ -55,22 +55,22 @@ namespace FrontendSecure.Controllers
                 //return RedirectToAction("Index", "Home");
             }
             var searchList = new List<Customer>();
-            if (!string.IsNullOrEmpty(searchString))
-            {
-                var clist = db.ReadAll();
+            //if (!string.IsNullOrEmpty(searchString))
+            //{
+            //    var clist = db.ReadAll();
            
-            foreach (var c in clist)
-            {
-                if (c.Firm.Contains(searchString))
-                {
-                    searchList.Add(c);
-                }
-            }
-            }
-            else
-            {
-                //searchList = db.ReadAll();
-            }
+            //foreach (var c in clist)
+            //{
+            //    if (c.Firm.Contains(searchString))
+            //    {
+            //        searchList.Add(c);
+            //    }
+            //}
+            //}
+            //else
+            //{
+            //    //searchList = db.ReadAll();
+            //}
 
             return View(searchList);
         }
@@ -88,41 +88,40 @@ namespace FrontendSecure.Controllers
                 return View("NotAuthorized");
             }
             var s = db.Read(id.Value);
-            var userList = s.ContactPersons;
-            var searchList = dbAsset.ReadAllWithFk(id.Value);
-            if (!string.IsNullOrEmpty(searchString))
-            {
-                if (activeTab != null)
-                {
-                    if (activeTab.Equals("AssetPane"))
-                    {
-                        var clist = searchList;
-                        searchList = new List<Asset>();
-                        searchList.AddRange(
-                            clist.Where(c => c.Name.ToLower().Contains(searchString.ToLower()) || c.Type.Description.ToLower().Contains(searchString.ToLower())));
-                    }
-                    else if (activeTab.Equals("UserPane"))
-                    {
-                        var clist = userList;
-                        userList = new List<User>();
-                        userList.AddRange(
-                            clist.Where(
-                                c =>
-                                    c.FirstName.ToLower().Contains(searchString.ToLower()) || c.Email.ToLower().Contains(searchString.ToLower())));
+            //var userList = s.ContactPersons;
+            //var searchList = dbAsset.ReadAllWithFk(id.Value);
+            //if (!string.IsNullOrEmpty(searchString))
+            //{
+            //    if (activeTab != null)
+            //    {
+            //        if (activeTab.Equals("AssetPane"))
+            //        {
+            //            var clist = searchList;
+            //            searchList = new List<Asset>();
+            //            searchList.AddRange(
+            //                clist.Where(c => c.Name.ToLower().Contains(searchString.ToLower()) || c.Type.Description.ToLower().Contains(searchString.ToLower())));
+            //        }
+            //        else if (activeTab.Equals("UserPane"))
+            //        {
+            //            var clist = userList;
+            //            userList = new List<User>();
+            //            userList.AddRange(
+            //                clist.Where(
+            //                    c =>
+            //                        c.FirstName.ToLower().Contains(searchString.ToLower()) || c.Email.ToLower().Contains(searchString.ToLower())));
 
-                    }
-                }
-            }
+            //        }
+            //   }
+            //}
 
             var model = new CustomerAssetypeViewModel()
             {
-                Users = userList,
+                //Users = userList,
                 Customer = s,
-                SortedAssets = searchList,
-                AssetTypes = dbAssetType.ReadAll()
+              //  SortedAssets = searchList,
         };
            
-            if (model.Customer == null || model.AssetTypes == null)
+            if (model.Customer == null)
             {
                 return HttpNotFound();
             }

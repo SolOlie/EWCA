@@ -16,6 +16,7 @@ namespace DAL.Repositories
             {
             using (var ctx = new CADBContext())
             {
+                t.AssetId = t.Asset.Id;
                 Changelog a = ctx.Changelogs.Add(t);
                 ctx.Entry(t.User).State = EntityState.Unchanged;
                 ctx.Entry(t.Asset).State = EntityState.Unchanged;
