@@ -22,15 +22,6 @@ select,
 textarea {
     max-width: 280px;
 }
-.searchButton {
-        margin-left: -25px;
-    position: relative;
-    padding-right: 30px;
-}
-#search {
-        border-radius: 5px;
-    margin-top: 10px;
-}
 .loader {
     border: 16px solid #dadada;
     border-top: 16px solid #3498db;

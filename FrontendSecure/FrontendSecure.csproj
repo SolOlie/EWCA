@@ -230,13 +230,10 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\AssetDetails.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\CreateCostumer.css" />
-    <Content Include="Content\CustomerDetailsStyles.css" />
     <Content Include="Content\CustomerIndexStyles.css" />
     <Content Include="Content\dx.android5.light.css" />
     <Content Include="Content\dx.common.css" />
@@ -253,7 +250,6 @@
     <Content Include="Content\dx.win8.black.css" />
     <Content Include="Content\dx.win8.white.css" />
     <Content Include="Content\HistoryStyles.css" />
-    <Content Include="Content\SearchStyleSheet.css" />
     <Content Include="Content\Tooltipster\css\themes\tooltipster-light.css" />
     <Content Include="Content\Tooltipster\css\themes\tooltipster-noir.css" />
     <Content Include="Content\Tooltipster\css\themes\tooltipster-punk.css" />
