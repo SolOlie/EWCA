@@ -112,10 +112,13 @@ namespace FrontendSecure.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Email,FirstName,LastName,Password, PhoneNumber")] User user)
-        {
+         {
+            User u = db.Read(user.Id);
+            user.IsContactForCustomer = u.IsContactForCustomer;
+            user.Email = u.Email;
             if (ModelState.IsValid)
             {
-                User u = db.Read(user.Id);
+                
                 var model = new SetPasswordViewModel
                 {
                     Email = u.Email,

@@ -15,7 +15,7 @@
             col.SetDataItemTemplateContent(c =>
             {
                 ViewContext.Writer.Write(
-                    Html.ActionLink("Detaljer", "Edit", "Users", new { id = DataBinder.Eval(c.DataItem, "Id")}, null)
+                    Html.ActionLink("Ændre", "Edit", "Users", new { id = DataBinder.Eval(c.DataItem, "Id")}, null)
                 );
             });
             col.SetHeaderTemplateContent(c =>
