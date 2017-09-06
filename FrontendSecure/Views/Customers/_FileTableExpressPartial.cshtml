@@ -23,7 +23,17 @@
 
         });
         settings.SettingsBehavior.ConfirmDelete = true;
-
+        settings.ClientLayout = (sender, e) =>
+        {
+            if (e.LayoutMode == ClientLayoutMode.Saving)
+            {
+                Session["LayoutFile"] = e.LayoutData;
+            }
+            else
+            {
+                e.LayoutData = (string)Session["LayoutFile"];
+            }
+        };
         settings.CommandColumn.Visible = true;
         settings.CommandColumn.ShowNewButton = false;
         settings.CommandColumn.ShowDeleteButton = true;

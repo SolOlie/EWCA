@@ -48,35 +48,19 @@ namespace FrontendSecure.Controllers
             return false;
         }
         // GET: Customers
-        public ActionResult Index(string searchString)
+        public ActionResult Index()
         {
             if (!isAuthorized(1)) //Id 1 er id for EliteWeb
             {
                 //return RedirectToAction("Index", "Home");
             }
             var searchList = new List<Customer>();
-            //if (!string.IsNullOrEmpty(searchString))
-            //{
-            //    var clist = db.ReadAll();
-           
-            //foreach (var c in clist)
-            //{
-            //    if (c.Firm.Contains(searchString))
-            //    {
-            //        searchList.Add(c);
-            //    }
-            //}
-            //}
-            //else
-            //{
-            //    //searchList = db.ReadAll();
-            //}
-
+            
             return View(searchList);
         }
 
         // GET: Customers/Details/5
-        public ActionResult Details(int? id, string searchString, string activeTab)
+        public ActionResult Details(int? id,  string activeTab)
         {
             if (id == null)
             {
@@ -84,42 +68,13 @@ namespace FrontendSecure.Controllers
             }
             if (!isAuthorized(id.Value))
             {
-
                 return View("NotAuthorized");
             }
             var s = db.Read(id.Value);
-            //var userList = s.ContactPersons;
-            //var searchList = dbAsset.ReadAllWithFk(id.Value);
-            //if (!string.IsNullOrEmpty(searchString))
-            //{
-            //    if (activeTab != null)
-            //    {
-            //        if (activeTab.Equals("AssetPane"))
-            //        {
-            //            var clist = searchList;
-            //            searchList = new List<Asset>();
-            //            searchList.AddRange(
-            //                clist.Where(c => c.Name.ToLower().Contains(searchString.ToLower()) || c.Type.Description.ToLower().Contains(searchString.ToLower())));
-            //        }
-            //        else if (activeTab.Equals("UserPane"))
-            //        {
-            //            var clist = userList;
-            //            userList = new List<User>();
-            //            userList.AddRange(
-            //                clist.Where(
-            //                    c =>
-            //                        c.FirstName.ToLower().Contains(searchString.ToLower()) || c.Email.ToLower().Contains(searchString.ToLower())));
-
-            //        }
-            //   }
-            //}
-
             var model = new CustomerAssetypeViewModel()
             {
-                //Users = userList,
-                Customer = s,
-              //  SortedAssets = searchList,
-        };
+               Customer = s,
+             };
            
             if (model.Customer == null)
             {
@@ -164,15 +119,10 @@ namespace FrontendSecure.Controllers
             {
                 return HttpNotFound();
             }
-            var users = dbUser.ReadAllWithFk(customerId);
             var model = new CreateChangelogModel()
             {
                 Asset = asset,
-                Users = users,
-                
-            }
-            ;
-
+            };
             return View(model);
         }
 
@@ -292,7 +242,6 @@ namespace FrontendSecure.Controllers
         // GET: Customers/Edit/5
         public ActionResult Edit(int? id)
         {
-           
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -326,39 +275,6 @@ namespace FrontendSecure.Controllers
                 return RedirectToAction("Index");
             }
             return View(customer);
-        }
-
-        // GET: Customers/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            if (!isAuthorized(id.Value))
-            {
-                return View("NotAuthorized");
-            }
-            Customer customer = db.Read(id.Value);
-            if (customer == null)
-            {
-                return HttpNotFound();
-            }
-            return View(customer);
-        }
-
-        // POST: Customers/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            if (!isAuthorized(id))
-            {
-                return View("NotAuthorized");
-            }
-            Customer customer = db.Read(id);
-            db.Delete(customer);
-            return RedirectToAction("Index");
         }
 
         [HttpGet]

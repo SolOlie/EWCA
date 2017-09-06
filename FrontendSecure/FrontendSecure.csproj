@@ -185,7 +185,6 @@
     <Compile Include="Controllers\ChangelogsController.cs" />
     <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\HistoryController.cs" />
-    <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Gateways\AServiceGateway.cs" />
     <Compile Include="Gateways\SecureGateways\HistorySecureGateway.cs" />
@@ -375,17 +374,14 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Account\SignIn.cshtml" />
-    <Content Include="Views\Assets\Details.cshtml" />
     <Content Include="Views\Assets\Edit.cshtml" />
     <Content Include="Views\Customers\AssetDetails.cshtml" />
     <Content Include="Views\Customers\Create.cshtml" />
     <Content Include="Views\Customers\CreateAsset.cshtml" />
-    <Content Include="Views\Customers\Delete.cshtml" />
     <Content Include="Views\Customers\Details.cshtml" />
     <Content Include="Views\Customers\Edit.cshtml" />
     <Content Include="Views\Customers\Index.cshtml" />
     <Content Include="Views\Customers\SortedAssets.cshtml" />
-    <Content Include="Views\Search\Index.cshtml" />
     <Content Include="Views\Users\Create.cshtml" />
     <Content Include="Views\Users\Edit.cshtml" />
     <Content Include="Views\Shared\NotAuthorized.cshtml" />

@@ -6,11 +6,21 @@
         settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Customers", Action = "CustomerTableExpressPartialAddNew" };
         settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Customers", Action = "CustomerTableExpressPartialUpdate" };
         settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Customers", Action = "CustomerTableExpressPartialDelete" };
-                                                          settings.SettingsText.CommandDelete = "Slet";
-                                                          settings.CommandColumn.Caption =" ";
+        settings.SettingsText.CommandDelete = "Slet";
+        settings.CommandColumn.Caption =" ";
         settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
         settings.SettingsBehavior.ConfirmDelete = true;
-
+            settings.ClientLayout = (sender, e) =>
+            {
+                if (e.LayoutMode == ClientLayoutMode.Saving)
+                {
+                    Session["LayoutCustomer"] = e.LayoutData;
+                }
+                else
+                {
+                    e.LayoutData = (string) Session["LayoutCustomer"];
+                }
+              };
         settings.Columns.Add(column =>
         {
             column.Caption = "";
@@ -41,14 +51,14 @@
             column.Settings.AllowDragDrop = DefaultBoolean.False;
             column.Settings.AllowSort = DefaultBoolean.False;
             column.Width = 50;
-            
+
         });
 
         settings.CommandColumn.Visible = true;
         settings.CommandColumn.ShowNewButton = false;
         settings.CommandColumn.ShowDeleteButton = true;
         settings.CommandColumn.ShowEditButton = false;
-                                                          settings.CommandColumn.Width = 50;
+        settings.CommandColumn.Width = 50;
 
         settings.KeyFieldName = "Id";
 

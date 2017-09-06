@@ -26,7 +26,17 @@
 
         });
 
-
+        settings.ClientLayout = (sender, e) =>
+        {
+            if (e.LayoutMode == ClientLayoutMode.Saving)
+            {
+                Session["LayoutChangelog"] = e.LayoutData;
+            }
+            else
+            {
+                e.LayoutData = (string)Session["LayoutChangelog"];
+            }
+        };
         settings.SettingsBehavior.ConfirmDelete = true;
 
         settings.CommandColumn.Visible = true;

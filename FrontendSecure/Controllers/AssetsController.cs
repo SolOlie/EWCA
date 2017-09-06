@@ -19,25 +19,6 @@ namespace FrontendSecure.Controllers
         private IServiceGateway<Customer>dbc = new BllFacade().GetCustomerGateway();
         private IServiceGateway<File>dbf = new BllFacade().GetFileGateway();
         
-
-        // GET: Assets/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            Asset asset = db.Read(id.Value);
-            
-            if (asset == null)
-            {
-                return HttpNotFound();
-            }
-           
-            
-            return View(asset);
-        }
         // GET: Assets/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -73,12 +54,7 @@ namespace FrontendSecure.Controllers
             }
             return View(new CreateAssetModel());
         }
-        [HttpPost]
-        public bool ModifiedDelete(int id) 
-        {
-            Asset asset = db.Read(id);
-            return db.Delete(asset);
-        }//bool til at checke om der bliver returneret true eller false når vi sletter en asset i vores liste.
+        
         [HttpPost]
         public ActionResult AddFile(int assetId, HttpPostedFileBase upload)
         {
@@ -103,15 +79,6 @@ namespace FrontendSecure.Controllers
             return Redirect(Request.UrlReferrer.ToString());
         }
 
-        [HttpPost]
-        public bool ModifiedDeleteFile(int id)
-        {
-            var file = dbf.Read(id);
-            var deleted = dbf.Delete(file);
-            return deleted;
-        }
-
-
         [ValidateInput(false)]
         public ActionResult AssetTableExpressPartial(int? customerid)
         {
@@ -124,58 +91,6 @@ namespace FrontendSecure.Controllers
             return PartialView("~/Views/Customers/_AssetTableExpressPartial.cshtml", model);
         }
 
-        [HttpPost, ValidateInput(false)]
-        public ActionResult AssetTableExpressPartialAddNew([ModelBinder(typeof(DevExpressEditorsBinder))] Entities.Entities.Asset item)
-        {
-            var model = new AssetListPartialModel();
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                  
-                }
-                catch (Exception e)
-                {
-                    ViewData["EditError"] = e.Message;
-                }
-            }
-            else
-                ViewData["EditError"] = "Please, correct all errors.";
-            return PartialView("~/Views/Customers/_AssetTableExpressPartial.cshtml", model);
-        }
-        [HttpPost, ValidateInput(false)]
-        public ActionResult AssetTableExpressPartialUpdate([ModelBinder(typeof(DevExpressEditorsBinder))] Entities.Entities.Asset item)
-        {
-            var model = new AssetListPartialModel();
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    var a = db.Read(item.Id);
-                    item.Customer = a.Customer;
-                    item.CustomerId = a.Customer.Id;
-                    item.Changelogs = a.Changelogs;
-                    item.FileAttachments = a.FileAttachments;
-                    item.InstallationDate = a.InstallationDate;
-                    item.Type = a.Type;
-                    item.TypeId = a.Type.Id;
-                    var b = db.Update(item);
-                    if (b)
-                    {
-                        
-                        model.CustomerId = a.Customer.Id;
-                        model.Assets = db.ReadAllWithFk(a.Customer.Id);
-                    }
-                }
-                catch (Exception e)
-                {
-                    ViewData["EditError"] = e.Message;
-                }
-            }
-            else
-                ViewData["EditError"] = "Please, correct all errors.";
-            return PartialView("~/Views/Customers/_AssetTableExpressPartial.cshtml", model);
-        }
         [HttpPost, ValidateInput(false)]
         public ActionResult AssetTableExpressPartialDelete(string Id)
         {

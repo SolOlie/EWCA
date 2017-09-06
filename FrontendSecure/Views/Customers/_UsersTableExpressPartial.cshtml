@@ -28,7 +28,17 @@
             col.Settings.AllowSort = DefaultBoolean.False;
             col.Width = 70;
         });
-
+        settings.ClientLayout = (sender, e) =>
+        {
+            if (e.LayoutMode == ClientLayoutMode.Saving)
+            {
+                Session["LayoutUsers"] = e.LayoutData;
+            }
+            else
+            {
+                e.LayoutData = (string)Session["LayoutUsers"];
+            }
+        };
         settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
         settings.SettingsBehavior.ConfirmDelete = true;
         settings.CommandColumn.Visible = true;

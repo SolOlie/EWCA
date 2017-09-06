@@ -15,53 +15,6 @@ namespace FrontendSecure.Controllers
         private IServiceGateway<File> fdb = new BllFacade().GetFileGateway();
         private IServiceGateway<User> udb = new BllFacade().GetUserGateway();
         
-        [HttpPost]
-        public bool ModifiedAdd(string Description, int userId,  int Hours, DateTime Date, int assetId, int? id)
-        {
-            if (Description == null)
-            {
-                return false;
-            }
-            db.Create(new Changelog()
-            {
-                Description = Description,
-                User = new User()
-                {
-                  Id  = userId
-                },
-                Asset = new Asset()
-                {
-                    Id = assetId
-                },
-                Minutes = Hours,
-                ChangedDate = Date
-            });
-            return true;
-        }
-        [HttpPost]
-        public bool ModifiedDelete(int id)
-        {
-            Changelog changelog = db.Read(id);
-            var deleted = db.Delete(changelog);
-            return deleted;
-        }
-
-        [HttpPost]
-        public bool ModifiedEdit(string Description, int userId, int Hours, DateTime Date, int assetId, int id)
-        {
-            var changelog = db.Read(id);
-            changelog.UserId = userId;
-            changelog.User.Id = userId;
-            changelog.Asset.Id = assetId;
-            changelog.ChangedDate = Date;
-            changelog.Description = Description;
-            changelog.Minutes = Hours;
-            var updated = db.Update(changelog);
-            return updated;
-        }
-
-
-
         [ValidateInput(false)]
         public ActionResult ChangelogTableExpressPartial(int assetid)
         {
@@ -71,44 +24,6 @@ namespace FrontendSecure.Controllers
             return PartialView("~/Views/Customers/_ChangelogTableExpressPartial.cshtml", model);
         }
 
-        [HttpPost, ValidateInput(false)]
-        public ActionResult ChangelogTableExpressPartialAddNew([ModelBinder(typeof(DevExpressEditorsBinder))] Entities.Entities.Changelog item)
-        {
-            var model = new ChangelogsListPartialModel();
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    // Insert here a code to insert the new item in your model
-                }
-                catch (Exception e)
-                {
-                    ViewData["EditError"] = e.Message;
-                }
-            }
-            else
-                ViewData["EditError"] = "Please, correct all errors.";
-            return PartialView("~/Views/Customers/_ChangelogTableExpressPartial.cshtml", model);
-        }
-        [HttpPost, ValidateInput(false)]
-        public ActionResult ChangelogTableExpressPartialUpdate([ModelBinder(typeof(DevExpressEditorsBinder))] Entities.Entities.Changelog item)
-        {
-            var model = new ChangelogsListPartialModel();
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    // Insert here a code to update the item in your model
-                }
-                catch (Exception e)
-                {
-                    ViewData["EditError"] = e.Message;
-                }
-            }
-            else
-                ViewData["EditError"] = "Please, correct all errors.";
-            return PartialView("~/Views/Customers/_ChangelogTableExpressPartial.cshtml", model);
-        }
         [HttpPost, ValidateInput(false)]
         public ActionResult ChangelogTableExpressPartialDelete(string Id)
         {

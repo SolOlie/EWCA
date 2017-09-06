@@ -102,84 +102,9 @@
     </ul>
     <div class="tab-content">
         <div class="tab-pane active" id="Changelog">
-            <div style="display: none;">
-                @*<div style="overflow-x: visible">
-                    <table class="table table-striped table-hover">
-                        <tr id="hideHeaders">
-                            <th>
-                                Bruger
-                            </th>
-                            <th>
-                                Timer
-                            </th>
-                            <th>
-                                Beskrivelse
-                            </th>
-                            <th>
-                                Dato
-                            </th>
-                            <th>
-
-                            </th>
-                        </tr>
-                        <tbody>
-                            @foreach (var cl in Model.Asset.Changelogs)
-                        {
-                                <tr>
-                                    <td>@cl.User.FirstName @cl.User.LastName</td>
-                                    <td>@cl.Minutes</td>
-                                    <td>
-                                        <div id="descriptionHover">
-                                            Hold over for mere...
-                                            <span class="tooltiptext">
-                                                @cl.Description
-                                            </span>
-
-                                        </div>
-
-
-                                    </td>
-                                    <td>@cl.ChangedDate.ToShortDateString()</td>
-                                    <td>
-                                        <a class="btn btn-default" id="editChangelogBtn" onclick="editChangelogBtn(this)" data-id="@cl.Id" data-name="@cl.Description" data-hour="@cl.Minutes" data-userId="@cl.User.Id" data-year="@cl.ChangedDate.Year" data-month="@cl.ChangedDate.Month" data-day="@cl.ChangedDate.Day">
-                                            <span class="glyphicon glyphicon-pencil">
-
-                                            </span>
-                                        </a>
-                                        <a class="btn btn-danger" id="removeChangelogBtn" onclick="deleteClick(this)" data-id="@cl.Id" data-name="@cl.User.FirstName">
-                                            <span class="glyphicon glyphicon-trash" aria-hidden="true">
-
-                                            </span>
-                                        </a>
-                                    </td>
-                                </tr>
-                        }
-                            <tr>
-                                <td id="tdForAddChangelog">
-                                    <a id="addChangelogBtn" class="btn btn-default align-right">
-                                        <span class="glyphicon glyphicon-plus"
-                                              aria-hidden="true">
-                                            <b>Changelog</b>
-                                        </span>
-                                    </a>
-                                </td>
-                                <td id="tdDisable3"></td>
-                                <td id="tdDisable4"></td>
-                                <td id="tdDisable5"></td>
-                                <td id="tdDisable6"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                </div>*@
-            </div>
-
-                        @Html.Action("ChangelogTableExpressPartial", "Changelogs", new {assetid = Model.Asset.Id})
-                       
-
-
-
             
+            @Html.Action("ChangelogTableExpressPartial", "Changelogs", new {assetid = Model.Asset.Id})
+
         </div>
         <div id="Files" class="tab-pane">
             <a id="addFileBtn" class="btn btn-default align-right" onclick="toggleAddFile()">
@@ -214,301 +139,24 @@
                 }
 
                 </div>
-            <div style="display: none;">
-                @*<table class="table table-striped table-hover">
-                    <tr id="hideHeadersFiles">
-                        <th>
-                            Filnavn
-                        </th>
-                        <th>
-                            Filtype
-                        </th>
-                        <th></th>
-                    </tr>
-                    <tbody>
-                        @if (Model.Asset.FileAttachments != null)
-                        {
-                            foreach (var files in Model.Asset.FileAttachments)
-                            {
-                                <tr>
-                                    <td>
-                                        @files.Name
-                                    </td>
-                                    <td>
-                                        @files.ContentType
-                                    </td>
-                                    <td>
-                                        <a class="btn btn-default" id="downloadBtn" data-id="@files.Id" onclick="downloadFile(this)">
-                                            <span class="glyphicon glyphicon-download-alt"></span>
-                                        </a>
-
-                                        <a class="btn btn-danger" id="deleteFileBtn" onclick="deleteFile(this)" data-id="@files.Id">
-                                            <span class="glyphicon glyphicon-trash"></span>
-                                        </a>
-                                    </td>
-                                </tr>
-
-                            }
-                        }
-                        <tr>
-                            <td id="tdDisable7">
-                                <a id="addFileBtn" class="btn btn-default align-right" onclick="toggleAddFile()">
-                                    <span class="glyphicon glyphicon-plus"
-                                          aria-hidden="true">
-                                        <b>Fil</b>
-                                    </span>
-                                </a>
-                            </td>
-                            <td id="tdDisable1"></td>
-                            <td id="tdDisable2"></td>
-                        </tr>
-
-                    </tbody>
-                </table>*@
-            </div>
-
-
+          
             @Html.Action("FileTableExpressPartial", "Changelogs", new { assetid = Model.Asset.Id })
 
-
-
-
         </div>
     </div>
 </div>
-<div id="popupBackgroundChangelog" style="display: none;"></div>
-<div id="addChangelogPopup" style="display: none;">
-    <div id="addChangelogStyle">
-        <div class="form-group">
-            <select id="dropdownSelect">
-                @foreach (var user in Model.Users)
-                {
-                    <option value="@user.Id">@user.FirstName @user.LastName</option>
-                }
-            </select>
-        </div>
-        <div class="form-group">
-            <input type="date" id="date" />
-        </div>
-        <div class="form-group">
-            <input type="number" id="hours" placeholder="Minutes" />
-        </div>
-
-        <div class="form-group">
-            <textarea id="description" placeholder="Type description here..."></textarea>
-        </div>
-
-        <a class="btn btn-success" onclick="showPageLoadingSpinner()" id="yesBtn">
-            <span class="glyphicon glyphicon-ok"></span>
-        </a>
-        <a class="btn btn-danger" id="noBtn">
-            <span class="glyphicon glyphicon-remove"></span>
-        </a>
-    </div>
-</div>
-<div id="popupBackground" style="display: none;"></div>
-<div id="deletepopup" style="display: none;">
-
-    <p id="popupPTag">
-        Ønsker du at slette?
-    <p id="name">
-
-    </p>
-
-    <a class="btn btn-success" id="yesButton" onclick="showPageLoadingSpinner()"><span class="glyphicon glyphicon-ok"></span></a>
-    <a class="btn btn-danger" id="noButton"><span class="glyphicon glyphicon-remove"></span></a>
-</div>
-
-
 <p onclick="showPageLoadingSpinner()">
     @Html.ActionLink("Tilbage", "Details", new { id = Model.Asset.Customer.Id })
 </p>
 <script>
-    $globalurl = '';
-    function deleteFile(e) {
-        $globalurl = '@Url.Action("ModifiedDeleteFile", "Assets")';
-        $globalid = $(e).data('id');
-        $("#popupBackground").show();
-        $("#deletepopup")
-            .toggle("fast",
-                function() {
-                    $('#popupBackground')
-                       .bind('click', function() {
-                           HidePopup();
-                       });
-                });
-    }
-    //delete changelog
-    function deleteClick(e) {
-        $globalurl = '@Url.Action("ModifiedDelete", "Changelogs")';
-        $globalid = $(e).data('id');
-        $("#popupBackground").show();
-        $("#deletepopup")
-            .toggle("fast",
-                function() {
-                    document.getElementById('name').innerHTML = $(e).data('name');
-                    $('#popupBackground')
-                       .bind('click', function() {
-                           HidePopup();
-                       });
-                });
-    }
-    function HidePopup() {
-        $("#deletepopup")
-            .toggle('fast',
-                function () {
-                    $("#popupBackground").hide();
-                    $("#popupBackground").unbind('click');
-                });
-    }
-    $("#noButton")
-        .click(function() {
-            $("#deletepopup")
-                .toggle("fast",
-                    function() {
-                        $("#popupBackground").hide();
-                    });
-        });
-    //Generisk yes knap når man vil delete
-    $("#yesButton")
-        .click(function () {
-            $("#popupBackground").unbind('click');
-            $("#deletepopup")
-                 .toggle("fast",
-                     function () {
-                         $.ajax({
-                             type: "POST",
-                             url: $globalurl,
-                             data: {id : $globalid},
-                             success: function (data) {
-                                 if(data){
-                                     location.reload();
-                                 }
-                                 else {
-                                     alert("Something went wrong")
-                                 }
-                             },
-                             failure: function(data) {
-                                 alert("Try reloading the page");
-                             },
-
-                             error: function(data) {
-                                 console.log("ERROR");
-                             }
-                         });
-                     });
-        });
-    $("#addChangelogBtn")
-        .click(function() {
-            $globalurl = '@Url.Action("ModifiedAdd", "Changelogs")';
-           $globalid = 0;
-            console.log($globalurl);
-
-            showHidePopup();
-        });
-    function showHidePopup() {
-        $("#addChangelogPopup").toggle('fast',
-            function () {
-
-            });
-    }
-    function editChangelogBtn(e) {
-        showHidePopup();
-        var date = new Date(parseInt($(e).data('year')),
-            parseInt($(e).data('month')-1),
-            parseInt($(e).data('day'))+1);
-        var id = $(e).attr('data-userId');
-        $("#description").val($(e).data('name'));
-        $("#hours").val($(e).data('hour'));
-        document.getElementById('date').valueAsDate = date;
-        console.log(id);
-        document.getElementById("dropdownSelect").value = id;
-        $globalurl = '@Url.Action("ModifiedEdit", "Changelogs")';
-        $globalid = $(e).attr('data-id');
-        $("#popupBackground").show();
-
-    };
-    function showHidePopup() {
-        $("#addChangelogPopup").toggle('fast',
-            function () {
-
-            });
-    }
-
-    $("#noBtn")
-        .click(function() {
-            showHidePopup();
-            $("#popupBackground").hide();
-        });
-    $("#yesBtn")
-        .click(function () {
-            var description = $("#description").val();
-            var hours = $("#hours").val();
-            var id = $("#dropdownSelect").val();
-            var date = $("#date").val();
-            var assetid = @Model.Asset.Id;
-            $.ajax({
-                type: "POST",
-                url: $globalurl,
-                data: { Description : description, Hours:  hours, userId: id, Date: date, assetID: assetid, id: $globalid },
-                success: function (data) {
-                    if (data) {
-                        showHidePopup();
-
-                        location.reload();
-                        $("#popupBackground").hide();
-                        $.ajax({
-                            type: "POST",
-                            url: $globalurl2,
-                            
-                        });
-                    }
-                    else {
-                        alert("Something went wrong")
-                    }
-                },
-                failure: function (data) {
-                    alert("Try reloading the page");
-                },
-
-                error: function (data) {
-                    console.log("ERROR");
-                }
-            });
-        });
-
-    function downloadFile(e) {
-        console.log(e);
-        var id = $(e).data("id");
-        var urltosend = "/Customers/Download/" + id;
-        var req = new XMLHttpRequest();
-
-        req.open("GET", urltosend, true);
-        req.responseType = "blob";
-        req.onload = function(event) {
-            var blob = req.response;
-            var fileName = req.getResponseHeader("Content-disposition");
-            var fileNameShort = fileName.split('=')[1];
-            var link = document.createElement('a');
-            link.href = window.URL.createObjectURL(blob);
-            link.download = fileNameShort;
-            link.click();
-
-        };
-
-        req.send();
-    };
-    function TabShift() {
+  function TabShift() {
         setTimeout(function() {
             localStorage.setItem("paneactive", $("ul.nav-tabs li.active ").attr("id"));
             var element = document.querySelector(".tab-content .active");
             localStorage.setItem("contentactive", $(element).attr("id"));
             console.log(localStorage.getItem("contentactive"));
         },400);
-
-
     }
-
     $(document)
         .ready(function () {
             var id = localStorage.getItem("paneactive");
@@ -521,7 +169,6 @@
 
 
         });
-
     function toggleAddFile() {
         $("#addFilePopup")
             .toggle('fast',
@@ -533,25 +180,5 @@
         showPageLoadingSpinner();
         toggleAddFile();
     }
-    function fileSorter() {
-        var req = new XMLHttpRequest();
-        var filetype = req.getResponseHeader("Content-disposition");
-        var fileType = filetype.split('.')[1];
-        if (fileType === "pdf") {
-            $('<span/>').attr("class", "fa fa-file-pdf-o".innerhtml);
-            console.log(fileType + "pdf");
-        }
-        else if (fileType === "doc" || fileType === "docx") {
-            $('<span/>').attr("class", "fa fa-file-word-o".innerhtml);
-            console.log(fileType + "word");
-        }
-        else if (fileType === "xlsx") {
-            $('<span/>').attr("class", "fa fa-file-excel-o".innerhtml);
-            console.log(fileType + "excel");
-        } else {
-            $('<span/>').attr("class", "fa fa-file".innerhtml);
-            console.log(fileType + "file");
-        }
-
-    }
+   
 </script>

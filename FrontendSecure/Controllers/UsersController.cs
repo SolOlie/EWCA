@@ -16,14 +16,7 @@ namespace FrontendSecure.Controllers
     public class UsersController : ApiController
     {
         private IServiceGateway<User> db = new BllFacade().GetUserGateway();
-        protected ApplicationDbContext applicationDbContext { get; set; }
-        protected UserManager<ApplicationUser> userManager { get; set; }
-
-        public UsersController()
-        {
-            this.applicationDbContext = new ApplicationDbContext();
-            this.userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(this.applicationDbContext));
-        }
+        
         // GET: Users/Create
         public ActionResult Create(int? CustomerId)
         {
@@ -135,29 +128,6 @@ namespace FrontendSecure.Controllers
             }
             return View(user);
         }
-        [HttpPost]
-        public bool AjaxCreateConfirmed(User users)
-        {
-            User user = db.Create(users);
-            return true;
-        }
-        [HttpPost]
-        public bool AjaxDeleteConfirmed(int id)
-        {
-
-            User user = db.Read(id);
-            user.Password = "";
-            var deleted = db.Update(user);
-            if (deleted)
-            {
-                var s = WebapiService.instance.DeleteAsync<User>("/api/Account/RemoveLogin?email=" + user.Email, System.Web.HttpContext.Current.User.Identity.Name).Result;
-                if (!s)
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
 
         [ValidateInput(false)]
         public ActionResult UsersTableExpressPartial(int? customerid)
@@ -186,10 +156,15 @@ namespace FrontendSecure.Controllers
                 
                 try
                 {
-                    var a = db.Read(id);
-                    db.Delete(a);
-                    model.Users = db.ReadAllWithFk(a.IsContactForCustomer.Id);
-                    model.CustomerId = a.IsContactForCustomer.Id;
+                    User user = db.Read(id);
+                    user.Password = "";
+                    var deleted = db.Update(user);
+                    if (deleted)
+                    {
+                        var s =
+                            WebapiService.instance.DeleteAsync<User>("/api/Account/RemoveLogin?email=" + user.Email,
+                                System.Web.HttpContext.Current.User.Identity.Name).Result;
+                    }
 
                 }
                 catch (Exception e)

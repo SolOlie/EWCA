@@ -40,7 +40,17 @@
             column.Width = 70;
         });
 
-
+        settings.ClientLayout = (sender, e) =>
+        {
+            if (e.LayoutMode == ClientLayoutMode.Saving)
+            {
+                Session["LayoutAsset"] = e.LayoutData;
+            }
+            else
+            {
+                e.LayoutData = (string)Session["LayoutAsset"];
+            }
+        };
         settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Assets", Action = "AssetTableExpressPartialDelete" };
         settings.CommandColumn.Width = 50;
         settings.CommandColumn.Caption = " ";
@@ -89,15 +99,6 @@
         });
         settings.Columns.Add("Note");
         settings.Columns.Add("Login");
-        //settings.Columns.Add(column =>
-        //{
-        //    column.FieldName = "Password";
-        //    var prop = column.PropertiesEdit as TextBoxProperties;
-        //    prop.Password = true;
-        //    column.ToolTip = DataBinder.Eval(column.Da)
-        //    settings.ToolTip
-        //});
-
     });
 
     if (ViewData["EditError"] != null){

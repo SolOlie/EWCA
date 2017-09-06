@@ -31,14 +31,6 @@
             @Html.ActionLink("Historie", "Index", "History", new { area = "" }, new { @class = "navbar-brand" })
         </div>
         <div class="navbar-collapse collapse">
-            <div class="navbar-right">
-                <form id="searchForm" action="/users/search">
-                    <input id="search" name="searchString" />
-                    <input type="hidden" name="activeTab" id="activeTab" />
-                    <a class="searchButton"><span class="glyphicon glyphicon-search"></span></a>
-                </form>
-
-            </div>
             @Html.Partial("_LoginPartial")
         </div>
     </div>
@@ -57,22 +49,7 @@
    
 
 <script type="text/javascript">
-    $("#searchForm")
-        .on('submit',
-            function(e) { 
-                var paneselected = localStorage.getItem('paneactive');
-                $("#activeTab").val(paneselected);
-                var url = window.location.pathname;
-                if (url.toLowerCase().indexOf("details") >= 0) {
-                    $(this).attr('action', url);
-                } else if (url.toLowerCase().indexOf("customers") >= 0) {
-                    $(this).attr('action', '/Customers/');
-                } else {
-                    $(this).attr('action', '/Search/');
-                }
-            });
-
-    function showPageLoadingSpinner() {
+  function showPageLoadingSpinner() {
         $('.loader').show();
 
     }
