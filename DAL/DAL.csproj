@@ -210,6 +210,10 @@
     <Compile Include="Migrations\201709051333146_Minutes in changelogs.Designer.cs">
       <DependentUpon>201709051333146_Minutes in changelogs.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709060819044_Admin role for user.cs" />
+    <Compile Include="Migrations\201709060819044_Admin role for user.Designer.cs">
+      <DependentUpon>201709060819044_Admin role for user.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AssetRepo.cs" />
@@ -329,6 +333,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201709051333146_Minutes in changelogs.resx">
       <DependentUpon>201709051333146_Minutes in changelogs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709060819044_Admin role for user.resx">
+      <DependentUpon>201709060819044_Admin role for user.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

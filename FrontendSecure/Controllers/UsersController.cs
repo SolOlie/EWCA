@@ -16,17 +16,66 @@ namespace FrontendSecure.Controllers
     public class UsersController : ApiController
     {
         private IServiceGateway<User> db = new BllFacade().GetUserGateway();
-        
+        private enum AuthStates
+        {
+            NoAuth,
+            UserAuth,
+            AdminAuth,
+            ElitewebAuth
+        };
+        private AuthStates isAuthorized(int customerId)
+        {
+            return AuthStates.ElitewebAuth;
+            var session = Session["loggedinUserId"];
+            if (session == null)
+            {
+                return AuthStates.NoAuth;
+            }
+
+            int loggedinUserId = (int)session;
+            var loggedInUser = db.Read(loggedinUserId);
+
+            if (loggedInUser == null)
+            {
+                return AuthStates.NoAuth;
+            }
+
+            if (loggedInUser.IsContactForCustomer.Id > 0)
+            {
+                if (1 == loggedInUser.IsContactForCustomer.Id)
+                {
+                    return AuthStates.ElitewebAuth;
+                }
+                if (customerId == loggedInUser.IsContactForCustomer.Id)
+                {
+                    if (loggedInUser.IsAdmin)
+                    {
+                        return AuthStates.AdminAuth;
+                    }
+                    return AuthStates.UserAuth;
+                }
+
+                return AuthStates.NoAuth;
+
+            }
+            return AuthStates.NoAuth;
+        }
         // GET: Users/Create
         public ActionResult Create(int? CustomerId)
         {
+
             if (CustomerId == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            if (isAuthorized(CustomerId.Value) == AuthStates.UserAuth || isAuthorized(CustomerId.Value) == AuthStates.NoAuth)
+            {
+                return View("NotAuthorized");
+            }
+
             var Model = new CreateUserWithCustomModel()
             {
-                Users = db.ReadAll().Select(e=> e.Email).ToList(),
+                Users = db.ReadAll().Select(e => e.Email).ToList(),
                 CustomerId = CustomerId.Value,
                 User = new User()
             };
@@ -40,6 +89,10 @@ namespace FrontendSecure.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(User user, int CustomerId)
         {
+            if (isAuthorized(CustomerId) == AuthStates.UserAuth || isAuthorized(CustomerId) == AuthStates.NoAuth)
+            {
+                return View("NotAuthorized");
+            }
             if (ModelState.IsValid)
             {
                 user.IsContactForCustomer = new Customer()
@@ -69,12 +122,12 @@ namespace FrontendSecure.Controllers
                     HandleBadRequest(ex);
                     if (!ModelState.IsValid)
                     {
-                       
+
                         return View(model);
                     }
                     throw;
                 }
-                
+
             }
             var Model = new CreateUserWithCustomModel()
             {
@@ -92,9 +145,14 @@ namespace FrontendSecure.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             User user = db.Read(id.Value);
+
             if (user == null)
             {
                 return HttpNotFound();
+            }
+            if (isAuthorized(user.IsContactForCustomer.Id) == AuthStates.UserAuth || isAuthorized(user.IsContactForCustomer.Id) == AuthStates.NoAuth)
+            {
+                return View("NotAuthorized");
             }
             return View(user);
         }
@@ -104,27 +162,31 @@ namespace FrontendSecure.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Email,FirstName,LastName,Password, PhoneNumber")] User user)
-         {
+        public ActionResult Edit([Bind(Include = "Id,Email,FirstName,LastName,Password, PhoneNumber, IsAdmin")] User user)
+        {
             User u = db.Read(user.Id);
+            if (isAuthorized(u.IsContactForCustomer.Id) == AuthStates.UserAuth || isAuthorized(u.IsContactForCustomer.Id) == AuthStates.NoAuth)
+            {
+                return View("NotAuthorized");
+            }
             user.IsContactForCustomer = u.IsContactForCustomer;
             user.Email = u.Email;
             if (ModelState.IsValid)
             {
-                
+
                 var model = new SetPasswordViewModel
                 {
                     Email = u.Email,
                     Password = user.Password
                 };
-                var s = WebapiService.instance.PostAsync("/api/Account/SetPassword",model, System.Web.HttpContext.Current.User.Identity.Name).Result;
+                var s = WebapiService.instance.PostAsync("/api/Account/SetPassword", model, System.Web.HttpContext.Current.User.Identity.Name).Result;
                 user.IsContactForCustomer = u.IsContactForCustomer;
                 user.Changelogs = u.Changelogs;
                 user.Email = u.Email;
-                
+
                 db.Update(user);
-                
-                return RedirectToAction("Details", "Customers", new {id = u.IsContactForCustomer.Id});
+
+                return RedirectToAction("Details", "Customers", new { id = u.IsContactForCustomer.Id });
             }
             return View(user);
         }
@@ -132,9 +194,14 @@ namespace FrontendSecure.Controllers
         [ValidateInput(false)]
         public ActionResult UsersTableExpressPartial(int? customerid)
         {
+
             var model = new UsersListPartialModel();
             if (customerid.HasValue)
             {
+                if (isAuthorized(customerid.Value) == AuthStates.UserAuth || isAuthorized(customerid.Value) == AuthStates.NoAuth)
+                {
+                    return PartialView("NotAuthorizedPartical");
+                }
                 model.Users = db.ReadAllWithFk(customerid.Value);
                 model.CustomerId = customerid.Value;
             }
@@ -153,10 +220,14 @@ namespace FrontendSecure.Controllers
             var model = new UsersListPartialModel();
             if (id > 0)
             {
-                
+
                 try
                 {
                     User user = db.Read(id);
+                    if (isAuthorized(user.IsContactForCustomer.Id) == AuthStates.UserAuth || isAuthorized(user.IsContactForCustomer.Id) == AuthStates.NoAuth)
+                    {
+                        return PartialView("NotAuthorizedPartical");
+                    }
                     user.Password = "";
                     var deleted = db.Update(user);
                     if (deleted)

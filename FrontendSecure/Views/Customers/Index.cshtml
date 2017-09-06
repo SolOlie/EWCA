@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Index";
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
     Layout = "~/Views/Shared/_Layout.cshtml";
     @Html.DevExpress().GetStyleSheets(
         new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
@@ -19,7 +20,7 @@
     <link href="~/Content/CustomerIndexStyles.css" rel="stylesheet" />
 }
 <div id="customerIndex">
-   
+    
     @Html.Action("CustomerTableExpressPartial")
 
 </div>

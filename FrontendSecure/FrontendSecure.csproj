@@ -393,6 +393,7 @@
     <Content Include="Views\Customers\_FileTableExpressPartial.cshtml" />
     <Content Include="Views\Changelogs\Edit.cshtml" />
     <Content Include="Views\Changelogs\Create.cshtml" />
+    <Content Include="Views\Shared\NotAuthorizedPartical.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

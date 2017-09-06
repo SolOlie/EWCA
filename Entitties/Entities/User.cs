@@ -24,5 +24,6 @@ namespace Entities.Entities
         [SkipTracking]
         public Customer IsContactForCustomer { get; set; }
 
+        public bool IsAdmin { get; set; }
     }
 }

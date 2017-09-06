@@ -1,5 +1,8 @@
+@using DevExpress.Web.ASPxRichEdit.Forms
 @{
-    var grid = Html.DevExpress().GridView(settings => {
+
+    var grid = Html.DevExpress().GridView(settings =>
+    {
         settings.Name = "CustomerTableExpress";
         settings.CallbackRouteValues = new { Controller = "Customers", Action = "CustomerTableExpressPartial" };
 
@@ -7,20 +10,20 @@
         settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Customers", Action = "CustomerTableExpressPartialUpdate" };
         settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Customers", Action = "CustomerTableExpressPartialDelete" };
         settings.SettingsText.CommandDelete = "Slet";
-        settings.CommandColumn.Caption =" ";
+        settings.CommandColumn.Caption = " ";
         settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
         settings.SettingsBehavior.ConfirmDelete = true;
-            settings.ClientLayout = (sender, e) =>
+        settings.ClientLayout = (sender, e) =>
+        {
+            if (e.LayoutMode == ClientLayoutMode.Saving)
             {
-                if (e.LayoutMode == ClientLayoutMode.Saving)
-                {
-                    Session["LayoutCustomer"] = e.LayoutData;
-                }
-                else
-                {
-                    e.LayoutData = (string) Session["LayoutCustomer"];
-                }
-              };
+                Session["LayoutCustomer"] = e.LayoutData;
+            }
+            else
+            {
+                e.LayoutData = (string)Session["LayoutCustomer"];
+            }
+        };
         settings.Columns.Add(column =>
         {
             column.Caption = "";
@@ -37,7 +40,7 @@
                 col.SetDataItemTemplateContent(c =>
                 {
                     ViewContext.Writer.Write(
-                        Html.ActionLink("Detaljer", "Details", "Customers", new { id = DataBinder.Eval(c.DataItem, "Id")}, null)
+                        Html.ActionLink("Detaljer", "Details", "Customers", new { id = DataBinder.Eval(c.DataItem, "Id") }, null)
                     );
                 });
                 col.SetHeaderTemplateContent(c =>
@@ -80,9 +83,26 @@
         settings.Columns.Add("Firm");
         settings.Columns.Add("Address");
         settings.Columns.Add("Date");
+        settings.BeforeGetCallbackResult = (s, e) =>
+        {
+            if (ViewData["EditError"] != null)
+            {
+                MVCxGridView gridView = (MVCxGridView) s;
+                gridView.Settings.ShowFooter = true;
+            }
+        };
+
+
+      if (ViewData["EditError"] != null)
+        {
+
+            settings.SetFooterRowTemplateContent(c =>
+            {
+                Html.ViewContext.Writer.Write(ViewData["EditError"]);
+            });
+
+        }
     });
-    if (ViewData["EditError"] != null){
-        grid.SetEditErrorText((string)ViewData["EditError"]);
-    }
+
 }
 @grid.Bind(Model).GetHtml()

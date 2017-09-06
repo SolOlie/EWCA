@@ -85,6 +85,11 @@
             c.Caption="Password";
             c.FieldName = "Password";
         });
+        settings.Columns.Add(c =>
+        {
+            c.Caption = "Admin";
+            c.FieldName = "IsAdmin";
+        });
 
     });
     if (ViewData["EditError"] != null){

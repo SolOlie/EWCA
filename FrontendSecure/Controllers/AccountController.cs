@@ -110,10 +110,12 @@ namespace FrontendSecure.Controllers
                 {
                     if (users.Password == model.Password)
                     {
-                        
-                        Session["loggedInCustomerId"] =
-                            users.IsContactForCustomer.Id;
-                       }
+                        Session["loggedinUserId"] = users.Id;
+                    }
+                    if (users.IsContactForCustomer.Id != 1)
+                    {
+                        return RedirectToAction("Details", "Customers", new {users.IsContactForCustomer.Id});
+                    }
                 }
                 return Redirect(returnUrl??"/");
             }
@@ -141,7 +143,7 @@ namespace FrontendSecure.Controllers
                 Response.Cookies.Add(c);
             }
             Session["loggedInCustomerId"] = null;
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("SignIn", "Account");
         }
     }
 }
