@@ -136,7 +136,7 @@ namespace EWCustomerAccountingBackend.Controllers
 
         // POST api/Account/SetPassword
         [Route("SetPassword")]
-        [AllowAnonymous]
+       // [AllowAnonymous]
         public async Task<IHttpActionResult> SetPassword(SetPasswordBindingModel model)
         {
             if (!ModelState.IsValid)
@@ -325,7 +325,7 @@ namespace EWCustomerAccountingBackend.Controllers
         }
 
         // POST api/Account/Register
-        [AllowAnonymous]
+       // [AllowAnonymous]
         [Route("Register")]
         public async Task<IHttpActionResult> Register(RegisterBindingModel model)
         {
