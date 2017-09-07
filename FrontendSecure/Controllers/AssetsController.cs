@@ -18,7 +18,53 @@ namespace FrontendSecure.Controllers
         private IServiceGateway<AssetType> dba = new BllFacade().GetAssetTypeGateway();
         private IServiceGateway<Customer>dbc = new BllFacade().GetCustomerGateway();
         private IServiceGateway<File>dbf = new BllFacade().GetFileGateway();
-        
+        private IServiceGateway<User>udb = new BllFacade().GetUserGateway();
+
+        private enum AuthState
+        {
+            NoAuth,
+            UserAuth,
+            AdminAuth,
+            ElitewebAuth
+        };
+        private AuthState isAuthorized(int customerId)
+        {
+            return AuthState.ElitewebAuth;
+            var session = Session["loggedinUserId"];
+            if (session == null)
+            {
+                return AuthState.NoAuth;
+            }
+
+            int loggedinUserId = (int)session;
+            var loggedInUser = udb.Read(loggedinUserId);
+
+            if (loggedInUser == null)
+            {
+                return AuthState.NoAuth;
+            }
+
+            if (loggedInUser.IsContactForCustomer.Id > 0)
+            {
+                if (1 == loggedInUser.IsContactForCustomer.Id)
+                {
+                    return AuthState.ElitewebAuth;
+                }
+                if (customerId == loggedInUser.IsContactForCustomer.Id)
+                {
+                    if (loggedInUser.IsAdmin)
+                    {
+                        return AuthState.AdminAuth;
+                    }
+                    return AuthState.UserAuth;
+                }
+
+                return AuthState.NoAuth;
+
+            }
+            return AuthState.NoAuth;
+        }
+
         // GET: Assets/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -27,6 +73,10 @@ namespace FrontendSecure.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             var asset = db.Read(id.Value);
+            if (isAuthorized(asset.Customer.Id) == AuthState.NoAuth)
+            {
+                return View("NotAuthorized");
+            }
             var model = new CreateAssetModel()
             {
                 Asset = asset,
@@ -47,6 +97,11 @@ namespace FrontendSecure.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Asset asset)
         {
+            
+            if (isAuthorized(asset.Customer.Id) == AuthState.NoAuth)
+            {
+                return View("NotAuthorized");
+            }
             if (ModelState.IsValid)
             {
                db.Update(asset);
@@ -58,6 +113,11 @@ namespace FrontendSecure.Controllers
         [HttpPost]
         public ActionResult AddFile(int assetId, HttpPostedFileBase upload)
         {
+            var asset = db.Read(assetId);
+            if (isAuthorized(asset.Customer.Id) == AuthState.NoAuth)
+            {
+                return View("NotAuthorized");
+            }
             if (upload != null && upload.ContentLength > 0)
             {
                 var attachment = new File()
@@ -85,6 +145,10 @@ namespace FrontendSecure.Controllers
             var model = new AssetListPartialModel();
             if (customerid.HasValue)
             {
+                if (isAuthorized(customerid.Value) == AuthState.NoAuth)
+                {
+                    return PartialView("NotAuthorizedPartical");
+                }
                 model.Assets = db.ReadAllWithFk(customerid.Value);
                 model.CustomerId = customerid.Value;
             }
@@ -106,6 +170,10 @@ namespace FrontendSecure.Controllers
                 try
                 {
                    var a = db.Read(id);
+                    if (isAuthorized(a.Customer.Id) == AuthState.NoAuth)
+                    {
+                        return PartialView("NotAuthorizedPatialPopup");
+                    }
                     db.Delete(a);
 
                     model.Assets = db.ReadAllWithFk(a.Customer.Id);
