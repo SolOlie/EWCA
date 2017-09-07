@@ -24,7 +24,7 @@ namespace FrontendSecure.Controllers
         };
         private AuthState isAuthorized(int customerId)
         {
-            return AuthState.ElitewebAuth;
+            //return AuthState.ElitewebAuth;
             var session = Session["loggedinUserId"];
             if (session == null)
             {
