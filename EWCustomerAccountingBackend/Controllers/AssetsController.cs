@@ -17,7 +17,7 @@ using EWCustomerAccountingBackend.Models;
 
 namespace EWCustomerAccountingBackend.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class AssetsController : ApiController
     {
         private IRepository<Asset> db = new Facade().GetAssetRepo();

@@ -37,6 +37,8 @@ namespace DAL.DB
         public DbSet<User> Users { get; set; }
         public DbSet<AssetType> AssetTypes { get; set; }
         public DbSet<File> Files { get; set; }
+        public DbSet<Switch> Switches { get; set; }
+        public DbSet<Port> Ports { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Changelog>().Property(e => e.ChangedDate).HasColumnType("datetime2");
@@ -50,6 +52,9 @@ namespace DAL.DB
             modelBuilder.Entity<Asset>().HasOptional(a => a.Type).WithMany(a => a.Assets);
             modelBuilder.Entity<Asset>().HasMany(x => x.FileAttachments).WithRequired(x => x.Asset);
             modelBuilder.Entity<File>().HasOptional(x => x.ContentFile).WithRequired(x => x.File);
+            modelBuilder.Entity<Asset>().HasOptional(s => s.Port).WithOptionalDependent(p => p.Uplink);
+            modelBuilder.Entity<Switch>().HasMany(p => p.Ports).WithRequired(s => s.Swtich);
+            modelBuilder.Entity<Customer>().HasMany(s => s.Switches).WithRequired(s => s.Customer);
             modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
             base.OnModelCreating(modelBuilder);
         }

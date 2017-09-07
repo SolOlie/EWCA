@@ -15,7 +15,7 @@ using Entities.Entities;
 
 namespace EWCustomerAccountingBackend.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class FilesController : ApiController
     {
         private IRepository<File> db = new Facade().GetFileRepo();

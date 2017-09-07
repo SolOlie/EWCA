@@ -14,7 +14,7 @@ using WebGrease;
 
 namespace FrontendSecure.Controllers
 {
-    [Authorize] 
+    //[Authorize] 
     public class CustomersController : Controller
     {
         private readonly IServiceGateway<Customer> db = new BllFacade().GetCustomerGateway();
@@ -36,7 +36,7 @@ namespace FrontendSecure.Controllers
         };
         private AuthState isAuthorized(int customerId)
         {
-            //return AuthState.ElitewebAuth;
+            return AuthState.ElitewebAuth;
             var session = Session["loggedinUserId"];
             if (session == null)
             {

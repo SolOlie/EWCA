@@ -45,6 +45,9 @@
         <li role="presentation" onclick="TabShift()" id="UserPane">
             <a href="#User" data-toggle="tab" id="idUser">Brugere</a>
         </li>
+        <li role="presentation" onclick="TabShift()" id="SwitchPane">
+            <a href="#Switch" data-toggle="tab" id="idSwitch">Switches</a>
+        </li>
     </ul>
 </div>
 <div class="container-fluid" style="overflow-x: auto;">
@@ -55,9 +58,18 @@
         
         </div>
         <div id="User" class="tab-pane">
-         
-            @Html.Action("UsersTableExpressPartial", "Users", new { customerId = Model.Customer.Id})
-        
+
+            @Html.Action("UsersTableExpressPartial", "Users", new {customerId = Model.Customer.Id})
+
+        </div>
+        <div id="Switch" class="tab-pane">
+
+
+            @Html.Action("SwitchTableExpressPartial", "Switch", new { customerid = Model.Customer.Id })
+
+
+
+
         </div>
     </div>
 </div>

@@ -185,9 +185,11 @@
     <Compile Include="Controllers\ChangelogsController.cs" />
     <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\HistoryController.cs" />
+    <Compile Include="Controllers\SwitchController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Gateways\AServiceGateway.cs" />
     <Compile Include="Gateways\SecureGateways\HistorySecureGateway.cs" />
+    <Compile Include="Gateways\SecureGateways\SwitchGatewaySecure.cs" />
     <Compile Include="Gateways\UnsecureGateways\AssetGateway.cs" />
     <Compile Include="Gateways\UnsecureGateways\AssetTypeGateway.cs" />
     <Compile Include="Gateways\UnsecureGateways\ChangelogGateway.cs" />
@@ -204,6 +206,7 @@
     <Compile Include="Gateways\UnsecureGateways\UserGateway.cs" />
     <Compile Include="Models\AssetListPartialModel.cs" />
     <Compile Include="Models\ChangelogsListPartialModel.cs" />
+    <Compile Include="Models\CreateSwitchModel.cs" />
     <Compile Include="Models\FileListPartialModel.cs" />
     <Compile Include="Models\LogDetails.cs" />
     <Compile Include="Models\BaseHistoryVM.cs" />
@@ -225,6 +228,7 @@
     <Compile Include="Models\JsonBadRequest.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\SignInModel.cs" />
+    <Compile Include="Models\SwitchListPartialModel.cs" />
     <Compile Include="Models\UsersListPartialModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -395,6 +399,8 @@
     <Content Include="Views\Changelogs\Create.cshtml" />
     <Content Include="Views\Shared\NotAuthorizedPartical.cshtml" />
     <Content Include="Views\Shared\NotAuthorizedPatialPopup.cshtml" />
+    <Content Include="Views\Customers\_SwitchTableExpressPartial.cshtml" />
+    <Content Include="Views\Switch\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

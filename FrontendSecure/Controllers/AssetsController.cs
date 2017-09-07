@@ -11,7 +11,7 @@ using TrackerEnabledDbContext.Common.Models;
 
 namespace FrontendSecure.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class AssetsController : Controller
     {
         private IServiceGateway<Asset> db = new BllFacade().GetAssetGateway();
@@ -29,7 +29,7 @@ namespace FrontendSecure.Controllers
         };
         private AuthState isAuthorized(int customerId)
         {
-            //return AuthState.ElitewebAuth;
+            return AuthState.ElitewebAuth;
             var session = Session["loggedinUserId"];
             if (session == null)
             {

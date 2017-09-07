@@ -49,5 +49,12 @@ namespace Entities.Entities
 
         public bool SoftDelete { get; set; }
 
+        public string RAM { get; set; }
+
+        public string HDD { get; set; }
+
+        public Port Port { get; set; }
+        public int PortId { get; set; }
+
     }
 }

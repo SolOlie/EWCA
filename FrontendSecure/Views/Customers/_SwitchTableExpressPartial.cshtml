@@ -1,19 +1,15 @@
-@using System.Web.UI.WebControls
-@using DevExpress.XtraReports.Configuration
-@model  FrontendSecure.Models.AssetListPartialModel
+@model FrontendSecure.Models.SwitchListPartialModel
 @{
     var grid = Html.DevExpress().GridView(settings => {
-        settings.Name = "AssetTableExpress";
-        settings.CallbackRouteValues = new { Controller = "Assets", Action = "AssetTableExpressPartial", customerid = Model.CustomerId};
-
-        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Assets", Action = "AssetTableExpressPartialAddNew" };
+        settings.Name = "SwitchTableExpress";
+        settings.CallbackRouteValues = new { Controller = "Switch", Action = "SwitchTableExpressPartial", customerid = Model.CustomerId };
         settings.Columns.Add(column =>
         {
             column.Caption = "";
             column.SetDataItemTemplateContent(c =>
             {
                 ViewContext.Writer.Write(
-                    Html.ActionLink("Ændre", "Edit", new { id = DataBinder.Eval(c.DataItem, "Id") })
+                    Html.ActionLink("Ændre", "Edit","Switch", new { id = DataBinder.Eval(c.DataItem, "Id") }, null)
                 );
             });
 
@@ -23,14 +19,14 @@
                 col.SetDataItemTemplateContent(c =>
                 {
                     ViewContext.Writer.Write(
-                        Html.ActionLink("Detaljer", "AssetDetails", "Customers", new { id = DataBinder.Eval(c.DataItem, "Id"), customerId = Model.CustomerId}, null)
+                        Html.ActionLink("Detaljer", "Details","Switch", new { id = DataBinder.Eval(c.DataItem, "Id"), customerId = Model.CustomerId }, null)
                     );
                 });
                 col.Width = 50;
                 col.SetHeaderTemplateContent(c =>
                 {
                     ViewContext.Writer.Write(
-                        Html.ActionLink("Ny", "CreateAsset", "Customers", new { id = Model.CustomerId }, null).ToHtmlString()
+                        Html.ActionLink("Ny", "Create","Switch", new { id = Model.CustomerId }, null).ToHtmlString()
                     );
                 });
 
@@ -51,7 +47,7 @@
                 e.LayoutData = (string)Session["LayoutAsset"];
             }
         };
-        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Assets", Action = "AssetTableExpressPartialDelete" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Switch", Action = "SwitchTableExpressPartialDelete" };
         settings.CommandColumn.Width = 50;
         settings.CommandColumn.Caption = " ";
         settings.SettingsText.CommandDelete = "Slet";
@@ -80,31 +76,10 @@
         settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
         settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
 
-        settings.Columns.Add(c =>
-        {
-            c.Caption = "Navn";
-            c.FieldName = "Name";
-        });
-
-        settings.Columns.Add(c =>
-        {
-            c.FieldName = "Type.Description";
-            c.Caption = "Type";
-
-        });
-        settings.Columns.Add(c =>
-        {
-            c.FieldName = "Usedby";
-            c.Caption = "Bruger";
-        });
-        settings.Columns.Add("Note");
-        settings.Columns.Add("Login");
-        settings.Columns.Add("Password");
-        settings.Columns.Add("IpAddress");
+        settings.Columns.Add("Name");
     });
-
     if (ViewData["EditError"] != null){
         grid.SetEditErrorText((string)ViewData["EditError"]);
     }
 }
-@grid.Bind(Model.Assets).GetHtml()
+@grid.Bind(Model.Switches).GetHtml()

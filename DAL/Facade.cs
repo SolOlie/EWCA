@@ -39,6 +39,10 @@ namespace DAL
             return new FileRepo();
         }
 
+        public IRepository<Switch> GetSwitchRepo()
+        {
+            return new SwitchRepo();
+        }
        
     }
 }

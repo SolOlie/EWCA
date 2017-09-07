@@ -18,7 +18,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace EWCustomerAccountingBackend.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class UsersBackendController : ApiController
     {
         private IRepository<User> db = new Facade().GetUserRepo();

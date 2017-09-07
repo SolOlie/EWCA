@@ -32,5 +32,10 @@ namespace FrontendSecure
             return new FileGatewaySecure();
         }
 
+        public IServiceGateway<Switch> GetSwitchGateway()
+        {
+            return new SwitchGatewaySecure();
+        }
+
        }
 }

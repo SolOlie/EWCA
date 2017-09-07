@@ -20,6 +20,8 @@ namespace Entities.Entities
         [SkipTracking]
         public List<Asset> Assets { get; set; }
 
+        public List<Switch> Switches { get; set; }
+
 
     }
 }
