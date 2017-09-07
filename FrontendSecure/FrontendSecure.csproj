@@ -394,6 +394,7 @@
     <Content Include="Views\Changelogs\Edit.cshtml" />
     <Content Include="Views\Changelogs\Create.cshtml" />
     <Content Include="Views\Shared\NotAuthorizedPartical.cshtml" />
+    <Content Include="Views\Shared\NotAuthorizedPatialPopup.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
