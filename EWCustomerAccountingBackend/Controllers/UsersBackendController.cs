@@ -18,16 +18,17 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace EWCustomerAccountingBackend.Controllers
 {
+    [Authorize]
     public class UsersBackendController : ApiController
     {
         private IRepository<User> db = new Facade().GetUserRepo();
-
+        [AllowAnonymous]
         // GET: api/Users
         public List<User> GetUsers()
         {
             return db.ReadAll();
         }
-
+        [AllowAnonymous]
         // GET: api/Users/5
         [ResponseType(typeof(User))]
         public IHttpActionResult GetUser(int id)
@@ -40,7 +41,6 @@ namespace EWCustomerAccountingBackend.Controllers
 
             return Ok(user);
         }
-
         public List<User> GetUsersWithFk(int id)
         {
             return db.ReadAllWithFk(id);

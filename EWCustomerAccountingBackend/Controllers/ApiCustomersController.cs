@@ -15,7 +15,7 @@ using Entities.Entities;
 
 namespace EWCustomerAccountingBackend.Controllers
 {
-    //[Authorize] //det virker nu
+    [Authorize]
     public class ApiCustomersController : ApiController
     {
         private IRepository<Customer> db = new Facade().GetCustomerRepo();

@@ -8,6 +8,7 @@ using FrontendSecure.Models;
 
 namespace FrontendSecure.Controllers
 {
+    [Authorize]
     public class ChangelogsController : Controller
     {
         private IServiceGateway<Changelog> db = new BllFacade().GetChangelogGateway();

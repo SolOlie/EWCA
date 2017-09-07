@@ -11,6 +11,7 @@ using TrackerEnabledDbContext.Common.Models;
 
 namespace EWCustomerAccountingBackend.Controllers
 {
+    [Authorize]
     public class HistoryBackendController : ApiController
     {
 

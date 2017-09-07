@@ -12,6 +12,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace FrontendSecure.Controllers
 {
+    [Authorize]
     [HandleApiError]
     public class UsersController : ApiController
     {

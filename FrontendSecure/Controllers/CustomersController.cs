@@ -14,7 +14,7 @@ using WebGrease;
 
 namespace FrontendSecure.Controllers
 {
-    //[Authorize] //det virker nu
+    [Authorize] 
     public class CustomersController : Controller
     {
         private readonly IServiceGateway<Customer> db = new BllFacade().GetCustomerGateway();

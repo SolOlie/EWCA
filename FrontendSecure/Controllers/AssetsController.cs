@@ -11,7 +11,7 @@ using TrackerEnabledDbContext.Common.Models;
 
 namespace FrontendSecure.Controllers
 {
-    
+    [Authorize]
     public class AssetsController : Controller
     {
         private IServiceGateway<Asset> db = new BllFacade().GetAssetGateway();

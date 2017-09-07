@@ -15,6 +15,7 @@ using Entities.Entities;
 
 namespace EWCustomerAccountingBackend.Controllers
 {
+    [Authorize]
     public class ChangelogsController : ApiController
     {
         private IRepository<Changelog> db = new Facade().GetChangelogRepo();

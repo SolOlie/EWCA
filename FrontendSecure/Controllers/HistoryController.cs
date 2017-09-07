@@ -11,6 +11,7 @@ using TrackerEnabledDbContext.Common.Models;
 
 namespace FrontendSecure.Controllers
 {
+    [Authorize]
     public class HistoryController : Controller
     {
         private HistorySecureGateway hsg = new HistorySecureGateway();

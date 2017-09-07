@@ -67,6 +67,7 @@ namespace FrontendSecure.Controllers
 
         //
         // POST: /Account/Login
+        [AllowAnonymous]
         [HttpPost]
         public async Task<ActionResult> SignIn(SignInModel model, string returnUrl = null)
         {
