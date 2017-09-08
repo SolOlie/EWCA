@@ -63,16 +63,5 @@ namespace FrontendSecure.Controllers
         {
             throw new NotImplementedException();
         }
-        [HttpGet]
-        public ActionResult Create(int id)
-        {
-            var model = new CreateSwitchModel()
-            {
-                CustomerId = id,
-                Assets = dba.ReadAllWithFk(id),
-            };
-            return View(model);
-
-        }
-    }
+       }
 }

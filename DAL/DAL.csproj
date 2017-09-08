@@ -222,6 +222,10 @@
     <Compile Include="Migrations\201709071249319_Added switch to customer.Designer.cs">
       <DependentUpon>201709071249319_Added switch to customer.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709080717514_Asset contains switch.cs" />
+    <Compile Include="Migrations\201709080717514_Asset contains switch.Designer.cs">
+      <DependentUpon>201709080717514_Asset contains switch.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AssetRepo.cs" />
@@ -351,6 +355,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201709071249319_Added switch to customer.resx">
       <DependentUpon>201709071249319_Added switch to customer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709080717514_Asset contains switch.resx">
+      <DependentUpon>201709080717514_Asset contains switch.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

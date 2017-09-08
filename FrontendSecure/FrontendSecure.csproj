@@ -400,10 +400,10 @@
     <Content Include="Views\Shared\NotAuthorizedPartical.cshtml" />
     <Content Include="Views\Shared\NotAuthorizedPatialPopup.cshtml" />
     <Content Include="Views\Customers\_SwitchTableExpressPartial.cshtml" />
-    <Content Include="Views\Switch\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Switch\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

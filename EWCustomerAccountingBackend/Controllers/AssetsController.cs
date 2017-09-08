@@ -21,6 +21,7 @@ namespace EWCustomerAccountingBackend.Controllers
     public class AssetsController : ApiController
     {
         private IRepository<Asset> db = new Facade().GetAssetRepo();
+        private IRepository<Switch> dbs = new Facade().GetSwitchRepo();
         
         // GET: api/Assets
         public List<Asset> GetAssets()
@@ -80,8 +81,16 @@ namespace EWCustomerAccountingBackend.Controllers
             {
                 return BadRequest(ModelState);
             }
-
-            db.Create(asset);
+            var t = db.Create(asset);
+            if (t.Type.Description.ToLower().Trim().Equals("switch"))
+            {
+                dbs.Create(new Switch()
+                {
+                    Asset = t,
+                    Customer = t.Customer,
+                    Name = asset.Name,
+                });
+            }
 
 
             return CreatedAtRoute("DefaultApi", new { id = asset.Id }, asset);

@@ -17,7 +17,10 @@ namespace DAL.Repositories
             using (var ctx = new CADBContext())
             {
                 t.CustomerId = t.Customer.Id;
+                t.AssetId = t.Asset.Id;
                 ctx.Entry(t.Customer).State = EntityState.Unchanged;
+                ctx.Entry(t.Asset).State = EntityState.Unchanged;
+
                 Switch a = ctx.Switches.Add(t);
                 if (t.Ports != null)
                 {

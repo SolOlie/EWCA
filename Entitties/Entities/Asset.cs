@@ -55,6 +55,8 @@ namespace Entities.Entities
 
         public Port Port { get; set; }
         public int PortId { get; set; }
+        public Switch Switch { get; set; }
+        public int SwitchId { get; set; }
 
     }
 }

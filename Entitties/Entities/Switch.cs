@@ -13,5 +13,7 @@ namespace Entities.Entities
         public List<Port> Ports { get; set; }
         public int CustomerId { get; set; }
         public Customer Customer { get; set; }
+        public Asset Asset { get; set; }
+        public int AssetId { get; set; }
     }
 }
