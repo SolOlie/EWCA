@@ -131,7 +131,7 @@
 
             @Html.LabelFor(model => model.Asset.Type, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <div style="display: inline-block; position: relative;">
+                <div style="display: inline-block; position: relative;" id="ma">
                     @Html.DropDownListFor(m => m.Asset.Type.Id,
                         Model.AssetTypes.Select(m => new SelectListItem()
                         {
@@ -139,26 +139,32 @@
                             Text = m.Description
                         }),
                         "Vælg type", new {id = "select"})
-                    <div style="position: absolute; left: 0; right: 0; top: 0; bottom: 0; display: none;" id="clearDropdown"></div>
+                    <div style="position: absolute; left: 0; right: 0; top: 0; bottom: 0; display: inline-block;" id="clearDropdown"></div>
                 </div>
                 <div style="display: inline-block; position: relative;">
                     <input placeholder="Ny type" name="atInput" id="assetTypeInput"/>
                     <div style="position: absolute; left: 0; right: 0; top: 0; bottom: 0;" id="clearInput"></div>
                 </div>
+                
                    
                 
 
             </div>
         </div>
 
-
+        <div style="display: inline-block; margin-bottom: 1%; margin-left: 17%;"id="addPortBtn">
+            <label>Tilføj porte til switchen her: </label>
+            <a class="btn btn-default"  onclick="showPopup()">
+                <span class="glyphicon glyphicon-plus"></span>
+            </a>
+        </div>
         <div class="form-group">
             @Html.Label("Fil", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <input type="file" id="attachment" name="upload" />
             </div>
         </div>
-
+       
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Opret" class="btn btn-default" />
@@ -166,7 +172,42 @@
         </div>
     </div>
 }
-
+<div class="popup" style="position: absolute; display: none; z-index: 1; top: 55%; left: 10%; height: 500px; width: 700px; background-color: lightgray; border-radius: 5px;" id="PopupForAddPort">
+    <div class="col-md-6" style="margin-left: 5%; ">
+        <input placeholder="Port" style="margin-top: 2%;"/>
+        <input placeholder="Uplink til" style="margin-top: 2%;"/>
+        <input placeholder="Trunk" style="margin-top: 2%;"/>
+        <input placeholder="VLAN" style="margin-top: 2%;"/>
+        <textarea placeholder="Note" style="margin-top: 2%; width: 180px;"></textarea>
+        <div><b>Tilføj porten til listen</b>
+            <a class="btn btn-default" id="addPortsToListBtn">
+                <span class="glyphicon glyphicon-arrow-right"></span>
+            </a>
+        </div>
+        
+        <div style="margin-top: 70%; margin-left: 10%; height: 50px; width: 100px; padding-top: 2%; padding-left: 2%;">
+            <a class="btn btn-success" id="addPortsYesBtn">
+                <span class="glyphicon glyphicon-ok"></span>
+            </a>
+            <a class="btn btn-danger" onclick="showPopup()" id="addPortsNoBtn">
+                <span class="glyphicon glyphicon-remove"></span>
+            </a>
+        </div>
+    </div>
+    <div>
+        <table style="width: 40%;">
+            <tr>
+                <th>Port number</th>
+                <th>Uplink til</th>
+                <th>VLAN</th>
+            </tr>
+            <tr>
+                
+            </tr>
+        </table>
+        
+    </div>
+</div>
 <div>
     @Html.ActionLink("Tilbage", "Details", "Customers", new { id = Model.customerId }, null)
 </div>
@@ -177,7 +218,19 @@
 <script type="text/javascript">
     $(document)
         .ready(function () {
+            $("#select").val(1);
+            $(function () {
+                $('Select').change(function () {
+                    if (this.value == 1) {
+                        $('#addPortBtn').show();
+                    } else {
+                        $('#addPortBtn').hide();
+
+                    }
+                });
+            });
             $("#select").removeAttr("required");
+            
         });
     $("#select")
         .on('change',
@@ -204,5 +257,31 @@
 
             $("#clearInput").show();
         });
+    function showPopup() {
+        $("#PopupForAddPort")
+            .toggle('fast',function() {
+                
+            });
+    }
+    //$(function () {
+    //    $('Select').change(function () {
+    //        if (this.value == 1) {
+    //            $('#addPortBtn').show();
+    //        } else {
+    //            $('#addPortBtn').hide();
 
+    //        }
+    //    });
+    //});
+    $('#addPortsToListBtn').click(function (event) {
+           
+           $.ajax({
+               url: '@Url.Action("PostPort","Ports")', 
+               data: $('#user_input').val(),
+               success: function (data) {
+                   $('.table').html(response);
+               }
+           });
+       }
+   );
 </script>

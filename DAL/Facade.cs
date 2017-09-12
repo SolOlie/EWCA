@@ -43,6 +43,11 @@ namespace DAL
         {
             return new SwitchRepo();
         }
+
+        public IRepository<Port> GetPortRepo()
+        {
+            return new PortRepo();
+        }
        
     }
 }

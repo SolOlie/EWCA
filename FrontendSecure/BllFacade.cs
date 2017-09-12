@@ -37,5 +37,10 @@ namespace FrontendSecure
             return new SwitchGatewaySecure();
         }
 
+        public IServiceGateway<Port> GetPortGateway()
+        {
+            return new PortGatewaySecure();
+        }
+
        }
 }

@@ -234,6 +234,7 @@
     <Compile Include="Repositories\CustomerRepo.cs" />
     <Compile Include="Repositories\FileRepo.cs" />
     <Compile Include="Repositories\IRepository.cs" />
+    <Compile Include="Repositories\PortRepo.cs" />
     <Compile Include="Repositories\SwitchRepo.cs" />
     <Compile Include="Repositories\UserRepo.cs" />
   </ItemGroup>
