@@ -3,38 +3,31 @@
     var grid = Html.DevExpress().GridView(settings => {
         settings.Name = "SwitchTableExpress";
         settings.CallbackRouteValues = new { Controller = "Switch", Action = "SwitchTableExpressPartial", customerid = Model.CustomerId };
-        settings.Columns.Add(column =>
+
+
+
+        settings.Columns.Add(col =>
         {
-            column.Caption = "";
-            column.SetDataItemTemplateContent(c =>
+            col.Caption = "";
+            col.SetDataItemTemplateContent(c =>
             {
                 ViewContext.Writer.Write(
-                    Html.ActionLink("Ændre", "Edit","Switch", new { id = DataBinder.Eval(c.DataItem, "Id") }, null)
+                    Html.ActionLink("Detaljer", "AssetDetails","Customers", new { id = DataBinder.Eval(c.DataItem, "Id"), customerId = Model.CustomerId }, null)
+                );
+            });
+            col.Width = 50;
+            col.Settings.AllowDragDrop = DefaultBoolean.False;
+            col.Settings.AllowSort = DefaultBoolean.False;
+
+            col.SetHeaderTemplateContent(c =>
+            {
+                ViewContext.Writer.Write(
+                    Html.ActionLink("Ny", "CreateAsset","Customers", new { id = Model.CustomerId }, null).ToHtmlString()
                 );
             });
 
-            settings.Columns.Add(col =>
-            {
-                col.Caption = "";
-                col.SetDataItemTemplateContent(c =>
-                {
-                    ViewContext.Writer.Write(
-                        Html.ActionLink("Detaljer", "Details","Switch", new { id = DataBinder.Eval(c.DataItem, "Id"), customerId = Model.CustomerId }, null)
-                    );
-                });
-                col.Width = 50;
-                col.SetHeaderTemplateContent(c =>
-                {
-                    ViewContext.Writer.Write(
-                        Html.ActionLink("Ny", "Create","Switch", new { id = Model.CustomerId }, null).ToHtmlString()
-                    );
-                });
-
-            });
-            column.Settings.AllowDragDrop = DefaultBoolean.False;
-            column.Settings.AllowSort = DefaultBoolean.False;
-            column.Width = 70;
         });
+
 
         settings.ClientLayout = (sender, e) =>
         {

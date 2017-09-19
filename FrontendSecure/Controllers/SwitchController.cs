@@ -59,9 +59,6 @@ namespace FrontendSecure.Controllers
             throw new NotImplementedException();
         }
 
-        public ActionResult Details(int id, int customerid)
-        {
-            throw new NotImplementedException();
-        }
+     
        }
 }

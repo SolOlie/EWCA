@@ -30,7 +30,7 @@ namespace DAL.Repositories
         {
             using (var ctx = new CADBContext())
             {
-                var a = ctx.Ports.Include(y => y.Swtich).FirstOrDefault(x => x.Id == id);
+                var a = ctx.Ports.Include(y => y.Uplink).FirstOrDefault(x => x.Id == id);
                 return a;
             }
         }
@@ -39,7 +39,7 @@ namespace DAL.Repositories
         {
             using (var ctx = new CADBContext())
             {
-                var a = ctx.Ports.Include(y => y.Swtich).ToList();
+                var a = ctx.Ports.Include(y => y.Uplink).ToList();
                 return a;
             }
         }
@@ -95,7 +95,7 @@ namespace DAL.Repositories
         {
             using (var ctx = new CADBContext())
             {
-                var afk = ctx.Ports.Include(y => y.Swtich).ToList();
+                var afk = ctx.Ports.Include(y => y.Uplink).ToList();
                 return afk;
             }
         }
