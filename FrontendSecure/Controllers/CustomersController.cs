@@ -22,6 +22,7 @@ namespace FrontendSecure.Controllers
         private readonly IServiceGateway<Asset> dbAsset = new BllFacade().GetAssetGateway();
 
         private readonly IServiceGateway<AssetType> dbAssetType = new BllFacade().GetAssetTypeGateway();
+        private readonly IServiceGateway<Port> dbPort = new BllFacade().GetPortGateway();
 
 
         private readonly IServiceGateway<User> dbUser = new BllFacade().GetUserGateway();
@@ -180,7 +181,7 @@ namespace FrontendSecure.Controllers
                     return View("NotAuthorized");
                 default:
                     var model = new CreateAssetModel()
-                    {
+                    {customerassetlist = dbAsset.ReadAllWithFk(id),
                         Users = dbUser.ReadAllWithFk(id),
                         customerId = id,
                         Customers = new List<Customer>() { db.Read(id) },
@@ -249,17 +250,17 @@ namespace FrontendSecure.Controllers
                 }
 
                 var sw = new Switch();
-                if (asset.Type.Description.ToLower().Equals("switch"))
-                {
-                    sw.Name = asset.Name;
-                    sw.Customer = asset.Customer;
-                    sw.CustomerId = asset.Customer.Id;
+                //if (asset.Type.Description.ToLower().Equals("switch"))
+                //{
+                //    sw.Name = asset.Name;
+                //    sw.Customer = asset.Customer;
+                //    sw.CustomerId = asset.Customer.Id;
 
                    
-                    sw.Ports = ports;
+                //    sw.Ports = ports;
 
                     
-                }
+                //}
                 if (upload != null && upload.ContentLength > 0)
                 {
                     var attachment = new File()
@@ -275,17 +276,30 @@ namespace FrontendSecure.Controllers
                     }
                     asset.FileAttachments = new List<File>() { attachment };
                 }
-                ports = new List<Port>();
+               
               var a =  dbAsset.Create(asset);
-                if (sw.Name != null)
-                {
-                    sw.Asset = a;
-                    sw.AssetId = a.Id;
-                    var s = dbSwitch.Create(sw);
+                //if (sw.Name != null)
+                //{
+                //    sw.Asset = a;
+                //    sw.AssetId = a.Id;
+                //    var s = dbSwitch.Create(sw);
                           
-                }
+                //}
+                var aa = dbAsset.Read(a.Id);
                 
-
+                foreach (var port in ports)
+                {
+                    port.SwitchId = aa.Switch.Id;
+                }
+                dbPort.Create(new Port()
+                {
+                    Swtich = new Switch()
+                    {
+                        Ports = ports
+                    }
+                });
+               
+ ports = new List<Port>();
                 return RedirectToAction("Details", new { id = asset.Customer.Id });
             }
             var model = new CreateAssetModel()

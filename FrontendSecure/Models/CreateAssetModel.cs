@@ -12,6 +12,7 @@ namespace FrontendSecure.Models
         public List<User> Users { get; set; }
         public List<AssetType> AssetTypes { get; set; }
         public int customerId { get; set; }
+        public List<Asset> customerassetlist { get; set; }
         public bool SoftDelete { get; set; }
     }
 }

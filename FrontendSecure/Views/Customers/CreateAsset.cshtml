@@ -176,7 +176,13 @@
 <div class="popup" style="position: absolute; display: none; z-index: 1; top: 55%; left: 10%; height: 500px; width: 700px; background-color: lightgray; border-radius: 5px;" id="PopupForAddPort">
     <div class="col-md-6" style="margin-left: 5%; ">
         <input id="portNumber" placeholder="Port" style="margin-top: 2%;"/>
-        <input id="uplink" placeholder="Uplink til" style="margin-top: 2%;"/>
+       
+        <select id="assetForPort" style="margin-top: 2%;">
+            @foreach (var item in Model.customerassetlist)
+            {
+                <option value="@item.Id">@item.Name</option>
+            }
+        </select>
         <input id="trunk" placeholder="Trunk" style="margin-top: 2%;"/>
         <input id="vlan" placeholder="VLAN" style="margin-top: 2%;"/>
         <textarea id="note" placeholder="Note" style="margin-top: 2%; width: 180px;"></textarea>
@@ -258,7 +264,7 @@
     $('#addPortsToListBtn').click(function (event) {
            $.ajax({
                url: '@Url.Action("AddToPortListAjax","Customers")', 
-               data: { portnumber: 1, VLAN: $("#vlan").val(), trunk: $("#trunk").val(), assetId:1, note: $("#note").val() },
+               data: { portnumber: 1, VLAN: $("#vlan").val(), trunk: $("#trunk").val(), assetId: $("#assetForPort").val(), note: $("#note").val() },
                success: function (data) {
                    $('#Table').load("/Customers/RenderPortPartial");
                }

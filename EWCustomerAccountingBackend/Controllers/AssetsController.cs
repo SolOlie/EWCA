@@ -84,12 +84,19 @@ namespace EWCustomerAccountingBackend.Controllers
             var t = db.Create(asset);
             if (t.Type.Description.ToLower().Trim().Equals("switch"))
             {
-                dbs.Create(new Switch()
+               var s = dbs.Create(new Switch()
                 {
                     Asset = t,
                     Customer = t.Customer,
                     Name = asset.Name,
                 });
+
+                if (s != null)
+                {
+                    var asse = db.Read(t.Id);
+                    asse.SwitchId = s.Id;
+                    db.Update(asse);
+                }
             }
 
 

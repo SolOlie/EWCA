@@ -17,17 +17,17 @@ namespace DAL.Repositories
     {
         public Switch Create(Switch t)
         {
-            using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required))
-            {
-                
-                    
                     using (var ctx = new CADBContext())
                     {
-                        ctx.Database.ExecuteSqlCommand(@"SET IDENTITY_INSERT [CustomerAccountingDB].[dbo].[Switches] ON");
-                        t.CustomerId = t.Customer.Id;
+
+                ctx.Database.Connection.Open();
+
+                t.CustomerId = t.Customer.Id;
                         t.AssetId = t.Asset.Id;
+
                         ctx.Entry(t.Customer).State = EntityState.Unchanged;
                         ctx.Entry(t.Asset).State = EntityState.Unchanged;
+
                         Switch a = ctx.Switches.Add(t);
                         if (t.Ports != null)
                         {
@@ -38,15 +38,16 @@ namespace DAL.Repositories
                             }
                             ctx.Ports.AddRange(t.Ports);
                         }
-
-                        ctx.SaveChanges();
+                        
+                           ctx.Database.ExecuteSqlCommand(@"SET IDENTITY_INSERT [CustomerAccountingDB].[dbo].[Switches] ON");
+                             ctx.SaveChanges();
                         ctx.Database.ExecuteSqlCommand(@"SET IDENTITY_INSERT [CustomerAccountingDB].[dbo].[Switches] OFF");
-                        scope.Complete();
+                   
                         return a;
                     
                 }
                
-            }
+            
            
         }
 

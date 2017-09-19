@@ -16,7 +16,7 @@ namespace DAL.Repositories
         {
             using (var ctx = new CADBContext())
             {
-                Port a = ctx.Ports.Add(t);
+                var a = new Port();
                 if (t.Swtich != null)
                 {
                     ctx.Ports.AddRange(t.Swtich.Ports);

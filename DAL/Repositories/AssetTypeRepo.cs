@@ -35,6 +35,18 @@ namespace DAL.Repositories
             using (var ctx = new CADBContext())
             {
                 var c = ctx.AssetTypes.Include(m => m.Assets).ToList();
+                if (c.Find(a => a.Description.ToLower().Equals("switch")) == null)
+                {
+                    var swit = new AssetType()
+                    {
+                        Description = "Switch"
+                    };
+                    ctx.AssetTypes.Add(swit);
+                    ctx.SaveChanges();
+
+                    c = ctx.AssetTypes.Include(m => m.Assets).ToList();
+                }
+
                  return c;
             }
         }
