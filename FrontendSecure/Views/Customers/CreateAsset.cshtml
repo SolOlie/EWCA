@@ -1,4 +1,5 @@
-﻿@model  FrontendSecure.Models.CreateAssetModel
+﻿@using Entities.Entities
+@model  FrontendSecure.Models.CreateAssetModel
 
 @{
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
@@ -174,11 +175,11 @@
 }
 <div class="popup" style="position: absolute; display: none; z-index: 1; top: 55%; left: 10%; height: 500px; width: 700px; background-color: lightgray; border-radius: 5px;" id="PopupForAddPort">
     <div class="col-md-6" style="margin-left: 5%; ">
-        <input placeholder="Port" style="margin-top: 2%;"/>
-        <input placeholder="Uplink til" style="margin-top: 2%;"/>
-        <input placeholder="Trunk" style="margin-top: 2%;"/>
-        <input placeholder="VLAN" style="margin-top: 2%;"/>
-        <textarea placeholder="Note" style="margin-top: 2%; width: 180px;"></textarea>
+        <input id="portNumber" placeholder="Port" style="margin-top: 2%;"/>
+        <input id="uplink" placeholder="Uplink til" style="margin-top: 2%;"/>
+        <input id="trunk" placeholder="Trunk" style="margin-top: 2%;"/>
+        <input id="vlan" placeholder="VLAN" style="margin-top: 2%;"/>
+        <textarea id="note" placeholder="Note" style="margin-top: 2%; width: 180px;"></textarea>
         <div><b>Tilføj porten til listen</b>
             <a class="btn btn-default" id="addPortsToListBtn">
                 <span class="glyphicon glyphicon-arrow-right"></span>
@@ -195,17 +196,8 @@
         </div>
     </div>
     <div>
-        <table style="width: 40%;">
-            <tr>
-                <th>Port number</th>
-                <th>Uplink til</th>
-                <th>VLAN</th>
-            </tr>
-            <tr>
-                
-            </tr>
-        </table>
-        
+       
+        @Html.Partial("PortListPartialView",new List<Port>())
     </div>
 </div>
 <div>
@@ -225,7 +217,6 @@
                         $('#addPortBtn').show();
                     } else {
                         $('#addPortBtn').hide();
-
                     }
                 });
             });
@@ -248,6 +239,7 @@
                 $("#select").prop("disabled", true);
                 $(this).hide().prev("input[disabled]").prop("disabled", false).focus();
                 $("#clearDropdown").show();
+                $('#addPortBtn').hide();
             
         });
     $("#clearDropdown")
@@ -263,23 +255,12 @@
                 
             });
     }
-    //$(function () {
-    //    $('Select').change(function () {
-    //        if (this.value == 1) {
-    //            $('#addPortBtn').show();
-    //        } else {
-    //            $('#addPortBtn').hide();
-
-    //        }
-    //    });
-    //});
     $('#addPortsToListBtn').click(function (event) {
-           
            $.ajax({
-               url: '@Url.Action("PostPort","Ports")', 
-               data: $('#user_input').val(),
+               url: '@Url.Action("AddToPortListAjax","Customers")', 
+               data: { portnumber: 1, VLAN: $("#vlan").val(), trunk: $("#trunk").val(), assetId:1, note: $("#note").val() },
                success: function (data) {
-                   $('.table').html(response);
+                   $('#Table').load("/Customers/RenderPortPartial");
                }
            });
        }

@@ -5,8 +5,11 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 using DAL.DB;
 using Entities.Entities;
+using System.Configuration;
+using System.Runtime.Remoting.Contexts;
 
 namespace DAL.Repositories
 {
@@ -14,21 +17,37 @@ namespace DAL.Repositories
     {
         public Switch Create(Switch t)
         {
-            using (var ctx = new CADBContext())
+            using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required))
             {
-                t.CustomerId = t.Customer.Id;
-                t.AssetId = t.Asset.Id;
-                ctx.Entry(t.Customer).State = EntityState.Unchanged;
-                ctx.Entry(t.Asset).State = EntityState.Unchanged;
+                
+                    
+                    using (var ctx = new CADBContext())
+                    {
+                        ctx.Database.ExecuteSqlCommand(@"SET IDENTITY_INSERT [CustomerAccountingDB].[dbo].[Switches] ON");
+                        t.CustomerId = t.Customer.Id;
+                        t.AssetId = t.Asset.Id;
+                        ctx.Entry(t.Customer).State = EntityState.Unchanged;
+                        ctx.Entry(t.Asset).State = EntityState.Unchanged;
+                        Switch a = ctx.Switches.Add(t);
+                        if (t.Ports != null)
+                        {
+                            foreach (var p in t.Ports)
+                            {
+                                p.SwitchId = a.Id;
 
-                Switch a = ctx.Switches.Add(t);
-                if (t.Ports != null)
-                {
-                    ctx.Ports.AddRange(t.Ports);
+                            }
+                            ctx.Ports.AddRange(t.Ports);
+                        }
+
+                        ctx.SaveChanges();
+                        ctx.Database.ExecuteSqlCommand(@"SET IDENTITY_INSERT [CustomerAccountingDB].[dbo].[Switches] OFF");
+                        scope.Complete();
+                        return a;
+                    
                 }
-                ctx.SaveChanges();
-                return a;
+               
             }
+           
         }
 
         public Switch Read(int id)

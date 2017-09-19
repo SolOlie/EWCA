@@ -52,7 +52,9 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -226,6 +228,26 @@
     <Compile Include="Migrations\201709080717514_Asset contains switch.Designer.cs">
       <DependentUpon>201709080717514_Asset contains switch.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709130929433_Added key anno to switch.cs" />
+    <Compile Include="Migrations\201709130929433_Added key anno to switch.Designer.cs">
+      <DependentUpon>201709130929433_Added key anno to switch.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709130934130_added new anno til switch.cs" />
+    <Compile Include="Migrations\201709130934130_added new anno til switch.Designer.cs">
+      <DependentUpon>201709130934130_added new anno til switch.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709141121226_testAnno.cs" />
+    <Compile Include="Migrations\201709141121226_testAnno.Designer.cs">
+      <DependentUpon>201709141121226_testAnno.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709141133309_Trying with modelbuilder.cs" />
+    <Compile Include="Migrations\201709141133309_Trying with modelbuilder.Designer.cs">
+      <DependentUpon>201709141133309_Trying with modelbuilder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709141141423_more test.cs" />
+    <Compile Include="Migrations\201709141141423_more test.Designer.cs">
+      <DependentUpon>201709141141423_more test.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AssetRepo.cs" />
@@ -359,6 +381,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201709080717514_Asset contains switch.resx">
       <DependentUpon>201709080717514_Asset contains switch.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709130929433_Added key anno to switch.resx">
+      <DependentUpon>201709130929433_Added key anno to switch.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709130934130_added new anno til switch.resx">
+      <DependentUpon>201709130934130_added new anno til switch.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709141121226_testAnno.resx">
+      <DependentUpon>201709141121226_testAnno.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709141133309_Trying with modelbuilder.resx">
+      <DependentUpon>201709141133309_Trying with modelbuilder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709141141423_more test.resx">
+      <DependentUpon>201709141141423_more test.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -56,6 +56,9 @@ namespace DAL.DB
             modelBuilder.Entity<Switch>().HasMany(p => p.Ports).WithRequired(s => s.Swtich);
             modelBuilder.Entity<Customer>().HasMany(s => s.Switches).WithRequired(s => s.Customer);
             modelBuilder.Entity<Asset>().HasOptional(s => s.Switch).WithRequired(p => p.Asset);
+            modelBuilder.Entity<Switch>()
+                .Property(t => t.Id)
+                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
             modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
             base.OnModelCreating(modelBuilder);
         }

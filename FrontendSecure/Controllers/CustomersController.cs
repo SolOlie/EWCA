@@ -26,6 +26,8 @@ namespace FrontendSecure.Controllers
 
         private readonly IServiceGateway<User> dbUser = new BllFacade().GetUserGateway();
         private readonly IServiceGateway<File> dbFile = new BllFacade().GetFileGateway();
+        private readonly IServiceGateway<Switch> dbSwitch = new BllFacade().GetSwitchGateway();
+        private static List<Port> ports;
 
         private enum AuthState
         {
@@ -185,6 +187,7 @@ namespace FrontendSecure.Controllers
                         AssetTypes = dbAssetType.ReadAll(),
                         Asset = new Asset()
                     };
+                    ports = new List<Port>();
 
                     return View(model);
 
@@ -242,6 +245,20 @@ namespace FrontendSecure.Controllers
                 else
                 {
                     asset.TypeId = asset.Type.Id;
+                    asset.Type = dbAssetType.Read(asset.Type.Id);
+                }
+
+                var sw = new Switch();
+                if (asset.Type.Description.ToLower().Equals("switch"))
+                {
+                    sw.Name = asset.Name;
+                    sw.Customer = asset.Customer;
+                    sw.CustomerId = asset.Customer.Id;
+
+                   
+                    sw.Ports = ports;
+
+                    
                 }
                 if (upload != null && upload.ContentLength > 0)
                 {
@@ -258,7 +275,17 @@ namespace FrontendSecure.Controllers
                     }
                     asset.FileAttachments = new List<File>() { attachment };
                 }
-                dbAsset.Create(asset);
+                ports = new List<Port>();
+              var a =  dbAsset.Create(asset);
+                if (sw.Name != null)
+                {
+                    sw.Asset = a;
+                    sw.AssetId = a.Id;
+                    var s = dbSwitch.Create(sw);
+                          
+                }
+                
+
                 return RedirectToAction("Details", new { id = asset.Customer.Id });
             }
             var model = new CreateAssetModel()
@@ -381,6 +408,25 @@ namespace FrontendSecure.Controllers
             }
             model = db.ReadAll();
             return PartialView("_CustomerTableExpressPartial", model);
+        }
+
+        public bool AddToPortListAjax(int portnumber, int assetId, string trunk, string VLAN, string note)
+        {
+            var p = new Port()
+            {
+                PortNumber = portnumber,
+                Note = note,
+                Trunk = trunk,
+                VLAN = VLAN,
+                UplinkId = assetId
+            };
+            ports.Add(p);
+            return true;
+        }
+
+        public ActionResult RenderPortPartial()
+        {
+            return PartialView("PortListPartialView", ports);
         }
     }
 }

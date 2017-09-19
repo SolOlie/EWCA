@@ -1,0 +1,28 @@
+﻿@model IEnumerable<Entities.Entities.Port>
+    <div style="max-height: 400px !important; overflow-y: scroll">
+        <table style="width: 100%;"  id="Table" class="table-striped table-hover table table-bordered">
+            <thead>
+            <tr>
+                <th>Port number</th>
+                <th>Uplink til</th>
+                <th>VLAN</th>
+            </tr>
+            </thead>
+            <tbody>
+                @foreach (var c in Model)
+            {
+                    <tr>
+                        <td>
+                            @c.PortNumber
+                        </td>
+                        <td>
+                            @c.Uplink
+                        </td>
+                        <td>
+                            @c.VLAN
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+</div>
