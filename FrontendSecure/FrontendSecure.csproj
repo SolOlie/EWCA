@@ -219,6 +219,7 @@
     <Compile Include="Models\CreateUserWithCustomModel.cs" />
     <Compile Include="Models\CustomerAssetypeViewModel.cs" />
     <Compile Include="Models\ISoftDeleteTableModel.cs" />
+    <Compile Include="Models\PortListPartialModel.cs" />
     <Compile Include="Models\SearchModel.cs" />
     <Compile Include="Models\SignInResult.cs" />
     <Compile Include="Filters\HandleApiErrorAttribute.cs" />
@@ -404,6 +405,7 @@
     <Content Include="Views\Shared\NotAuthorizedPatialPopup.cshtml" />
     <Content Include="Views\Customers\_SwitchTableExpressPartial.cshtml" />
     <Content Include="Views\Customers\PortListPartialView.cshtml" />
+    <Content Include="Views\Customers\_PortListExpressPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

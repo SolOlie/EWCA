@@ -1,0 +1,87 @@
+@model FrontendSecure.Models.PortListPartialModel
+@{
+    var grid = Html.DevExpress().GridView(settings => {
+        settings.Name = "PortListExpress";
+        settings.CallbackRouteValues = new { Controller = "Ports", Action = "PortListExpressPartial" , assetid = Model.assetid};
+
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Ports", Action = "PortListExpressPartialAddNew" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Ports", Action = "PortListExpressPartialUpdate" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Ports", Action = "PortListExpressPartialDelete" };
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+        settings.CommandColumn.Caption = " ";
+        settings.SettingsText.CommandDelete = "Slet";
+        settings.Columns.Add(col =>
+        {
+            col.Caption = "";
+            col.SetDataItemTemplateContent(
+                c =>
+                {
+                    ViewContext.Writer.Write(Html.ActionLink("Ændre", "PutPort", "Ports", new { id = DataBinder.Eval(c.DataItem, "Id") }, null));
+                });
+            col.SetHeaderTemplateContent(c =>
+            {
+                ViewContext.Writer.Write(Html.ActionLink("Ny", "PostPort", "Ports", new { assetid = Model.assetid }, null));
+            });
+
+        });
+
+        settings.ClientLayout = (sender, e) =>
+        {
+            if (e.LayoutMode == ClientLayoutMode.Saving)
+            {
+                Session["LayoutPort"] = e.LayoutData;
+            }
+            else
+            {
+                e.LayoutData = (string)Session["LayoutPort"];
+            }
+        };
+        settings.SettingsBehavior.ConfirmDelete = true;
+
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowNewButton = false;
+        settings.CommandColumn.ShowDeleteButton = true;
+        settings.CommandColumn.ShowEditButton = false;
+
+        settings.KeyFieldName = "Id";
+
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowNewButton = false;
+        settings.CommandColumn.ShowDeleteButton = true;
+        settings.CommandColumn.ShowEditButton = false;
+        settings.CommandColumn.Width = 70;
+
+        settings.KeyFieldName = "Id";
+
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = true;
+        settings.Settings.ShowFilterRow = false;
+        settings.SettingsSearchPanel.Visible = true;
+        settings.SettingsSearchPanel.ShowApplyButton = true;
+
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+        settings.Settings.ShowHeaderFilterButton = true;
+
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+
+
+        settings.Columns.Add("PortNumber");
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Uplink.Name";
+            c.Caption = "Uplink";
+        });
+        settings.Columns.Add("Trunk");
+        settings.Columns.Add("VLAN");
+        settings.Columns.Add("Note");
+    });
+    if (ViewData["EditError"] != null){
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model.Ports).GetHtml()

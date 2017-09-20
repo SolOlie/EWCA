@@ -114,6 +114,9 @@
         <li role="presentation" onclick="TabShift()" id="FilePane">
             <a href="#Files" data-toggle="tab" id="idFile">Filer</a>
         </li>
+        <li role="presentation" onclick="TabShift()" id="Port">
+            <a href="#Ports" data-toggle="tab" id="idPort">Ports</a>
+        </li>
     </ul>
     <div class="tab-content">
         <div class="tab-pane active" id="Changelog">
@@ -128,34 +131,40 @@
                     <b>Fil</b>
                 </span>
             </a>
-                <div id="addFilePopup" style=" height: 150px;
-                     width: 300px;
-    position: fixed;
-    background-color: lightgray;
-    top: 50%;
-    left: 50%;
-    margin-left: -150px;
-    margin-top: -75px;
-    border-radius: 5px;
-    padding: 20px;
-    padding-left: 30px;
-    display: none;">
-                    @using (Html.BeginForm("AddFile", "Assets", FormMethod.Post, new {enctype = "multipart/form-data"}))
+            <div id="addFilePopup" style=" height: 150px;
+                                      width: 300px;
+                                      position: fixed;
+                                      background-color: lightgray;
+                                      top: 50%;
+                                      left: 50%;
+                                      margin-left: -150px;
+                                      margin-top: -75px;
+                                      border-radius: 5px;
+                                      padding: 20px;
+                                      padding-left: 30px;
+                                      display: none;">
+                @using (Html.BeginForm("AddFile", "Assets", FormMethod.Post, new {enctype = "multipart/form-data"}))
                 {
-                        <input type="hidden" name="assetId" value="@Model.Asset.Id" />
-                        <input type="File" id="fileUpload" name="Upload" />
-                        <div class="form-group" id="buttons">
-                            <input type="submit" class="btn btn-success" value="submit" onclick="fileSubmitted()" />
-                            <a class="btn btn-danger" id="cancelBtn" onclick="toggleAddFile()">
-                                Cancel
-                            </a>
-                        </div>
+                    <input type="hidden" name="assetId" value="@Model.Asset.Id" />
+                    <input type="File" id="fileUpload" name="Upload" />
+                    <div class="form-group" id="buttons">
+                        <input type="submit" class="btn btn-success" value="submit" onclick="fileSubmitted()" />
+                        <a class="btn btn-danger" id="cancelBtn" onclick="toggleAddFile()">
+                            Cancel
+                        </a>
+                    </div>
 
                 }
 
-                </div>
+            </div>
           
             @Html.Action("FileTableExpressPartial", "Changelogs", new { assetid = Model.Asset.Id })
+
+        </div>
+        <div id="Ports" class="tab-pane">
+
+            @Html.Action("PortListExpressPartial", "Ports", new {assetid = Model.Asset.Id})
+
 
         </div>
     </div>

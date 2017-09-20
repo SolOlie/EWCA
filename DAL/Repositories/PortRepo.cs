@@ -95,7 +95,7 @@ namespace DAL.Repositories
         {
             using (var ctx = new CADBContext())
             {
-                var afk = ctx.Ports.Include(y => y.Uplink).ToList();
+                var afk = ctx.Ports.Include(y => y.Uplink).Where(c=>c.SwitchId == id).ToList();
                 return afk;
             }
         }
