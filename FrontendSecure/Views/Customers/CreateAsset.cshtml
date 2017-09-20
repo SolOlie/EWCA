@@ -261,7 +261,7 @@
     $('#addPortsToListBtn').click(function (event) {
            $.ajax({
                url: '@Url.Action("AddToPortListAjax","Customers")', 
-               data: { portnumber: 1, VLAN: $("#vlan").val(), trunk: $("#trunk").val(), assetId: $("#assetForPort").val(), note: $("#note").val() },
+               data: { portnumber: $("#portNumber").val(), VLAN: $("#vlan").val(), trunk: $("#trunk").val(), assetId: $("#assetForPort").val(), note: $("#note").val() },
                success: function (data) {
                    $('#Table').load("/Customers/RenderPortPartial");
                }

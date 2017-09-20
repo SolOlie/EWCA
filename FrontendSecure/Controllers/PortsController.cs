@@ -36,14 +36,23 @@ namespace FrontendSecure.Controllers
 
         [System.Web.Http.HttpPost, ValidateInput(false)]
 
-        public ActionResult PortListExpressPartialDelete(System.Int32 Id)
+        public ActionResult PortListExpressPartialDelete(string Id)
         {
+            Id = Id.Replace("\"", "");
+            if (string.IsNullOrEmpty(Id))
+            {
+                Id = "0";
+            }
+            int id = Int32.Parse(Id);
             var model = new PortListPartialModel();
-            if (Id >= 0)
+            if (id > 0)
             {
                 try
                 {
-                    // Insert here a code to delete the item from your model
+                    var c = dbports.Read(id);
+                    dbports.Delete(c);
+                    model.Ports = dbports.ReadAllWithFk(c.SwitchId);
+                    model.assetid = c.SwitchId;
                 }
                 catch (Exception e)
                 {

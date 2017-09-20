@@ -46,16 +46,23 @@ namespace DAL.DB
             modelBuilder.Entity<Customer>().Property(e => e.Date).HasColumnType("datetime2");
 
             modelBuilder.Entity<Changelog>().HasRequired(c => c.User).WithMany(e => e.Changelogs);
+
+
             modelBuilder.Entity<Customer>().HasMany(x => x.ContactPersons).WithOptional(x => x.IsContactForCustomer);
+            modelBuilder.Entity<Customer>().HasMany(s => s.Switches).WithRequired(s => s.Customer);
+
             modelBuilder.Entity<Asset>().HasRequired(a => a.Customer).WithMany(c => c.Assets).WillCascadeOnDelete(true);
             modelBuilder.Entity<Asset>().HasMany(a => a.Changelogs).WithRequired(a => a.Asset);
             modelBuilder.Entity<Asset>().HasOptional(a => a.Type).WithMany(a => a.Assets);
             modelBuilder.Entity<Asset>().HasMany(x => x.FileAttachments).WithRequired(x => x.Asset);
-            modelBuilder.Entity<File>().HasOptional(x => x.ContentFile).WithRequired(x => x.File);
-            modelBuilder.Entity<Asset>().HasOptional(s => s.Port).WithOptionalDependent(p => p.Asset);
-            modelBuilder.Entity<Switch>().HasMany(p => p.Ports).WithRequired(s => s.Switch);
-            modelBuilder.Entity<Customer>().HasMany(s => s.Switches).WithRequired(s => s.Customer);
+            modelBuilder.Entity<Asset>().HasOptional(s => s.Port).WithRequired(p => p.Asset);
             modelBuilder.Entity<Asset>().HasOptional(s => s.Switch).WithRequired(p => p.Asset);
+
+            modelBuilder.Entity<File>().HasOptional(x => x.ContentFile).WithRequired(x => x.File);
+           
+            modelBuilder.Entity<Switch>().HasMany(p => p.Ports).WithRequired(s => s.Switch);
+            
+            
             modelBuilder.Entity<Switch>()
                 .Property(t => t.Id)
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);

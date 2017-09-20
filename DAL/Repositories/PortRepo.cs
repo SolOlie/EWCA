@@ -16,17 +16,18 @@ namespace DAL.Repositories
         {
             using (var ctx = new CADBContext())
             {
-                if (t.Switch != null)
-                {
-                    ctx.Ports.AddRange(t.Switch.Ports);
-                }
-                else
-                {
+                //if (t.Switch != null)
+                //{
+                //    ctx.Ports.AddRange(t.Switch.Ports);
+                //}
+                
                 //    ctx.Entry(t.Switch).State = EntityState.Unchanged;
 
-                //    ctx.Entry(t.Asset).State = EntityState.Unchanged;
+             
+                var asset = ctx.Assets.FirstOrDefault(x => x.Id == t.AssetId);
+                t.Asset = asset;
                     ctx.Ports.Add(t);
-                }
+                ctx.Entry(t.Asset).State = EntityState.Unchanged;
                 ctx.SaveChanges();
                 return t;
             }
@@ -66,7 +67,7 @@ namespace DAL.Repositories
         }
         bool PortExists(int id, CADBContext ctx)
         {
-            if (ctx.Switches.Count(a => a.Id == id) > 0)
+            if (ctx.Ports.Count(a => a.Id == id) > 0)
             {
                 return true;
             }
