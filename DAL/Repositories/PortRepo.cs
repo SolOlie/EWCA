@@ -16,13 +16,19 @@ namespace DAL.Repositories
         {
             using (var ctx = new CADBContext())
             {
-                var a = new Port();
-                if (t.Swtich != null)
+                if (t.Switch != null)
                 {
-                    ctx.Ports.AddRange(t.Swtich.Ports);
+                    ctx.Ports.AddRange(t.Switch.Ports);
+                }
+                else
+                {
+                //    ctx.Entry(t.Switch).State = EntityState.Unchanged;
+
+                //    ctx.Entry(t.Asset).State = EntityState.Unchanged;
+                    ctx.Ports.Add(t);
                 }
                 ctx.SaveChanges();
-                return a;
+                return t;
             }
         }
 
@@ -30,7 +36,7 @@ namespace DAL.Repositories
         {
             using (var ctx = new CADBContext())
             {
-                var a = ctx.Ports.Include(y => y.Uplink).FirstOrDefault(x => x.Id == id);
+                var a = ctx.Ports.Include(y => y.Asset).Include(x=>x.Switch).FirstOrDefault(x => x.Id == id);
                 return a;
             }
         }
@@ -39,7 +45,7 @@ namespace DAL.Repositories
         {
             using (var ctx = new CADBContext())
             {
-                var a = ctx.Ports.Include(y => y.Uplink).ToList();
+                var a = ctx.Ports.Include(y => y.Asset).Include(x => x.Switch).ToList();
                 return a;
             }
         }
@@ -95,7 +101,7 @@ namespace DAL.Repositories
         {
             using (var ctx = new CADBContext())
             {
-                var afk = ctx.Ports.Include(y => y.Uplink).Where(c=>c.SwitchId == id).ToList();
+                var afk = ctx.Ports.Include(y => y.Asset).Include(x => x.Switch).Where(c=>c.SwitchId == id).ToList();
                 return afk;
             }
         }

@@ -293,7 +293,7 @@ namespace FrontendSecure.Controllers
                 }
                 dbPort.Create(new Port()
                 {
-                    Swtich = new Switch()
+                    Switch = new Switch()
                     {
                         Ports = ports
                     }
@@ -432,7 +432,7 @@ namespace FrontendSecure.Controllers
                 Note = note,
                 Trunk = trunk,
                 VLAN = VLAN,
-                UplinkId = assetId
+                AssetId = assetId
             };
             ports.Add(p);
             return true;

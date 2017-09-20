@@ -20,6 +20,7 @@ namespace FrontendSecure.Controllers
     public class PortsController : Controller
     {
         private readonly IServiceGateway<Port> dbports = new BllFacade().GetPortGateway();
+        private readonly IServiceGateway<Asset> dbAsset = new BllFacade().GetAssetGateway();
 
         [ValidateInput(false)]
         public ActionResult PortListExpressPartial(int assetid)
@@ -34,7 +35,7 @@ namespace FrontendSecure.Controllers
         }
 
         [System.Web.Http.HttpPost, ValidateInput(false)]
-      
+
         public ActionResult PortListExpressPartialDelete(System.Int32 Id)
         {
             var model = new PortListPartialModel();
@@ -50,6 +51,59 @@ namespace FrontendSecure.Controllers
                 }
             }
             return PartialView("~/Views/Customers/_PortListExpressPartial.cshtml", model);
+        }
+
+        public ActionResult EditPort(int id, int assetid)
+        {
+            Port p = dbports.Read(id);
+            int cid = dbAsset.Read(p.AssetId).Customer.Id;
+            var model = new CreatePortModel()
+            {
+                Port = p,
+                assetreturnid = assetid,
+                customerId = cid,
+                Assets = dbAsset.ReadAllWithFk(cid)
+            };
+            return View(model);
+        }
+
+        [System.Web.Mvc.HttpPost]
+        public ActionResult EditPort(Port port, int customerid, int assetid)
+        {
+
+            return RedirectToAction("AssetDetails", "Customers", new {id = assetid, customerId= customerid} );
+        }
+
+        public ActionResult CreatePort(int assetid)
+        {
+           int cid = dbAsset.Read(assetid).Customer.Id;
+            var model = new CreatePortModel()
+            {
+                assetreturnid = assetid,
+                Assets = dbAsset.ReadAllWithFk(cid),
+                customerId = cid,
+                Port = new Port() { SwitchId = assetid}
+            };
+            return View(model);
+        }
+
+        [System.Web.Mvc.HttpPost]
+        public ActionResult CreatePort(Port port , int assetreturnid, int customerid)
+        {
+            if (ModelState.IsValid)
+            {
+                dbports.Create(port);
+                return RedirectToAction("AssetDetails", "Customers", new { id = assetreturnid, customerId = customerid });
+            }
+
+            int cid = dbAsset.Read(assetreturnid).Customer.Id;
+            var model = new CreatePortModel()
+            {
+                assetreturnid = assetreturnid,
+                Assets = dbAsset.ReadAllWithFk(cid),
+                customerId = cid
+            };
+            return View(model);
         }
     }
 }

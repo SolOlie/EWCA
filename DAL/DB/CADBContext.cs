@@ -52,8 +52,8 @@ namespace DAL.DB
             modelBuilder.Entity<Asset>().HasOptional(a => a.Type).WithMany(a => a.Assets);
             modelBuilder.Entity<Asset>().HasMany(x => x.FileAttachments).WithRequired(x => x.Asset);
             modelBuilder.Entity<File>().HasOptional(x => x.ContentFile).WithRequired(x => x.File);
-            modelBuilder.Entity<Asset>().HasOptional(s => s.Port).WithOptionalDependent(p => p.Uplink);
-            modelBuilder.Entity<Switch>().HasMany(p => p.Ports).WithRequired(s => s.Swtich);
+            modelBuilder.Entity<Asset>().HasOptional(s => s.Port).WithOptionalDependent(p => p.Asset);
+            modelBuilder.Entity<Switch>().HasMany(p => p.Ports).WithRequired(s => s.Switch);
             modelBuilder.Entity<Customer>().HasMany(s => s.Switches).WithRequired(s => s.Customer);
             modelBuilder.Entity<Asset>().HasOptional(s => s.Switch).WithRequired(p => p.Asset);
             modelBuilder.Entity<Switch>()

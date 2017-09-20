@@ -406,6 +406,8 @@
     <Content Include="Views\Customers\_SwitchTableExpressPartial.cshtml" />
     <Content Include="Views\Customers\PortListPartialView.cshtml" />
     <Content Include="Views\Customers\_PortListExpressPartial.cshtml" />
+    <Content Include="Views\Ports\EditPort.cshtml" />
+    <Content Include="Views\Ports\CreatePort.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

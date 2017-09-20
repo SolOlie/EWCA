@@ -248,6 +248,10 @@
     <Compile Include="Migrations\201709141141423_more test.Designer.cs">
       <DependentUpon>201709141141423_more test.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709200952024_refactor.cs" />
+    <Compile Include="Migrations\201709200952024_refactor.Designer.cs">
+      <DependentUpon>201709200952024_refactor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AssetRepo.cs" />
@@ -396,6 +400,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201709141141423_more test.resx">
       <DependentUpon>201709141141423_more test.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709200952024_refactor.resx">
+      <DependentUpon>201709200952024_refactor.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

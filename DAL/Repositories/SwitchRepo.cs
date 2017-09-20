@@ -55,7 +55,7 @@ namespace DAL.Repositories
         {
             using (var ctx = new CADBContext())
             {
-                var a = ctx.Switches.Include(y => y.Ports).Include(c=> c.Customer).Include(e => e.Ports.Select(p=> p.Uplink)).FirstOrDefault(x => x.Id == id);
+                var a = ctx.Switches.Include(y => y.Ports).Include(c=> c.Customer).Include(e => e.Ports.Select(p=> p.Asset)).FirstOrDefault(x => x.Id == id);
                 return a;
             }
         }
@@ -64,7 +64,7 @@ namespace DAL.Repositories
         {
             using (var ctx = new CADBContext())
             {
-                var a = ctx.Switches.Include(y => y.Ports).Include(c => c.Customer).Include(e => e.Ports.Select(p => p.Uplink)).ToList();
+                var a = ctx.Switches.Include(y => y.Ports).Include(c => c.Customer).Include(e => e.Ports.Select(p => p.Asset)).ToList();
                 return a;
             }
         }
@@ -118,7 +118,7 @@ namespace DAL.Repositories
         {
             using (var ctx = new CADBContext())
             {
-                var afk = ctx.Switches.Include(y => y.Customer).Include(y => y.Ports).Include(y => y.Ports.Select(p=> p.Uplink)).Where(x => x.Customer.Id == id).ToList();
+                var afk = ctx.Switches.Include(y => y.Customer).Include(y => y.Ports).Include(y => y.Ports.Select(p=> p.Asset)).Where(x => x.Customer.Id == id).ToList();
                 return afk;
             }
         }
