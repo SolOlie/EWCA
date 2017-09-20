@@ -39,9 +39,9 @@ namespace DAL.Repositories
                             ctx.Ports.AddRange(t.Ports);
                         }
                         
-                           ctx.Database.ExecuteSqlCommand(@"SET IDENTITY_INSERT [CustomerAccountingDB].[dbo].[Switches] ON");
+                          // ctx.Database.ExecuteSqlCommand(@"SET IDENTITY_INSERT [CustomerAccountingDB].[dbo].[Switches] ON");
                              ctx.SaveChanges();
-                        ctx.Database.ExecuteSqlCommand(@"SET IDENTITY_INSERT [CustomerAccountingDB].[dbo].[Switches] OFF");
+                      //  ctx.Database.ExecuteSqlCommand(@"SET IDENTITY_INSERT [CustomerAccountingDB].[dbo].[Switches] OFF");
                    
                         return a;
                     

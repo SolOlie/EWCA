@@ -250,17 +250,7 @@ namespace FrontendSecure.Controllers
                 }
 
                 var sw = new Switch();
-                //if (asset.Type.Description.ToLower().Equals("switch"))
-                //{
-                //    sw.Name = asset.Name;
-                //    sw.Customer = asset.Customer;
-                //    sw.CustomerId = asset.Customer.Id;
-
-                   
-                //    sw.Ports = ports;
-
-                    
-                //}
+              
                 if (upload != null && upload.ContentLength > 0)
                 {
                     var attachment = new File()
@@ -278,26 +268,17 @@ namespace FrontendSecure.Controllers
                 }
                
               var a =  dbAsset.Create(asset);
-                //if (sw.Name != null)
-                //{
-                //    sw.Asset = a;
-                //    sw.AssetId = a.Id;
-                //    var s = dbSwitch.Create(sw);
-                          
-                //}
+              
                 var aa = dbAsset.Read(a.Id);
                 
                 foreach (var port in ports)
                 {
                     port.SwitchId = aa.Switch.Id;
+                    port.Switch = null;
+                    port.Asset = null;
+                    dbPort.Create(port);
                 }
-                dbPort.Create(new Port()
-                {
-                    Switch = new Switch()
-                    {
-                        Ports = ports
-                    }
-                });
+               
                
  ports = new List<Port>();
                 return RedirectToAction("Details", new { id = asset.Customer.Id });

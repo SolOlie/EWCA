@@ -22,7 +22,7 @@ namespace FrontendSecure.Gateways.SecureGateways
 
         public List<Port> ReadAll()
         {
-            var Ports = WebapiService.instance.GetAsync<List<Port>>("/api/Portes/GetPorts", HttpContext.Current.User.Identity.Name).Result;
+            var Ports = WebapiService.instance.GetAsync<List<Port>>("/api/Ports/GetPorts", HttpContext.Current.User.Identity.Name).Result;
             return Ports;
         }
 
