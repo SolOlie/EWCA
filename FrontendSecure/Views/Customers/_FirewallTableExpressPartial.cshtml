@@ -1,12 +1,11 @@
-@model FrontendSecure.Models.PortListPartialModel
+@model FrontendSecure.Models.FirewallListPartialModel
 @{
     var grid = Html.DevExpress().GridView(settings => {
-        settings.Name = "PortListExpress";
-        settings.CallbackRouteValues = new { Controller = "Ports", Action = "PortListExpressPartial" , assetid = Model.assetid};
+        settings.Name = "FirewallTableExpress";
+        settings.CallbackRouteValues = new { Controller = "Firewall", Action = "FirewallTableExpressPartial", Customerid = Model.customerid };
 
-        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Ports", Action = "PortListExpressPartialAddNew" };
-        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Ports", Action = "PortListExpressPartialUpdate" };
-        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Ports", Action = "PortListExpressPartialDelete" };
+
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Firewall", Action = "FirewallTableExpressPartialDelete" };
         settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
         settings.CommandColumn.Caption = " ";
         settings.SettingsText.CommandDelete = "Slet";
@@ -16,11 +15,11 @@
             col.SetDataItemTemplateContent(
                 c =>
                 {
-                    ViewContext.Writer.Write(Html.ActionLink("Ændre", "EditPort", "Ports", new { id = DataBinder.Eval(c.DataItem, "Id"), assetid = Model.assetid}, null));
+                    ViewContext.Writer.Write(Html.ActionLink("Ændre", "Edit", "Firewall", new { id = DataBinder.Eval(c.DataItem, "Id")}, null));
                 });
             col.SetHeaderTemplateContent(c =>
             {
-                ViewContext.Writer.Write(Html.ActionLink("Ny", "CreatePort", "Ports", new { assetid = Model.assetid}, null));
+                ViewContext.Writer.Write(Html.ActionLink("Ny", "Create", "Firewall", new { Customerid = Model.customerid }, null));
             });
 
         });
@@ -29,14 +28,15 @@
         {
             if (e.LayoutMode == ClientLayoutMode.Saving)
             {
-                Session["LayoutPort"] = e.LayoutData;
+                Session["LayoutFirewall"] = e.LayoutData;
             }
             else
             {
-                e.LayoutData = (string)Session["LayoutPort"];
+                e.LayoutData = (string)Session["LayoutFirewall"];
             }
         };
         settings.SettingsBehavior.ConfirmDelete = true;
+
 
         settings.CommandColumn.Visible = true;
         settings.CommandColumn.ShowNewButton = false;
@@ -62,19 +62,13 @@
         settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
         settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
 
-
-        settings.Columns.Add("PortNumber");
-        settings.Columns.Add(c =>
-        {
-            c.FieldName = "Asset.Name";
-            c.Caption = "Asset";
-        });
-        settings.Columns.Add("Trunk");
-        settings.Columns.Add("VLAN");
-        settings.Columns.Add("Note");
+        settings.Columns.Add("Protocol");
+        settings.Columns.Add("AllowedIps");
+        settings.Columns.Add("Interface");
+        settings.Columns.Add("Destination");
     });
     if (ViewData["EditError"] != null){
         grid.SetEditErrorText((string)ViewData["EditError"]);
     }
 }
-@grid.Bind(Model.Ports).GetHtml()
+@grid.Bind(Model.Firewalls).GetHtml()

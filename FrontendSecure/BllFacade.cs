@@ -42,5 +42,14 @@ namespace FrontendSecure
             return new PortGatewaySecure();
         }
 
+        public IServiceGateway<Firewall> GetFirewallGateway()
+        {
+            return new FirewallGatewaySecure();
+        }
+
+        public IServiceGateway<Lan> GetLanGateway()
+        {
+            return new LanGatewaySecure();
+        }
        }
 }
