@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Web;
 using System.Web.Mvc;
 using DevExpress.Web.Mvc;
@@ -13,6 +14,7 @@ namespace FrontendSecure.Controllers
     public class LanController : Controller
     {
         IServiceGateway<Lan> dbl = new BllFacade().GetLanGateway();
+        IServiceGateway<Customer> dbc = new BllFacade().GetCustomerGateway();
         [ValidateInput(false)]
         public ActionResult LanTableExpressPartial(int Customerid)
         {
@@ -50,13 +52,42 @@ namespace FrontendSecure.Controllers
             }
             return PartialView("~/Views/Customers/_LanTableExpressPartial.cshtml", model);
         }
-        public ActionResult Edit()
+        [HttpPost]
+        public ActionResult Edit(Lan f)
         {
-            return View();
+            if (!ModelState.IsValid)
+            {
+                return View(f);
+            }
+            f.Customer = null;
+            dbl.Update(f);
+            return RedirectToAction("Details", "Customers", new { id = f.CustomerId });
         }
-        public ActionResult Create()
+        public ActionResult Edit(int id)
         {
-            return View();
+            Lan f = dbl.Read(id);
+            f.CustomerId = f.Customer.Id;
+            return View(f);
+        }
+
+        [HttpPost]
+        public ActionResult Create(Lan f)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(f);
+            }
+            var c = dbc.Read(f.CustomerId);
+            f.Customer = c;
+            dbl.Create(f);
+
+            return RedirectToAction("Details", "Customers", new { id = f.CustomerId });
+        }
+        public ActionResult Create(int Customerid)
+        {
+            Lan f = new Lan();
+            f.CustomerId = Customerid;
+            return View(f);
         }
 
     }

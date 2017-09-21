@@ -14,6 +14,7 @@ namespace FrontendSecure.Controllers
     public class FirewallController : Controller
     {
         IServiceGateway<Firewall> dbf = new BllFacade().GetFirewallGateway();
+        IServiceGateway<Customer> dbc = new BllFacade().GetCustomerGateway();
         [ValidateInput(false)]
         public ActionResult FirewallTableExpressPartial(int Customerid)
         {
@@ -52,13 +53,42 @@ namespace FrontendSecure.Controllers
             return PartialView("~/Views/Customers/_FirewallTableExpressPartial.cshtml", model);
         }
 
-        public ActionResult Edit()
+        [HttpPost]
+        public ActionResult Edit(Firewall f)
         {
-            return View();
+            if (!ModelState.IsValid)
+            {
+                return View(f);
+            }
+            f.Customer = null;
+            dbf.Update(f);
+            return RedirectToAction("Details", "Customers", new {id = f.CustomerId});
         }
-        public ActionResult Create()
+        public ActionResult Edit(int id)
         {
-            return View();
+            Firewall f = dbf.Read(id);
+            f.CustomerId = f.Customer.Id;
+            return View(f);
+        }
+
+        [HttpPost]
+        public ActionResult Create(Firewall f)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(f);
+            }
+          var c = dbc.Read(f.CustomerId);
+            f.Customer = c;
+            dbf.Create(f);
+
+            return RedirectToAction("Details", "Customers", new { id = f.CustomerId });
+        }
+        public ActionResult Create(int Customerid)
+        {
+            Firewall f = new Firewall();
+            f.CustomerId = Customerid;
+            return View(f);
         }
     }
 }
