@@ -184,12 +184,16 @@
     <Compile Include="Controllers\AssetsController.cs" />
     <Compile Include="Controllers\ChangelogsController.cs" />
     <Compile Include="Controllers\CustomersController.cs" />
+    <Compile Include="Controllers\FirewallController.cs" />
     <Compile Include="Controllers\HistoryController.cs" />
+    <Compile Include="Controllers\LanController.cs" />
     <Compile Include="Controllers\PortsController.cs" />
     <Compile Include="Controllers\SwitchController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Gateways\AServiceGateway.cs" />
+    <Compile Include="Gateways\SecureGateways\FirewallGatewaySecure.cs" />
     <Compile Include="Gateways\SecureGateways\HistorySecureGateway.cs" />
+    <Compile Include="Gateways\SecureGateways\LanGatewaySecure.cs" />
     <Compile Include="Gateways\SecureGateways\PortGatewaySecure.cs" />
     <Compile Include="Gateways\SecureGateways\SwitchGatewaySecure.cs" />
     <Compile Include="Gateways\UnsecureGateways\AssetGateway.cs" />
@@ -211,6 +215,8 @@
     <Compile Include="Models\CreatePortModel.cs" />
     <Compile Include="Models\CreateSwitchModel.cs" />
     <Compile Include="Models\FileListPartialModel.cs" />
+    <Compile Include="Models\FirewallListPartialModel.cs" />
+    <Compile Include="Models\LanListPartialModel.cs" />
     <Compile Include="Models\LogDetails.cs" />
     <Compile Include="Models\BaseHistoryVM.cs" />
     <Compile Include="Models\CreateAssetModel.cs" />
@@ -408,6 +414,12 @@
     <Content Include="Views\Customers\_PortListExpressPartial.cshtml" />
     <Content Include="Views\Ports\EditPort.cshtml" />
     <Content Include="Views\Ports\CreatePort.cshtml" />
+    <Content Include="Views\Customers\_FirewallTableExpressPartial.cshtml" />
+    <Content Include="Views\Customers\_LanTableExpressPartial.cshtml" />
+    <Content Include="Views\Firewall\Edit.cshtml" />
+    <Content Include="Views\Firewall\Create.cshtml" />
+    <Content Include="Views\Lan\Edit.cshtml" />
+    <Content Include="Views\Lan\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

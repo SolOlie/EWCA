@@ -48,6 +48,12 @@
         <li role="presentation" onclick="TabShift()" id="SwitchPane">
             <a href="#Switch" data-toggle="tab" id="idSwitch">Switches</a>
         </li>
+        <li role="presentation" onclick="TabShift()" id="FirewallPane">
+            <a href="#Firewall" data-toggle="tab" id="idFirewall">Firewalls</a>
+        </li>
+        <li role="presentation" onclick="TabShift()" id="LanPane">
+            <a href="#Lan" data-toggle="tab" id="idLan">Lans</a>
+        </li>
     </ul>
 </div>
 <div class="container-fluid" style="overflow-x: auto;">
@@ -65,13 +71,31 @@
         <div id="Switch" class="tab-pane">
 
 
-            @Html.Action("SwitchTableExpressPartial", "Switch", new { customerid = Model.Customer.Id })
+            @Html.Action("SwitchTableExpressPartial", "Switch", new {customerid = Model.Customer.Id})
 
 
 
 
         </div>
-    </div>
+        <div id="Firewall" class="tab-pane">
+
+
+            @Html.Action("FirewallTableExpressPartial", "Firewall", new { Customerid = Model.Customer.Id })
+
+
+
+
+        </div>
+        <div id="Lan" class="tab-pane">
+
+
+            @Html.Action("LanTableExpressPartial", "Lan", new { Customerid = Model.Customer.Id })
+
+
+
+
+        </div>
+        </div>
 </div>
 
 
