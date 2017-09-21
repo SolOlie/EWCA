@@ -58,7 +58,9 @@
     <Compile Include="Entities\ContentFile.cs" />
     <Compile Include="Entities\Customer.cs" />
     <Compile Include="Entities\File.cs" />
+    <Compile Include="Entities\Firewall.cs" />
     <Compile Include="Entities\ISoftDelete.cs" />
+    <Compile Include="Entities\Lan.cs" />
     <Compile Include="Entities\Port.cs" />
     <Compile Include="Entities\Switch.cs" />
     <Compile Include="Entities\User.cs" />

@@ -39,15 +39,22 @@ namespace DAL.DB
         public DbSet<File> Files { get; set; }
         public DbSet<Switch> Switches { get; set; }
         public DbSet<Port> Ports { get; set; }
+        public DbSet<Firewall> Firewalls { get; set; }
+        public DbSet<Lan> Lans { get; set; }
+
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+
+           
             modelBuilder.Entity<Changelog>().Property(e => e.ChangedDate).HasColumnType("datetime2");
             modelBuilder.Entity<Asset>().Property(e => e.InstallationDate).HasColumnType("datetime2");
             modelBuilder.Entity<Customer>().Property(e => e.Date).HasColumnType("datetime2");
 
             modelBuilder.Entity<Changelog>().HasRequired(c => c.User).WithMany(e => e.Changelogs);
 
-
+            modelBuilder.Entity<Customer>().HasMany(x => x.Lans).WithRequired(y => y.Customer);
+            modelBuilder.Entity<Customer>().HasMany(x => x.Firewalls).WithRequired(y => y.Customer);
             modelBuilder.Entity<Customer>().HasMany(x => x.ContactPersons).WithOptional(x => x.IsContactForCustomer);
             modelBuilder.Entity<Customer>().HasMany(s => s.Switches).WithRequired(s => s.Customer);
 

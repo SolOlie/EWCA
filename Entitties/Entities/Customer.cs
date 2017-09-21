@@ -22,6 +22,9 @@ namespace Entities.Entities
 
         public List<Switch> Switches { get; set; }
 
+        public List<Lan> Lans { get; set; }
+        public List<Firewall> Firewalls { get; set; }
+
 
     }
 }
