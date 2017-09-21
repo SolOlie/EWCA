@@ -81,7 +81,7 @@ namespace EWCustomerAccountingBackend.Controllers
         [ResponseType(typeof(Lan))]
         public IHttpActionResult DeleteLan(int id)
         {
-            Lan lan = db.Read()(id);
+            Lan lan = db.Read(id);
             if (lan == null)
             {
                 return NotFound();
