@@ -66,6 +66,10 @@ namespace FrontendSecure.Controllers
         {
             Port p = dbports.Read(id);
             int cid = dbAsset.Read(p.AssetId).Customer.Id;
+            if (p.SwitchId == 0)
+            {
+                p.SwitchId = p.Switch.Id;
+            }
             var model = new CreatePortModel()
             {
                 Port = p,
@@ -79,7 +83,7 @@ namespace FrontendSecure.Controllers
         [System.Web.Mvc.HttpPost]
         public ActionResult EditPort(Port port, int customerid, int assetid)
         {
-
+            var isupdated = dbports.Update(port);
             return RedirectToAction("AssetDetails", "Customers", new {id = assetid, customerId= customerid} );
         }
 

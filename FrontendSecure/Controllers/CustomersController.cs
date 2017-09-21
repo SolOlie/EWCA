@@ -278,11 +278,14 @@ namespace FrontendSecure.Controllers
                     port.Asset = null;
                     dbPort.Create(port);
                 }
-               
-               
- ports = new List<Port>();
+            
+                 ports = new List<Port>();
+
                 return RedirectToAction("Details", new { id = asset.Customer.Id });
             }
+                    
+                    
+            //FAILED
             var model = new CreateAssetModel()
             {
                 Users = dbUser.ReadAll(),

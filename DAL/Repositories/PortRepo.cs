@@ -16,19 +16,33 @@ namespace DAL.Repositories
         {
             using (var ctx = new CADBContext())
             {
-                //if (t.Switch != null)
-                //{
-                //    ctx.Ports.AddRange(t.Switch.Ports);
-                //}
-                
-                //    ctx.Entry(t.Switch).State = EntityState.Unchanged;
 
-             
-                var asset = ctx.Assets.FirstOrDefault(x => x.Id == t.AssetId);
+                var asset = ctx.Assets.Include(x => x.Port).FirstOrDefault(x => x.Id == t.AssetId);
+                if (asset?.Port != null)
+                {
+                    var p = asset.Port;
+                    if (PortExists(p.Id, ctx))
+                    {
+                        ctx.Ports.Attach(p);
+                        ctx.Ports.Remove(p);
+                    }
+                }
+
                 t.Asset = asset;
-                    ctx.Ports.Add(t);
-                ctx.Entry(t.Asset).State = EntityState.Unchanged;
+                var pp = ctx.Ports.Add(t);
+                if (asset != null)
+                {
+
+                    asset.PortId = pp.Id;
+                    ctx.Assets.Attach(asset);
+                    ctx.Entry(asset).State = EntityState.Modified;
+
+
+                }
+
+                // ctx.Entry(t.Asset).State = EntityState.Unchanged;
                 ctx.SaveChanges();
+
                 return t;
             }
         }
@@ -37,7 +51,7 @@ namespace DAL.Repositories
         {
             using (var ctx = new CADBContext())
             {
-                var a = ctx.Ports.Include(y => y.Asset).Include(x=>x.Switch).FirstOrDefault(x => x.Id == id);
+                var a = ctx.Ports.Include(y => y.Asset).Include(x => x.Switch).FirstOrDefault(x => x.Id == id);
                 return a;
             }
         }
@@ -78,10 +92,58 @@ namespace DAL.Repositories
         {
             using (var ctx = new CADBContext())
             {
-                ctx.Ports.Attach(t);
+                var porttodelete = new Port(){Id = t.Id};
+                Delete(porttodelete);
+                var asset = ctx.Assets.Include(x => x.Port).FirstOrDefault(x => x.Id == t.AssetId);
+                if (asset?.Port != null)
+                {
+                    var p = asset.Port;
+                    if (PortExists(p.Id, ctx))
+                    {
+                        ctx.Ports.Attach(p);
+                        ctx.Ports.Remove(p);
+                    }
+                }
+
+                t.Asset = asset;
+                var pp = ctx.Ports.Add(t);
+                if (asset != null)
+                {
+
+                    asset.PortId = pp.Id;
+                    ctx.Assets.Attach(asset);
+                    ctx.Entry(asset).State = EntityState.Modified;
+
+
+                }
+
+                //var asset = ctx.Assets.AsNoTracking().Include(x => x.Port).FirstOrDefault(x => x.Id == t.AssetId);
+                //if (asset?.Port != null && asset.Port.Id != t.Id)
+                //{
+                //    var p = asset.Port;
+                //    if (PortExists(p.Id, ctx))
+                //    {
+                //        ctx.Ports.Attach(p);
+                //        ctx.Ports.Remove(p);
+                //    }
+
+                  
+                //}
+                //if (asset != null && asset?.Port?.Id != t.Id)
+                //{
+                //    asset.PortId = t.Id;
+                //    ctx.Assets.Attach(asset);
+                //    ctx.Entry(asset).State = EntityState.Modified;
+                   
+                //}
+                //     t.Asset = asset;
+               
+
+                //ctx.Ports.Attach(t);
+                //ctx.Entry(t).State = EntityState.Modified;
                 try
                 {
-                    ctx.SaveChanges(t.Id);
+                    ctx.SaveChanges();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -102,7 +164,7 @@ namespace DAL.Repositories
         {
             using (var ctx = new CADBContext())
             {
-                var afk = ctx.Ports.Include(y => y.Asset).Include(x => x.Switch).Where(c=>c.SwitchId == id).ToList();
+                var afk = ctx.Ports.Include(y => y.Asset).Include(x => x.Switch).Where(c => c.SwitchId == id).ToList();
                 return afk;
             }
         }
