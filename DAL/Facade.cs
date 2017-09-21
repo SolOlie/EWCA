@@ -14,6 +14,14 @@ namespace DAL
         {
             return new AssetRepo();
         }
+        public IRepository<Firewall> GetFirewallRepo()
+        {
+            return new FirewallRepo();
+        }
+        public IRepository<Lan> GetLanRepo()
+        {
+            return new LanRepo();
+        }
 
         public IRepository<Changelog> GetChangelogRepo()
         {
