@@ -67,6 +67,11 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Owin, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.3.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
       <Private>True</Private>
@@ -186,6 +191,7 @@
     <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\FirewallController.cs" />
     <Compile Include="Controllers\HistoryController.cs" />
+    <Compile Include="Controllers\ImportController.cs" />
     <Compile Include="Controllers\LanController.cs" />
     <Compile Include="Controllers\PortsController.cs" />
     <Compile Include="Controllers\SwitchController.cs" />
@@ -421,9 +427,11 @@
     <Content Include="Views\Firewall\Create.cshtml" />
     <Content Include="Views\Lan\Edit.cshtml" />
     <Content Include="Views\Lan\Create.cshtml" />
+    <Content Include="Views\Import\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\TempImports\" />
     <Folder Include="Views\Switch\" />
   </ItemGroup>
   <ItemGroup>

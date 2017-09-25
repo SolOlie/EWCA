@@ -1,0 +1,29 @@
+﻿@{
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Index</title>
+
+</head>
+<body>
+<div id="import">
+    @using (Html.BeginForm("import", "Import", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.Raw(ViewBag.Error)
+        <span>Excel file</span><input type="file" name="excelfile" />
+        <br />
+        <input type="submit" value="import" id="importbtn" onclick="showPageLoadingSpinner()" />
+    }
+</div>
+    <h1 style="display: none" id="load">Loading...</h1>
+
+    <script type="text/javascript">
+        $("#importbtn").click(function() {
+            $("#import").hide();
+            $("#load").show();
+        })
+    </script>
+</body>
+</html>
