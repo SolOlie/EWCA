@@ -51,22 +51,13 @@
                 });
                 col.Width = 50;
             });
-            settings.Columns.Add(col =>
-            {
-                col.Caption = "";
-                col.SetDataItemTemplateContent(c =>
-                {
-                    ViewContext.Writer.Write(
-                        Html.ActionLink("Exporter", "Export", "Import", new {customerId = DataBinder.Eval(c.DataItem, "Id")}, null)
-                        );
-                });
 
-            });
             column.Settings.AllowDragDrop = DefaultBoolean.False;
             column.Settings.AllowSort = DefaultBoolean.False;
             column.Width = 50;
 
         });
+
 
         settings.CommandColumn.Visible = true;
         settings.CommandColumn.ShowNewButton = false;
@@ -94,6 +85,20 @@
         settings.Columns.Add("Firm");
         settings.Columns.Add("Address");
         settings.Columns.Add("Date");
+
+        settings.Columns.Add(col =>
+        {
+            col.Caption = "";
+            col.SetDataItemTemplateContent(c =>
+            {
+                ViewContext.Writer.Write(
+                    Html.ActionLink("Exporter", "Export", "Import", new { customerId = DataBinder.Eval(c.DataItem, "Id") }, null)
+                    );
+            });
+            col.Width = 70;
+
+        });
+
         settings.BeforeGetCallbackResult = (s, e) =>
         {
             if (ViewData["EditError"] != null)

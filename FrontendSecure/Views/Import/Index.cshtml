@@ -8,22 +8,37 @@
 
 </head>
 <body>
+<h1>Importer kunde</h1>
+    <br/>
 <div id="import">
-    @using (Html.BeginForm("import", "Import", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    
+    @using (Html.BeginForm("DownloadTemplate", "Import", FormMethod.Post))
+    {
+       <span>Brug denne template til at importere kunden</span>
+       
+        <input type="submit" value="Download" />
+    }
+    
+    <br/>
+    <div style="height: 1px; background-color: #222222;"></div>
+    <br />
+
+    @using (Html.BeginForm("import", "Import", FormMethod.Post, new {enctype = "multipart/form-data"}))
     {
         @Html.Raw(ViewBag.Error)
-        <span>Excel file</span><input type="file" name="excelfile" />
-        <br />
-        <input type="submit" value="import" id="importbtn" onclick="showPageLoadingSpinner()" />
+        <span>Vælg en Excel fil</span><input type="file" name="excelfile"/>
+        <br/>
+        <input type="submit" value="Importer" id="importbtn" onclick="showPageLoadingSpinner()"/>
     }
 </div>
-    <h1 style="display: none" id="load">Loading...</h1>
+<h1 style="display: none" id="load">Loading...</h1>
 
-    <script type="text/javascript">
-        $("#importbtn").click(function() {
+<script type="text/javascript">
+    $("#importbtn")
+        .click(function() {
             $("#import").hide();
             $("#load").show();
         })
-    </script>
+</script>
 </body>
 </html>

@@ -298,5 +298,25 @@ namespace FrontendSecure.Controllers
                 }
             }
         }
+
+        public FileResult DownloadTemplate()
+        {
+            string filename = "Template.xlsx";
+            string filepath = AppDomain.CurrentDomain.BaseDirectory + "/Content/Template.xlsx";
+            byte[] filedata = System.IO.File.ReadAllBytes(filepath);
+            string contentType = MimeMapping.GetMimeMapping(filepath);
+
+            var cd = new System.Net.Mime.ContentDisposition
+            {
+                FileName = filename,
+                Inline = true,
+            };
+
+            Response.AppendHeader("Content-Disposition", cd.ToString());
+
+            
+            return File(filedata, contentType);
+
+        }
     }
 }
