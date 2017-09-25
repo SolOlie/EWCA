@@ -292,6 +292,7 @@
     <Content Include="Content\icons\dxiconsios.ttf" />
     <Content Include="Content\icons\dxiconsios.woff" />
     <None Include="Properties\PublishProfiles\EWCA - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\EWCAWebApp - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\FrontendSecure20170828015607 - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\aspnet\dx.aspnet.data.js" />
@@ -440,10 +441,6 @@
     <Content Include="Scripts\jquery-3.1.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DAL\DAL.csproj">
-      <Project>{c3f177f8-d8b2-4579-b408-789f0e02bac6}</Project>
-      <Name>DAL</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Entitties\Entities.csproj">
       <Project>{e88b6418-05d9-4e0a-b13a-670e26eaf4a8}</Project>
       <Name>Entities</Name>

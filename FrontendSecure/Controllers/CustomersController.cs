@@ -169,6 +169,9 @@ namespace FrontendSecure.Controllers
             {
                 Users = dbUser.ReadAll(),
                 Customer = new Customer()
+                {
+                    Date = DateTime.Now
+                }
             };
 
             return View(model);
@@ -187,6 +190,9 @@ namespace FrontendSecure.Controllers
                         Customers = new List<Customer>() { db.Read(id) },
                         AssetTypes = dbAssetType.ReadAll(),
                         Asset = new Asset()
+                        {
+                            InstallationDate = DateTime.Now
+                        }
                     };
                     ports = new List<Port>();
 

@@ -63,7 +63,11 @@
         settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
 
         settings.Columns.Add("Protocol");
-        settings.Columns.Add("AllowedIps");
+        settings.Columns.Add(col =>
+        {
+            col.Caption = "Tilladt fra";
+            col.FieldName = "AllowedIps";
+        });
         settings.Columns.Add("Interface");
         settings.Columns.Add("Destination");
     });

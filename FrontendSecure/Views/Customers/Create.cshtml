@@ -38,7 +38,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Customer.Date, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Customer.Date, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Customer.Date, new { htmlAttributes = new { @class = "form-control", id = "dateTimeField1" } })
                 @Html.ValidationMessageFor(model => model.Customer.Date, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -53,6 +53,15 @@
     </div>
 }
 
-<div onclick="showPageLoadingSpinner()" style ="display: inline-block">
+<div onclick="showPageLoadingSpinner()" style="display: inline-block">
     @Html.ActionLink("Tilbage", "Index")
 </div>
+<script>
+    $(document)
+        .ready(function () {
+          var date = new Date(parseInt(@(Model.Customer.Date.Year)),
+                parseInt(@(Model.Customer.Date.Month)-1),
+                parseInt(@(Model.Customer.Date.Day)+1));
+            document.getElementById("dateTimeField1").valueAsDate = date;
+        });
+</script>

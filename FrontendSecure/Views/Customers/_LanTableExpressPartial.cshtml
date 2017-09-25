@@ -36,7 +36,7 @@
             }
         };
         settings.SettingsBehavior.ConfirmDelete = true;
-        
+
 
         settings.CommandColumn.Visible = true;
         settings.CommandColumn.ShowNewButton = false;
@@ -62,10 +62,26 @@
         settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
         settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
 
-        settings.Columns.Add("Network");
-        settings.Columns.Add("DhcpServer");
-        settings.Columns.Add("Dns");
-        settings.Columns.Add("VLan");
+        settings.Columns.Add(col =>
+        {
+            col.Caption = "Netværk";
+            col.FieldName = "Network";
+        } );
+        settings.Columns.Add(col =>
+        {
+            col.Caption = "DHCP";
+            col.FieldName = "DhcpServer";
+        });
+        settings.Columns.Add(col =>
+        {
+            col.Caption = "DNS";
+            col.FieldName = "Dns";
+        });
+        settings.Columns.Add(col =>
+        {
+            col.Caption = "VLAN";
+            col.FieldName = "Vlan";
+        });
     });
     if (ViewData["EditError"] != null){
         grid.SetEditErrorText((string)ViewData["EditError"]);

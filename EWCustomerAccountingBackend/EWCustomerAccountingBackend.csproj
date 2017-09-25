@@ -365,8 +365,7 @@
     <Content Include="Content\icons\dxicons.woff" />
     <Content Include="Content\icons\dxiconsios.ttf" />
     <Content Include="Content\icons\dxiconsios.woff" />
-    <None Include="Properties\PublishProfiles\EWCustomerAccountingBackend20170828013231 - Web Deploy %282%29.pubxml" />
-    <None Include="Properties\PublishProfiles\EWCustomerAccountingBackend20170828013231 - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\EWCABackendApp - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\cldr.js" />
@@ -438,7 +437,9 @@
     <Content Include="Scripts\vectormap-utils\dx.vectormaputils.debug.js" />
     <Content Include="Scripts\vectormap-utils\dx.vectormaputils.js" />
     <Content Include="Scripts\vectormap-utils\dx.vectormaputils.node.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
