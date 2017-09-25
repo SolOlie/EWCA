@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Entities.Entities;
@@ -20,6 +21,122 @@ namespace FrontendSecure.Controllers
         public ActionResult Index()
         {
             return View();
+        }
+
+        [HttpGet]
+        public FileResult Export(int customerId)
+        {
+            Customer c = dbc.Read(customerId);
+            List<Asset> assets = db.ReadAllWithFk(customerId);
+
+
+            Microsoft.Office.Interop.Excel.Application oXL;
+            Microsoft.Office.Interop.Excel._Workbook oWB;
+            Microsoft.Office.Interop.Excel._Worksheet oSheet;
+            Microsoft.Office.Interop.Excel.Range oRng;
+            object misvalue = System.Reflection.Missing.Value;
+            try
+            {
+                //Start Excel and get Application object.
+                oXL = new Microsoft.Office.Interop.Excel.Application();
+                oXL.Visible = true;
+
+                //Get a new workbook.
+                oWB = (Excel._Workbook) (oXL.Workbooks.Add(""));
+                oSheet = (Excel._Worksheet) oWB.ActiveSheet;
+
+                //Add table headers going cell by cell.
+                oSheet.Cells[1, 1] = "Kunde";
+                oSheet.Cells[1, 2] = "Adresse";
+                oSheet.Cells[1, 3] = "Dato";
+
+                //Format A1:D1 as bold, vertical alignment = center.
+                oSheet.Range["A1", "C1"].Font.Bold = true;
+                oSheet.Range["A1", "C1"].VerticalAlignment =
+                    Excel.XlVAlign.xlVAlignCenter;
+
+
+                oSheet.Cells[2, 1] = c.Firm;
+                oSheet.Cells[2, 2] = c.Address;
+                oSheet.Cells[2, 3] = c.Date.ToShortDateString();
+                // Create an array to multiple values at once.
+
+                oSheet.Cells[4, 1] = "Navn";
+                oSheet.Cells[4, 2] = "Beskrivelse";
+                oSheet.Cells[4, 3] = "Adresse";
+                oSheet.Cells[4, 4] = "Lokation";
+                oSheet.Cells[4, 5] = "Login";
+                oSheet.Cells[4, 6] = "Password";
+                oSheet.Cells[4, 7] = "Note";
+                oSheet.Cells[4, 8] = "RAM";
+                oSheet.Cells[4, 9] = "HDD";
+                oSheet.Cells[4, 10] = "Type";
+                oSheet.Cells[4, 11] = "Bruger";
+                oSheet.Cells[4, 12] = "IP";
+                oSheet.Cells[4, 13] = "OS";
+                oSheet.Cells[4, 14] = "Dato";
+                oSheet.Range["A4", "N4"].Font.Bold = true;
+
+                for (int row = 0; row < assets.Count; row++)
+                {
+                    var a = assets[row];
+                    int rowtofill = row + 5;
+                    oSheet.Cells[rowtofill, 1] = a.Name;
+                    oSheet.Cells[rowtofill, 2] = a.Description;
+                    oSheet.Cells[rowtofill, 3] = a.Address;
+                    oSheet.Cells[rowtofill, 4] = a.Location;
+                    oSheet.Cells[rowtofill, 5] = a.Login;
+                    oSheet.Cells[rowtofill, 6] = a.Password;
+                    oSheet.Cells[rowtofill, 7] = a.Note;
+                    oSheet.Cells[rowtofill, 8] = a.RAM;
+                    oSheet.Cells[rowtofill, 9] = a.HDD;
+                    oSheet.Cells[rowtofill, 10] = a.Type.Description;
+                    oSheet.Cells[rowtofill, 11] = a.Usedby;
+                    oSheet.Cells[rowtofill, 12] = a.IpAddress;
+                    oSheet.Cells[rowtofill, 13] = a.OS;
+                    oSheet.Cells[rowtofill, 14] = a.InstallationDate.ToShortDateString();
+                }
+
+
+                
+                oRng = oSheet.UsedRange;
+                oRng.EntireColumn.AutoFit();
+
+                oXL.Visible = false;
+                oXL.UserControl = false;
+                string path = Server.MapPath("~//Content//TempImports//"+c.Firm+".xls");
+                oWB.SaveAs(path, Excel.XlFileFormat.xlWorkbookDefault,
+                    Type.Missing, Type.Missing,
+                    false, false, Excel.XlSaveAsAccessMode.xlNoChange,
+                    Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
+              
+                oWB.Close();
+                oXL.Quit();
+
+                string filename = "Export.xlsx";
+                string filepath = AppDomain.CurrentDomain.BaseDirectory + "/Content/TempImports/"+c.Firm+".xls";
+                byte[] filedata = System.IO.File.ReadAllBytes(filepath);
+                string contentType = MimeMapping.GetMimeMapping(filepath);
+
+                var cd = new System.Net.Mime.ContentDisposition
+                {
+                    FileName = filename,
+                    Inline = true,
+                };
+
+                Response.AppendHeader("Content-Disposition", cd.ToString());
+
+                System.IO.File.Delete(path);
+                return File(filedata, contentType);
+
+               
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+           
         }
 
         [HttpPost]

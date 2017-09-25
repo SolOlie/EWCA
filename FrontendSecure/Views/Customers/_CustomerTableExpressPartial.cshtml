@@ -51,6 +51,17 @@
                 });
                 col.Width = 50;
             });
+            settings.Columns.Add(col =>
+            {
+                col.Caption = "";
+                col.SetDataItemTemplateContent(c =>
+                {
+                    ViewContext.Writer.Write(
+                        Html.ActionLink("Exporter", "Export", "Import", new {customerId = DataBinder.Eval(c.DataItem, "Id")}, null)
+                        );
+                });
+
+            });
             column.Settings.AllowDragDrop = DefaultBoolean.False;
             column.Settings.AllowSort = DefaultBoolean.False;
             column.Width = 50;
@@ -93,7 +104,7 @@
         };
 
 
-      if (ViewData["EditError"] != null)
+        if (ViewData["EditError"] != null)
         {
 
             settings.SetFooterRowTemplateContent(c =>
