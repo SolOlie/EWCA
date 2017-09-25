@@ -32,8 +32,8 @@ textarea {
     position: fixed;
     -webkit-animation: spin 2s linear infinite;
     animation: spin 2s linear infinite;
-    top: 42%;
-    left: 42.5%;
+    top: 40%;
+    left: 45%;
     z-index: 999;
 }
 
