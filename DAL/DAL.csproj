@@ -92,6 +92,10 @@
     <Compile Include="Migrations\201709211050404_updated lan and firewall with customer.Designer.cs">
       <DependentUpon>201709211050404_updated lan and firewall with customer.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709260942366_Removed cascade delete.cs" />
+    <Compile Include="Migrations\201709260942366_Removed cascade delete.Designer.cs">
+      <DependentUpon>201709260942366_Removed cascade delete.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AssetRepo.cs" />
@@ -125,6 +129,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201709211050404_updated lan and firewall with customer.resx">
       <DependentUpon>201709211050404_updated lan and firewall with customer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709260942366_Removed cascade delete.resx">
+      <DependentUpon>201709260942366_Removed cascade delete.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
