@@ -54,7 +54,7 @@ namespace DAL.DB
             modelBuilder.Entity<Changelog>().HasRequired(c => c.User).WithMany(e => e.Changelogs);
 
             modelBuilder.Entity<Customer>().HasMany(x => x.Lans).WithRequired(y => y.Customer);
-            modelBuilder.Entity<Customer>().HasMany(x => x.Firewalls).WithRequired(y => y.Customer);
+            modelBuilder.Entity<Customer>().HasMany(x => x.Firewalls).WithRequired(y => y.Customer); 
             modelBuilder.Entity<Customer>().HasMany(x => x.ContactPersons).WithOptional(x => x.IsContactForCustomer);
             modelBuilder.Entity<Customer>().HasMany(s => s.Switches).WithRequired(s => s.Customer);
 

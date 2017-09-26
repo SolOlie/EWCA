@@ -10,16 +10,17 @@ using Entities.Entities;
 
 namespace DAL.Repositories
 {
-    class ChangelogRepo: IRepository<Changelog>
+    class ChangelogRepo : IRepository<Changelog>
     {
         public Changelog Create(Changelog t)
-            {
+        {
             using (var ctx = new CADBContext())
             {
                 t.AssetId = t.Asset.Id;
-                Changelog a = ctx.Changelogs.Add(t);
                 ctx.Entry(t.User).State = EntityState.Unchanged;
                 ctx.Entry(t.Asset).State = EntityState.Unchanged;
+                Changelog a = ctx.Changelogs.Add(t);
+
                 ctx.SaveChanges();
                 return a;
             }
@@ -29,7 +30,7 @@ namespace DAL.Repositories
         {
             using (var ctx = new CADBContext())
             {
-                return ctx.Changelogs.Include(y => y.User).Include(x => x.Asset).Include(x=> x.Asset.Customer).FirstOrDefault(x => x.Id == id);
+                return ctx.Changelogs.Include(y => y.User).Include(x => x.Asset).Include(x => x.Asset.Customer).FirstOrDefault(x => x.Id == id);
             }
         }
 
@@ -97,7 +98,7 @@ namespace DAL.Repositories
         {
             using (var ctx = new CADBContext())
             {
-                return ctx.Changelogs.Include(y => y.User).Include(x=>x.Asset).Where(x => x.Asset.Id == id).ToList();
+                return ctx.Changelogs.Include(y => y.User).Include(x => x.Asset).Where(x => x.Asset.Id == id).ToList();
             }
         }
     }

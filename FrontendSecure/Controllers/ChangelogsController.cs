@@ -238,10 +238,7 @@ namespace FrontendSecure.Controllers
             {
                 Id = AssetId
             };
-            c.User = new User()
-            {
-                Id = c.UserId
-            };
+            c.User = udb.Read(c.UserId);
             var iscreated = db.Create(c);
 
             if (iscreated == null)
