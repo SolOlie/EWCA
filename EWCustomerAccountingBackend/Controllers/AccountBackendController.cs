@@ -325,7 +325,7 @@ namespace EWCustomerAccountingBackend.Controllers
         }
 
         // POST api/Account/Register
-       // [AllowAnonymous]
+       [AllowAnonymous]
         [Route("Register")]
         public async Task<IHttpActionResult> Register(RegisterBindingModel model)
         {
@@ -336,7 +336,7 @@ namespace EWCustomerAccountingBackend.Controllers
 
             var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
 
-            IdentityResult result = await UserManager.CreateAsync(user, model.Password);
+            IdentityResult result =  UserManager.CreateAsync(user, model.Password).Result;
 
             if (!result.Succeeded)
             {
