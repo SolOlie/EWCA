@@ -347,6 +347,8 @@ namespace EWCustomerAccountingBackend.Controllers
             }
             catch (Exception ex)
             {
+
+                // if fails on opening underlying sources, try delete db and restart IIS
                 throw ex;
             }
 
