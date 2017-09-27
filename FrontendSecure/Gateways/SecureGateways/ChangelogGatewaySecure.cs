@@ -40,7 +40,8 @@ namespace FrontendSecure.Gateways.SecureGateways
 
         public List<Changelog> ReadAllWithFk(int id)
         {
-            throw new NotImplementedException();
+            var Changelog = WebapiService.instance.GetAsync<List<Changelog>>("/api/Changelogs/GetChangelogWithFk/" + id, HttpContext.Current.User.Identity.Name).Result;
+            return Changelog;
         }
     }
 }
