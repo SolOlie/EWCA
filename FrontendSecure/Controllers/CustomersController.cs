@@ -295,7 +295,7 @@ namespace FrontendSecure.Controllers
             var model = new CreateAssetModel()
             {
                 Users = dbUser.ReadAll(),
-                Customers = db.ReadAll(),
+                Customers = new List<Customer>() { db.Read(asset.Customer.Id) },
                 AssetTypes = dbAssetType.ReadAll(),
                 Asset = asset
             };

@@ -43,17 +43,17 @@ namespace DAL.Repositories
         {
             using (var ctx = new CADBContext())
             {
-                var listCustomer = ctx.Customers.Include(y => y.Assets).Include(y => y.ContactPersons).ToList();
+                var listCustomer = ctx.Customers.Include(y => y.ContactPersons).ToList();
                 foreach (var c in listCustomer)
                 {
                     foreach (var u in c.ContactPersons)
                     {
                         u.Password = new Crypto().Decrypt(u.Password);
                     }
-                    foreach (var r in c.Assets)
-                    {
-                        r.Password = new Crypto().Decrypt(r.Password);
-                    }
+                    //foreach (var r in c.Assets)
+                    //{
+                    //    r.Password = new Crypto().Decrypt(r.Password);
+                    //}
                 }
                 return listCustomer;
             }
