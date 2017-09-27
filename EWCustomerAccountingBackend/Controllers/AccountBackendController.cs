@@ -333,17 +333,25 @@ namespace EWCustomerAccountingBackend.Controllers
             {
                 return BadRequest(ModelState);
             }
-
-            var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
-
-            IdentityResult result =  UserManager.CreateAsync(user, model.Password).Result;
-
-            if (!result.Succeeded)
+            try
             {
-                return GetErrorResult(result);
+                var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
+
+                IdentityResult result = UserManager.CreateAsync(user, model.Password).Result;
+                if (!result.Succeeded)
+                {
+                    return GetErrorResult(result);
+                }
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+
+                // if fails on opening underlying sources, try delete db and restart IIS
+                throw ex;
             }
 
-            return Ok();
         }
 
         // POST api/Account/RegisterExternal
