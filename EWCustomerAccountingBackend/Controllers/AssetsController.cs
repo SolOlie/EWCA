@@ -26,9 +26,11 @@ namespace EWCustomerAccountingBackend.Controllers
         // GET: api/Assets
         public List<Asset> GetAssets()
         {
+           
             return db.ReadAll();
+            
         }
-
+            
         /// <summary>
         /// Get all assets from a Customer
         /// </summary>
@@ -36,7 +38,9 @@ namespace EWCustomerAccountingBackend.Controllers
         /// <returns></returns>
         public List<Asset> GetAssetsWithFk(int id)
         {
-            return db.ReadAllWithFk(id);
+            var a = db.ReadAllWithFk(id);
+
+            return a;
         }
 
 

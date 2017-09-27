@@ -109,7 +109,7 @@ namespace DAL.Repositories
         {
             using (var ctx = new CADBContext())
             {
-                var afk = ctx.Assets.Include(y => y.Customer).Include(y => y.Changelogs).Include(y => y.Type).Where(x => x.Customer.Id == id).ToList();
+                var afk = ctx.Assets.Include(y => y.Type).Where(x => x.Customer.Id == id).ToList();
                 foreach (var s in afk)
                 {
                     s.Password = new Crypto().Decrypt(s.Password);

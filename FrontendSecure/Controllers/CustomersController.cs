@@ -108,7 +108,7 @@ namespace FrontendSecure.Controllers
                     {
                         return HttpNotFound();
                     }
-
+                    s = null;
                     return View(model);
 
             }
@@ -373,7 +373,7 @@ namespace FrontendSecure.Controllers
         [HttpPost, ValidateInput(false)]
         public ActionResult CustomerTableExpressPartialDelete(string Id)
         {
-            if (isAuthorized(1) != AuthState.ElitewebAuth) //Id 1 er id for EliteWeb
+            if (isAuthorized(1) != AuthState.ElitewebAuth) //Id 1 er id for EliteWeb/2do
             {
                 return View("NotAuthorized");
             }
@@ -388,7 +388,10 @@ namespace FrontendSecure.Controllers
             {
                 try
                 {
-                    var c = db.Read(id);
+                    var c = new Customer()
+                    {
+                        Id = id
+                    };
                     db.Delete(c);
                     
                 }

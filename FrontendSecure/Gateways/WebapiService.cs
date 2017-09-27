@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -44,6 +45,7 @@ namespace FrontendSecure.Gateways
 
         private static async Task<T> DeserializeObject<T>(HttpResponseMessage result)
         {
+            
             string json = await result.Content.ReadAsStringAsync();
             if (result.IsSuccessStatusCode)
             {
@@ -63,8 +65,23 @@ namespace FrontendSecure.Gateways
             using (var client = new HttpClient())
             {
                 SetAuthHeader(authToken, client);
-                var result = client.GetAsync(ActionUri(action)).Result;
-                return await DeserializeObject<T>(result);
+
+
+                using (Stream s = client.GetStreamAsync(ActionUri(action)).Result)
+                using (StreamReader sr = new StreamReader(s))
+                using (JsonReader reader = new JsonTextReader(sr))
+                {
+                    JsonSerializer serializer = new JsonSerializer();
+
+                    // read the json from a stream
+                    // json size doesn't matter because only a small piece is read at a time from the HTTP request
+                    T t = serializer.Deserialize<T>(reader);
+                    return t;
+                }
+
+                
+                //var result = client.GetAsync(ActionUri(action)).Result;
+               // return await DeserializeObject<T>(result);
             }
         }
 
