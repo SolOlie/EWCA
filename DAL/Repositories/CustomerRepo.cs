@@ -65,9 +65,11 @@ namespace DAL.Repositories
             {
                 if (CustomerExists(t.Id, ctx))
                 {
-
-                    ctx.Database.ExecuteSqlCommand("DELETE FROM [CustomerAccountingDB].[dbo].[Users] WHERE IsContactForCustomer_Id =" + t.Id);
-                    ctx.Database.ExecuteSqlCommand("DELETE FROM [CustomerAccountingDB].[dbo].Customers WHERE id ="+t.Id);
+                    ctx.Database.ExecuteSqlCommand("DELETE FROM [dbo].[Switches] WHERE CustomerId =" + t.Id);
+                    ctx.Database.ExecuteSqlCommand("DELETE FROM [dbo].[Users] WHERE IsContactForCustomer_Id =" + t.Id);
+                    // ctx.Database.ExecuteSqlCommand("DELETE FROM [CustomerAccountingDB].[dbo].Customers WHERE id ="+t.Id);
+                    ctx.Customers.Attach(t);
+                    ctx.Customers.Remove(t);
                     ctx.SaveChanges();
                     return true;
                 }
