@@ -94,6 +94,7 @@
     </Reference>
     <Reference Include="Microsoft.Web.Infrastructure">
       <HintPath>..\EWCustomerAccountingBackend\bin\Microsoft.Web.Infrastructure.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -143,6 +144,7 @@
     </Reference>
     <Reference Include="System.Web.Razor">
       <HintPath>..\EWCustomerAccountingBackend\bin\System.Web.Razor.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Configuration" />
@@ -314,6 +316,7 @@
     <Content Include="Content\icons\dxiconsios.ttf" />
     <Content Include="Content\icons\dxiconsios.woff" />
     <None Include="Properties\PublishProfiles\EWCA - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\ewcafrontend.pubxml" />
     <None Include="Properties\PublishProfiles\EWCAWebApp - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\FrontendSecure20170828015607 - Web Deploy.pubxml" />
     <Content Include="Scripts\aspnet\dx.aspnet.data.js" />

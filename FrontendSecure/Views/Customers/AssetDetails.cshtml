@@ -172,6 +172,11 @@
 <p onclick="showPageLoadingSpinner()" style="display: inline-block; margin-top: 1%">
     @Html.ActionLink("Tilbage", "Details", new { id = Model.Asset.Customer.Id })
 </p>
+@section scripts
+{
+    
+
+
 <script>
   function TabShift() {
         setTimeout(function() {
@@ -206,3 +211,4 @@
     }
    
 </script>
+}
