@@ -26,7 +26,7 @@ namespace DAL.Repositories
         {
             using (var ctx = new CADBContext())
             {
-                return ctx.AssetTypes.Include(m=>m.Assets).FirstOrDefault(x => x.Id == id);
+                return ctx.AssetTypes.FirstOrDefault(x => x.Id == id);
             }
         }
 
@@ -34,7 +34,7 @@ namespace DAL.Repositories
         {
             using (var ctx = new CADBContext())
             {
-                var c = ctx.AssetTypes.Include(m => m.Assets).ToList();
+                var c = ctx.AssetTypes.ToList();
                 if (c.Find(a => a.Description.ToLower().Equals("switch")) == null)
                 {
                     var swit = new AssetType()
