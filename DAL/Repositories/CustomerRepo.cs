@@ -40,6 +40,7 @@ namespace DAL.Repositories
         {
             using (var ctx = new CADBContext())
             {
+               
                 var listCustomer = ctx.Customers.Include(y => y.ContactPersons).ToList();
                 foreach (var c in listCustomer)
                 {
