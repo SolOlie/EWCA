@@ -4,14 +4,13 @@
     ViewBag.Title = "CreatePort";
 }
 
-<h2>CreatePort</h2>
+<h2>Tilføj Port</h2>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>Port</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Port.SwitchId)
@@ -20,24 +19,30 @@
         <input type="hidden" value="@Model.assetreturnid" name="assetreturnid" />
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Port.PortNumber, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Port.PortNumber, new { htmlAttributes = new { @class = "form-control" } })
+            
+            <div class="col-md-10"style="display: inline-flex">
+                <b style="width: 90px; display: inline-block; margin-left: 8.5%;">Port nummer</b>
+                <div style="margin-left: 2.5%;">
+                    @Html.EditorFor(model => model.Port.PortNumber, new {htmlAttributes = new {@class = "form-control"}})
+                </div>
                 @Html.ValidationMessageFor(model => model.Port.PortNumber, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group">
-            @Html.LabelFor(model => model.Port.AssetId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(m => m.Port.AssetId,
+            <div class="col-md-10" style="display: inline-flex">
+                <b style="width: 50px; display: inline-block; margin-left: 13%;">Udstyr</b>
+                <div style="margin-left: 2.5%;">
+                    @Html.DropDownListFor(m => m.Port.AssetId,
                         Model.Assets.Select(m => new SelectListItem()
                         {
                             Value = m.Id.ToString(),
                             Text = m.Name
                         }),
-                        new { id = "select" })
-            
-                @Html.ValidationMessageFor(model => model.Port.AssetId, "", new { @class = "text-danger" })
+                        new {id = "select"})
+                </div>
+
+
+                @Html.ValidationMessageFor(model => model.Port.AssetId, "", new {@class = "text-danger"})
             </div>
         </div>
 
@@ -67,7 +72,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Tilføj" class="btn btn-default" />
             </div>
         </div>
     </div>
