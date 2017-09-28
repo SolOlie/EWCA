@@ -4,8 +4,7 @@
 
 @{
     ViewBag.Title = "AssetDetails";
-    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-    @Html.DevExpress().GetStyleSheets(
+   @Html.DevExpress().GetStyleSheets(
         new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
         new StyleSheet { ExtensionSuite = ExtensionSuite.Editors },
         new StyleSheet { ExtensionSuite = ExtensionSuite.GridView }
@@ -174,9 +173,6 @@
 </p>
 @section scripts
 {
-    
-
-
 <script>
   function TabShift() {
         setTimeout(function() {

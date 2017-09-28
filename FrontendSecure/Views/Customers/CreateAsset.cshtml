@@ -1,9 +1,7 @@
 ﻿@using Entities.Entities
 @model  FrontendSecure.Models.CreateAssetModel
 
-@{
-    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-}
+
 
 @using (Html.BeginForm("CreateAsset", "Customers", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
@@ -209,7 +207,6 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-}
 <script type="text/javascript">
     $(document)
         .ready(function () {
@@ -224,7 +221,7 @@
                 });
             });
             $("#select").removeAttr("required");
-            
+
         });
     $("#select")
         .on('change',
@@ -233,7 +230,7 @@
                     $("#assetTypeInput").prop("disabled", true);
                     $("#clearInput").show();
 
-                
+
             });
 
     $("#clearInput")
@@ -243,7 +240,7 @@
                 $(this).hide().prev("input[disabled]").prop("disabled", false).focus();
                 $("#clearDropdown").show();
                 $('#addPortBtn').hide();
-            
+
         });
     $("#clearDropdown")
         .click(function () {
@@ -255,12 +252,12 @@
     function showPopup() {
         $("#PopupForAddPort")
             .toggle('fast',function() {
-                
+
             });
     }
     $('#addPortsToListBtn').click(function (event) {
            $.ajax({
-               url: '@Url.Action("AddToPortListAjax","Customers")', 
+               url: '@Url.Action("AddToPortListAjax","Customers")',
                data: { portnumber: $("#portNumber").val(), VLAN: $("#vlan").val(), trunk: $("#trunk").val(), assetId: $("#assetForPort").val(), note: $("#note").val() },
                success: function (data) {
                    $('#Table').load("/Customers/RenderPortPartial");
@@ -276,3 +273,5 @@
             document.getElementById("dateTimeField1").valueAsDate = date;
         });
 </script>
+
+}

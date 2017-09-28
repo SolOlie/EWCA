@@ -3,7 +3,7 @@
 
 @{
     ViewBag.Title = Model.Customer.Firm;
-    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    
     @Html.DevExpress().GetStyleSheets(
         new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
         new StyleSheet { ExtensionSuite = ExtensionSuite.Editors },
@@ -102,8 +102,8 @@
 <p id="goBack" style="margin-top: 1%; display: inline-block">
     @Html.ActionLink("Tilbage", "Index")
 </p>
-
-<script type="text/javascript">
+@section scripts{
+    <script type="text/javascript">
    function TabShift() {
         setTimeout(function () {
             localStorage.setItem("paneactive", $("ul.nav-tabs li.active ").attr("id"));
@@ -121,8 +121,9 @@
             var id2 = localStorage.getItem("contentactive");
             var element2 = document.getElementById(id2);
             $(element2).addClass('active').siblings().removeClass('active');
-            
+
 
         });
-    
+
 </script>
+}
