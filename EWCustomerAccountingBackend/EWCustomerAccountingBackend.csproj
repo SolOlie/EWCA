@@ -367,6 +367,7 @@
     <Content Include="Content\icons\dxiconsios.woff" />
     <None Include="Properties\PublishProfiles\ewcabackend.pubxml" />
     <None Include="Properties\PublishProfiles\EWCABackendApp - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\macdbackend.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\cldr.js" />
     <Content Include="Scripts\cldr.min.js" />
