@@ -18,15 +18,65 @@ using Excel = Microsoft.Office.Interop.Excel;
 
 namespace FrontendSecure.Controllers
 {
+    [Authorize]
     public class ImportController : Controller
     {
         private IServiceGateway<Asset> db = new BllFacade().GetAssetGateway();
         private IServiceGateway<AssetType> dbaT = new BllFacade().GetAssetTypeGateway();
         private IServiceGateway<Customer> dbc = new BllFacade().GetCustomerGateway();
+        private IServiceGateway<User> dbu = new BllFacade().GetUserGateway();
+        private enum AuthStates
+        {
+            NoAuth,
+            UserAuth,
+            AdminAuth,
+            ElitewebAuth
+        };
+        private AuthStates isAuthorized(int customerId)
+        {
+            //return AuthStates.ElitewebAuth;
+            var session = Session["loggedinUserId"];
+            if (session == null)
+            {
+                return AuthStates.NoAuth;
+            }
+
+            int loggedinUserId = (int)session;
+            var loggedInUser = dbu.Read(loggedinUserId);
+
+            if (loggedInUser == null)
+            {
+                return AuthStates.NoAuth;
+            }
+
+            if (loggedInUser.IsContactForCustomer.Id > 0)
+            {
+                if (1 == loggedInUser.IsContactForCustomer.Id)
+                {
+                    return AuthStates.ElitewebAuth;
+                }
+                if (customerId == loggedInUser.IsContactForCustomer.Id)
+                {
+                    if (loggedInUser.IsAdmin)
+                    {
+                        return AuthStates.AdminAuth;
+                    }
+                    return AuthStates.UserAuth;
+                }
+
+                return AuthStates.NoAuth;
+
+            }
+            return AuthStates.NoAuth;
+        }
 
         // GET: Import
         public ActionResult Index()
         {
+            if (isAuthorized(1) != AuthStates.ElitewebAuth)
+            {
+                return View("NotAuthorized");
+            }
             return View();
         }
 
@@ -34,6 +84,10 @@ namespace FrontendSecure.Controllers
         [HttpGet]
         public void Export(int customerId)
         {
+            if (isAuthorized(1) != AuthStates.ElitewebAuth)
+            {
+                return;
+            }
             Customer c = dbc.Read(customerId);
             List<Asset> assets = db.ReadAllWithFk(customerId);
 
@@ -286,6 +340,10 @@ namespace FrontendSecure.Controllers
         [HttpPost]
         public ActionResult Import(HttpPostedFileBase excelfile)
         {
+            if (isAuthorized(1) != AuthStates.ElitewebAuth)
+            {
+                return View("NotAuthorized");
+            }
             if (excelfile == null || excelfile.ContentLength == 0)
             {
                 ViewBag.Error = "please select an excel file";
@@ -325,6 +383,10 @@ namespace FrontendSecure.Controllers
 
         public FileResult DownloadTemplate()
         {
+            if (isAuthorized(1) != AuthStates.ElitewebAuth)
+            {
+                return null;
+            }
             string filename = "Template.xlsx";
             string filepath = AppDomain.CurrentDomain.BaseDirectory + "/Content/Template.xlsx";
             byte[] filedata = System.IO.File.ReadAllBytes(filepath);

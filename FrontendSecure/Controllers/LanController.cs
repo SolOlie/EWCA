@@ -11,13 +11,64 @@ using FrontendSecure.Models;
 
 namespace FrontendSecure.Controllers
 {
+    [Authorize]
     public class LanController : Controller
     {
-        IServiceGateway<Lan> dbl = new BllFacade().GetLanGateway();
-        IServiceGateway<Customer> dbc = new BllFacade().GetCustomerGateway();
+         private readonly IServiceGateway<Lan> dbl = new BllFacade().GetLanGateway();
+       private readonly IServiceGateway<Customer> dbc = new BllFacade().GetCustomerGateway();
+
+        private readonly IServiceGateway<User> db = new BllFacade().GetUserGateway();
+        private enum AuthStates
+        {
+            NoAuth,
+            UserAuth,
+            AdminAuth,
+            ElitewebAuth
+        };
+        private AuthStates isAuthorized(int customerId)
+        {
+           // return AuthStates.ElitewebAuth;
+            var session = Session["loggedinUserId"];
+            if (session == null)
+            {
+                return AuthStates.NoAuth;
+            }
+
+            int loggedinUserId = (int)session;
+            var loggedInUser = db.Read(loggedinUserId);
+
+            if (loggedInUser == null)
+            {
+                return AuthStates.NoAuth;
+            }
+
+            if (loggedInUser.IsContactForCustomer.Id > 0)
+            {
+                if (1 == loggedInUser.IsContactForCustomer.Id)
+                {
+                    return AuthStates.ElitewebAuth;
+                }
+                if (customerId == loggedInUser.IsContactForCustomer.Id)
+                {
+                    if (loggedInUser.IsAdmin)
+                    {
+                        return AuthStates.AdminAuth;
+                    }
+                    return AuthStates.UserAuth;
+                }
+
+                return AuthStates.NoAuth;
+
+            }
+            return AuthStates.NoAuth;
+        }
         [ValidateInput(false)]
         public ActionResult LanTableExpressPartial(int Customerid)
         {
+            if (isAuthorized(Customerid) == AuthStates.NoAuth)
+            {
+                return PartialView("NotAuthorizedPartical");
+            }
             var model =  new LanListPartialModel()
             {
                 customerid = Customerid,
@@ -41,6 +92,10 @@ namespace FrontendSecure.Controllers
                 try
                 {
                     var d = dbl.Read(id);
+                    if (isAuthorized(d.Customer.Id) == AuthStates.NoAuth)
+                    {
+                        return PartialView("NotAuthorizedPartical");
+                    }
                     dbl.Delete(d);
                     model.customerid = d.Customer.Id;
                     model.Lans = dbl.ReadAllWithFk(d.Customer.Id);
@@ -55,6 +110,10 @@ namespace FrontendSecure.Controllers
         [HttpPost]
         public ActionResult Edit(Lan f)
         {
+            if (isAuthorized(f.CustomerId) == AuthStates.NoAuth)
+            {
+                return View("NotAuthorized");
+            }
             if (!ModelState.IsValid)
             {
                 return View(f);
@@ -67,6 +126,10 @@ namespace FrontendSecure.Controllers
         {
             Lan f = dbl.Read(id);
             f.CustomerId = f.Customer.Id;
+            if (isAuthorized(f.CustomerId) == AuthStates.NoAuth)
+            {
+                return View("NotAuthorized");
+            }
             return View(f);
         }
 
@@ -78,6 +141,10 @@ namespace FrontendSecure.Controllers
                 return View(f);
             }
             var c = dbc.Read(f.CustomerId);
+            if (isAuthorized(c.Id) == AuthStates.NoAuth)
+            {
+                return View("NotAuthorized");
+            }
             f.Customer = c;
             dbl.Create(f);
 
@@ -85,8 +152,13 @@ namespace FrontendSecure.Controllers
         }
         public ActionResult Create(int Customerid)
         {
+            if (isAuthorized(Customerid) == AuthStates.NoAuth)
+            {
+                return View("NotAuthorized");
+            }
             Lan f = new Lan();
             f.CustomerId = Customerid;
+
             return View(f);
         }
 

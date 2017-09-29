@@ -18,8 +18,8 @@ namespace EWCustomerAccountingBackend.Controllers
         // GET: Helper
         public ActionResult Index()
         {
-            var list = db.ReadAll();
-            return View(list);
+        
+            return View();
         }
 
         DAL.DB.CADBContext db1 = new DAL.DB.CADBContext();
@@ -31,17 +31,6 @@ namespace EWCustomerAccountingBackend.Controllers
             return PartialView("_CustomerTestTablePartial", model.ToList());
         }
        
-        /// <summary>
-        /// withoutdb
-        /// </summary>
-        /// <returns></returns>
-
-        [ValidateInput(false)]
-        public ActionResult tabletestwithoutDBPartial()
-        {
-            var model = db.ReadAll();
-            return PartialView("_tabletestwithoutDBPartial", model);
-        }
 
         
     }

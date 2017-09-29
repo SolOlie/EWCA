@@ -6,6 +6,7 @@ using FrontendSecure.Models;
 
 namespace FrontendSecure.Controllers
 {
+    [Authorize]
     public class PortsController : Controller
     {
         private readonly IServiceGateway<Port> dbports = new BllFacade().GetPortGateway();
@@ -14,6 +15,7 @@ namespace FrontendSecure.Controllers
         [ValidateInput(false)]
         public ActionResult PortListExpressPartial(int assetid)
         {
+
             var model = new PortListPartialModel()
             {
                 assetid = assetid,

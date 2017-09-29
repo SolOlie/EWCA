@@ -14,6 +14,7 @@ using Entities.Entities;
 
 namespace EWCustomerAccountingBackend.Controllers
 {
+    //[Authorize]
     public class PortsController : ApiController
     {
         private IRepository<Port> dbp = new Facade().GetPortRepo();

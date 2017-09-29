@@ -1,5 +1,4 @@
-﻿@model IEnumerable<Entities.Entities.Customer>
-@{
+﻿@{
     @Html.DevExpress().GetStyleSheets(
         new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
         new StyleSheet { ExtensionSuite = ExtensionSuite.Editors },
@@ -15,15 +14,4 @@
 }
 
 <h2>Index</h2>
-@foreach (var asset in Model)
-{
-  <p>@asset.Firm</p>
-}
-
-
 @Html.Action("CustomerTestTablePartial")
-
-<br/>
-
-
-@Html.Action("tabletestwithoutDBPartial")

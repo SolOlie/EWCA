@@ -26,12 +26,9 @@ namespace DAL.Repositories
         {
             using (var ctx = new CADBContext())
             {
-                var customer = ctx.Customers.Include(y => y.ContactPersons).FirstOrDefault(x => x.Id == id);
-                foreach (var c in customer.ContactPersons)
-                {
-                    c.Password = new Crypto().Decrypt(c.Password);
-                }
-            
+                var customer = ctx.Customers.FirstOrDefault(x => x.Id == id);
+               
+
                 return customer;
             }
         }
@@ -41,18 +38,8 @@ namespace DAL.Repositories
             using (var ctx = new CADBContext())
             {
                
-                var listCustomer = ctx.Customers.Include(y => y.ContactPersons).ToList();
-                foreach (var c in listCustomer)
-                {
-                    foreach (var u in c.ContactPersons)
-                    {
-                        u.Password = new Crypto().Decrypt(u.Password);
-                    }
-                    //foreach (var r in c.Assets)
-                    //{
-                    //    r.Password = new Crypto().Decrypt(r.Password);
-                    //}
-                }
+                var listCustomer = ctx.Customers.ToList();
+               
                 return listCustomer;
             }
         }

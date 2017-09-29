@@ -11,13 +11,19 @@ using FrontendSecure.Models;
 
 namespace FrontendSecure.Controllers
 {
+    [Authorize]
     public class FirewallController : Controller
     {
-        IServiceGateway<Firewall> dbf = new BllFacade().GetFirewallGateway();
-        IServiceGateway<Customer> dbc = new BllFacade().GetCustomerGateway();
+        private readonly IServiceGateway<Firewall> dbf = new BllFacade().GetFirewallGateway();
+        private readonly IServiceGateway<Customer> dbc = new BllFacade().GetCustomerGateway();
+
+       
+
         [ValidateInput(false)]
         public ActionResult FirewallTableExpressPartial(int Customerid)
         {
+           
+
             var model = new FirewallListPartialModel()
             {
                 customerid = Customerid,
@@ -25,10 +31,11 @@ namespace FrontendSecure.Controllers
             };
             return PartialView("~/Views/Customers/_FirewallTableExpressPartial.cshtml", model);
         }
-        
+
         [HttpPost, ValidateInput(false)]
         public ActionResult FirewallTableExpressPartialDelete(string Id)
         {
+
             Id = Id.Replace("\"", "");
             if (string.IsNullOrEmpty(Id))
             {
@@ -41,6 +48,7 @@ namespace FrontendSecure.Controllers
                 try
                 {
                     var d = dbf.Read(id);
+                   
                     dbf.Delete(d);
                     model.customerid = d.Customer.Id;
                     model.Firewalls = dbf.ReadAllWithFk(d.Customer.Id);
@@ -56,18 +64,20 @@ namespace FrontendSecure.Controllers
         [HttpPost]
         public ActionResult Edit(Firewall f)
         {
+           
             if (!ModelState.IsValid)
             {
                 return View(f);
             }
             f.Customer = null;
             dbf.Update(f);
-            return RedirectToAction("Details", "Customers", new {id = f.CustomerId});
+            return RedirectToAction("Details", "Customers", new { id = f.CustomerId });
         }
         public ActionResult Edit(int id)
         {
             Firewall f = dbf.Read(id);
             f.CustomerId = f.Customer.Id;
+           
             return View(f);
         }
 
@@ -78,7 +88,8 @@ namespace FrontendSecure.Controllers
             {
                 return View(f);
             }
-          var c = dbc.Read(f.CustomerId);
+            var c = dbc.Read(f.CustomerId);
+          
             f.Customer = c;
             dbf.Create(f);
 
@@ -86,8 +97,10 @@ namespace FrontendSecure.Controllers
         }
         public ActionResult Create(int Customerid)
         {
+           
             Firewall f = new Firewall();
             f.CustomerId = Customerid;
+
             return View(f);
         }
     }

@@ -15,6 +15,7 @@ using Entities.Entities;
 
 namespace EWCustomerAccountingBackend.Controllers
 {
+    //[Authorize]
     public class LansController : ApiController
     {
         private IRepository<Lan> db = new Facade().GetLanRepo();

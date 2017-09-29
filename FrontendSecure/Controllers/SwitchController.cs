@@ -11,11 +11,11 @@ using FrontendSecure.Models;
 
 namespace FrontendSecure.Controllers
 {
+    [Authorize]
     public class SwitchController : Controller
     {
-
         private IServiceGateway<Switch> dbs = new BllFacade().GetSwitchGateway();
-        private IServiceGateway<Asset> dba = new BllFacade().GetAssetGateway();
+       
         [ValidateInput(false)]
         public ActionResult SwitchTableExpressPartial(int customerid)
         {
@@ -52,12 +52,7 @@ namespace FrontendSecure.Controllers
                 }
             }
             return PartialView("~/Views/Customers/_SwitchTableExpressPartial.cshtml", model);
-        }
-        [HttpGet]
-        public ActionResult Edit(int id)
-        {
-            throw new NotImplementedException();
-        }
+        }   
 
      
        }

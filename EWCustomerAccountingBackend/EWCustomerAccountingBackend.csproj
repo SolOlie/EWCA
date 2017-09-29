@@ -460,7 +460,6 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Helper\Index.cshtml" />
     <Content Include="Views\Helper\_CustomerTestTablePartial.cshtml" />
-    <Content Include="Views\Helper\_tabletestwithoutDBPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

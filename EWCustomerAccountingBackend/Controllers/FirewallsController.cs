@@ -15,6 +15,8 @@ using Entities.Entities;
 
 namespace EWCustomerAccountingBackend.Controllers
 {
+
+    //[Authorize]
     public class FirewallsController : ApiController
     {
         private IRepository<Firewall> db = new Facade().GetFirewallRepo();

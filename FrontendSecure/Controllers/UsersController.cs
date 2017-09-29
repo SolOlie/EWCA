@@ -12,7 +12,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace FrontendSecure.Controllers
 {
-    //[Authorize]
+   [Authorize]
     [HandleApiError]
     public class UsersController : ApiController
     {
@@ -26,7 +26,7 @@ namespace FrontendSecure.Controllers
         };
         private AuthStates isAuthorized(int customerId)
         {
-            return AuthStates.ElitewebAuth;
+            //return AuthStates.ElitewebAuth;
             var session = Session["loggedinUserId"];
             if (session == null)
             {
