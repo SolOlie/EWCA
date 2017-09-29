@@ -650,6 +650,7 @@
     <Content Include="Content\icons\dxicons.woff" />
     <Content Include="Content\icons\dxiconsios.ttf" />
     <Content Include="Content\icons\dxiconsios.woff" />
+    <Content Include="Content\Template.xlsx" />
     <None Include="Properties\PublishProfiles\EWCA - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\ewcafrontend.pubxml" />
     <None Include="Properties\PublishProfiles\EWCAWebApp - Web Deploy.pubxml" />

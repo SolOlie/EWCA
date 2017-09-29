@@ -18,16 +18,11 @@ namespace FrontendSecure.Controllers
     public class CustomersController : Controller
     {
         private readonly IServiceGateway<Customer> db = new BllFacade().GetCustomerGateway();
-
         private readonly IServiceGateway<Asset> dbAsset = new BllFacade().GetAssetGateway();
-
         private readonly IServiceGateway<AssetType> dbAssetType = new BllFacade().GetAssetTypeGateway();
         private readonly IServiceGateway<Port> dbPort = new BllFacade().GetPortGateway();
-
-
         private readonly IServiceGateway<User> dbUser = new BllFacade().GetUserGateway();
         private readonly IServiceGateway<File> dbFile = new BllFacade().GetFileGateway();
-        private readonly IServiceGateway<Switch> dbSwitch = new BllFacade().GetSwitchGateway();
         private static List<Port> ports;
 
         private enum AuthState
