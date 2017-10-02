@@ -96,6 +96,10 @@
     <Compile Include="Migrations\201709260942366_Removed cascade delete.Designer.cs">
       <DependentUpon>201709260942366_Removed cascade delete.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201710020855504_Lan name.cs" />
+    <Compile Include="Migrations\201710020855504_Lan name.Designer.cs">
+      <DependentUpon>201710020855504_Lan name.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AssetRepo.cs" />
@@ -132,6 +136,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201709260942366_Removed cascade delete.resx">
       <DependentUpon>201709260942366_Removed cascade delete.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710020855504_Lan name.resx">
+      <DependentUpon>201710020855504_Lan name.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

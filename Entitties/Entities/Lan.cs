@@ -12,6 +12,8 @@ namespace Entities.Entities
     public class Lan
     {
         public int Id { get; set; }
+        [Display(Name = "Navn")]
+        public string Name { get; set; }
         [Display(Name = "Netværk")]
         public string Network { get; set; }
         [Display(Name = "DHCP Server")]
