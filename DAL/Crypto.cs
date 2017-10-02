@@ -20,6 +20,10 @@ namespace DAL
 
         public string Encrypt(string plainText)
         {
+            if (string.IsNullOrEmpty(plainText))
+            {
+                plainText = "-";
+            }
             // Salt and IV is randomly generated each time, but is preprended to encrypted cipher text
             // so that the same Salt and IV values can be used when decrypting.  
             var saltStringBytes = Generate256BitsOfRandomEntropy();

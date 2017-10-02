@@ -240,7 +240,16 @@ namespace FrontendSecure.Controllers
             };
             c.User = udb.Read(c.UserId);
             var iscreated = db.Create(c);
-
+            if (c.UserId < 1)
+            {
+                var users = udb.ReadAllWithFk(a.Customer.Id);
+                if (a.Customer.Id != 1)
+                {
+                    users.AddRange(udb.ReadAllWithFk(1));
+                }
+                ViewBag.Error = "please select a user!";
+                return View(new CreateChangelogModel { Users = users, AssetId = AssetId, Asset = a });
+            }
             if (iscreated == null)
             {
 
@@ -249,7 +258,7 @@ namespace FrontendSecure.Controllers
                 {
                     users.AddRange(udb.ReadAllWithFk(1));
                 }
-                return View(new CreateChangelogModel { Users = users, AssetId = AssetId });
+                return View(new CreateChangelogModel { Users = users, AssetId = AssetId, Asset = a });
 
             }
             return RedirectToAction("AssetDetails", "Customers", new { id = a.Id, customerId = a.Customer.Id });
