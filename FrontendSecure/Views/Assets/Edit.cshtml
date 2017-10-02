@@ -13,10 +13,12 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>You are editing: <b>@Html.DisplayFor(model => model.Asset.Name)</b></h4>
+        <h4>Du ændrer: <b>@Html.DisplayFor(model => model.Asset.Name)</b></h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Asset.Id)
+        @Html.HiddenFor(model => model.Asset.Customer.Id);
+        @Html.HiddenFor(model => model.Asset.Type.Id);
 
         <div class="form-group">
             @Html.LabelFor(model => model.Asset.Name, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -118,43 +120,20 @@
                 @Html.ValidationMessageFor(model => model.Asset.HDD, "", new { @class = "text-danger" })
             </div>
         </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.Asset.Customer, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(m => m.Asset.Customer.Id,
-                    Model.Customers.Select(m => new SelectListItem()
-                    {
-                        Value = m.Id.ToString(),
-                        Text = m.Firm
-                    }),
-                    "Select Customer")
-                @Html.ValidationMessageFor(model => model.Asset.Customer, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.Asset.Type, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(m => m.Asset.Type.Id,
-                   Model.AssetTypes.Select(m => new SelectListItem()
-                   {
-                       Value = m.Id.ToString(),
-                       Text = m.Description
-                   }),
-                    "Select type")
-                @Html.ValidationMessageFor(model => model.Asset.Type, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        
+       
+      
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Gem" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back", "Details", "Customers", new { id = Model.Asset.Customer.Id }, null)
+    @Html.ActionLink("Tilbage", "Details", "Customers", new { id = Model.Asset.Customer.Id }, null)
 </div>
 
 @section Scripts {

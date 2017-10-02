@@ -275,7 +275,7 @@ namespace FrontendSecure.Controllers
                         int rowtofill = row + 1;
                         portRow = port.CreateRow(rowtofill);
                         portRow.CreateCell(0).SetCellValue(a.PortNumber);
-                        portRow.CreateCell(1).SetCellValue("MV");
+                        portRow.CreateCell(1).SetCellValue(a.Asset);
                         portRow.CreateCell(2).SetCellValue(a.Trunk);
                         portRow.CreateCell(3).SetCellValue(a.VLAN);
                         portRow.CreateCell(4).SetCellValue(a.Note);
@@ -329,25 +329,6 @@ namespace FrontendSecure.Controllers
             }
 
 
-            //if (string.IsNullOrEmpty(date?.Trim()))
-            //{
-            //    customer.Date = DateTime.Now;
-            //}
-            //else
-            //{
-            //    var datetime = DateTime.Now;
-            //    var isparsed = DateTime.TryParseExact(date, "d-M-yyyy", null, DateTimeStyles.AllowWhiteSpaces,
-            //       out datetime);
-            //    if (isparsed)
-            //    {
-            //        customer.Date = datetime;
-            //    }
-            //    else
-            //    {
-            //        customer.Date = DateTime.Now;
-            //    }
-
-            //}
             // read Assets + type + switch
             List<Asset> assets = new List<Asset>();
             List<AssetType> assetTypes = new List<AssetType>();
@@ -386,18 +367,7 @@ namespace FrontendSecure.Controllers
                     }
                 }
                 
-                //string dateAsset = sheet.GetRow(row).GetCell(13).StringCellValue;
-
-                //if (string.IsNullOrEmpty(dateAsset?.Trim()))
-                //{
-                //    p.InstallationDate = DateTime.Now;
-                //}
-                //else
-                //{
-                //    var datetime = DateTime.Now;
-                //    var isparsed = DateTime.TryParseExact(dateAsset, "d-M-yyyy", null, DateTimeStyles.AllowWhiteSpaces, out datetime);
-                //    p.InstallationDate = isparsed ? datetime : DateTime.Now;
-                //}
+            
                 // date end
 
                 // type
