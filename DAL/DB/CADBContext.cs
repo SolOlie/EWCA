@@ -62,8 +62,8 @@ namespace DAL.DB
             modelBuilder.Entity<Asset>().HasMany(a => a.Changelogs).WithRequired(a => a.Asset);
             modelBuilder.Entity<Asset>().HasOptional(a => a.Type).WithMany(a => a.Assets);
             modelBuilder.Entity<Asset>().HasMany(x => x.FileAttachments).WithRequired(x => x.Asset);
-            modelBuilder.Entity<Asset>().HasOptional(s => s.Port).WithRequired(p => p.Asset);
             modelBuilder.Entity<Asset>().HasOptional(s => s.Switch).WithRequired(p => p.Asset);
+            modelBuilder.Entity<Port>().Property(t => t.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
 
             modelBuilder.Entity<File>().HasOptional(x => x.ContentFile).WithRequired(x => x.File);
            

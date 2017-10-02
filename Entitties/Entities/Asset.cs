@@ -52,9 +52,6 @@ namespace Entities.Entities
         public string RAM { get; set; }
 
         public string HDD { get; set; }
-
-        public Port Port { get; set; }
-        public int PortId { get; set; }
         public Switch Switch { get; set; }
         public int SwitchId { get; set; }
 

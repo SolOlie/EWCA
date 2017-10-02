@@ -412,7 +412,7 @@ namespace FrontendSecure.Controllers
             return PartialView("_CustomerTableExpressPartial", model);
         }
 
-        public bool AddToPortListAjax(int portnumber, int assetId, string trunk, string VLAN, string note)
+        public bool AddToPortListAjax(int portnumber, string asset, string trunk, string VLAN, string note)
         {
             var p = new Port()
             {
@@ -420,7 +420,7 @@ namespace FrontendSecure.Controllers
                 Note = note,
                 Trunk = trunk,
                 VLAN = VLAN,
-                AssetId = assetId
+                Asset = asset
             };
             ports.Add(p);
             return true;

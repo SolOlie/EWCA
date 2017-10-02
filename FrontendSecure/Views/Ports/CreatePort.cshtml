@@ -32,17 +32,11 @@
             <div class="col-md-10" style="display: inline-flex">
                 <b style="width: 50px; display: inline-block; margin-left: 13%;">Udstyr</b>
                 <div style="margin-left: 2.5%;">
-                    @Html.DropDownListFor(m => m.Port.AssetId,
-                        Model.Assets.Select(m => new SelectListItem()
-                        {
-                            Value = m.Id.ToString(),
-                            Text = m.Name
-                        }),
-                        new {id = "select"})
+                    @Html.EditorFor(model => model.Port.Asset, new { htmlAttributes = new { @class = "form-control" } })
                 </div>
 
 
-                @Html.ValidationMessageFor(model => model.Port.AssetId, "", new {@class = "text-danger"})
+                @Html.ValidationMessageFor(model => model.Port.Asset, "", new {@class = "text-danger"})
             </div>
         </div>
 

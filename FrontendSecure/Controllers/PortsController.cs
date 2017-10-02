@@ -56,7 +56,8 @@ namespace FrontendSecure.Controllers
         public ActionResult EditPort(int id, int assetid)
         {
             Port p = dbports.Read(id);
-            int cid = dbAsset.Read(p.AssetId).Customer.Id;
+
+            int cid = p.Switch.CustomerId;
             if (p.SwitchId == 0)
             {
                 p.SwitchId = p.Switch.Id;
@@ -66,7 +67,6 @@ namespace FrontendSecure.Controllers
                 Port = p,
                 assetreturnid = assetid,
                 customerId = cid,
-                Assets = dbAsset.ReadAllWithFk(cid)
             };
             return View(model);
         }

@@ -3,7 +3,7 @@ namespace DAL.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Initial : DbMigration
+    public partial class initial : DbMigration
     {
         public override void Up()
         {
@@ -28,7 +28,6 @@ namespace DAL.Migrations
                         SoftDelete = c.Boolean(nullable: false),
                         RAM = c.String(),
                         HDD = c.String(),
-                        PortId = c.Int(nullable: false),
                         SwitchId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
@@ -83,6 +82,37 @@ namespace DAL.Migrations
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
+                "dbo.Firewalls",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Protocol = c.String(),
+                        AllowedIps = c.String(),
+                        Interface = c.String(),
+                        Destination = c.String(),
+                        CustomerId = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Customers", t => t.CustomerId, cascadeDelete: true)
+                .Index(t => t.CustomerId);
+            
+            CreateTable(
+                "dbo.Lans",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Name = c.String(),
+                        Network = c.String(),
+                        DhcpServer = c.String(),
+                        Dns = c.String(),
+                        VLan = c.String(),
+                        CustomerId = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Customers", t => t.CustomerId, cascadeDelete: true)
+                .Index(t => t.CustomerId);
+            
+            CreateTable(
                 "dbo.Switches",
                 c => new
                     {
@@ -101,18 +131,16 @@ namespace DAL.Migrations
                 "dbo.Ports",
                 c => new
                     {
-                        Id = c.Int(nullable: false),
+                        Id = c.Int(nullable: false, identity: true),
                         SwitchId = c.Int(nullable: false),
                         PortNumber = c.Int(nullable: false),
-                        AssetId = c.Int(nullable: false),
+                        Asset = c.String(),
                         Trunk = c.String(),
                         VLAN = c.String(),
                         Note = c.String(),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Switches", t => t.SwitchId, cascadeDelete: true)
-                .ForeignKey("dbo.Assets", t => t.Id)
-                .Index(t => t.Id)
                 .Index(t => t.SwitchId);
             
             CreateTable(
@@ -198,7 +226,6 @@ namespace DAL.Migrations
             DropForeignKey("dbo.AuditLogDetails", "AuditLogId", "dbo.AuditLogs");
             DropForeignKey("dbo.Assets", "TypeId", "dbo.AssetTypes");
             DropForeignKey("dbo.Switches", "Id", "dbo.Assets");
-            DropForeignKey("dbo.Ports", "Id", "dbo.Assets");
             DropForeignKey("dbo.Files", "AssetId", "dbo.Assets");
             DropForeignKey("dbo.ContentFiles", "Id", "dbo.Files");
             DropForeignKey("dbo.Assets", "CustomerId", "dbo.Customers");
@@ -206,15 +233,18 @@ namespace DAL.Migrations
             DropForeignKey("dbo.Changelogs", "UserId", "dbo.Users");
             DropForeignKey("dbo.Switches", "CustomerId", "dbo.Customers");
             DropForeignKey("dbo.Ports", "SwitchId", "dbo.Switches");
+            DropForeignKey("dbo.Lans", "CustomerId", "dbo.Customers");
+            DropForeignKey("dbo.Firewalls", "CustomerId", "dbo.Customers");
             DropForeignKey("dbo.Users", "IsContactForCustomer_Id", "dbo.Customers");
             DropIndex("dbo.LogMetadata", new[] { "AuditLogId" });
             DropIndex("dbo.AuditLogDetails", new[] { "AuditLogId" });
             DropIndex("dbo.ContentFiles", new[] { "Id" });
             DropIndex("dbo.Files", new[] { "AssetId" });
             DropIndex("dbo.Ports", new[] { "SwitchId" });
-            DropIndex("dbo.Ports", new[] { "Id" });
             DropIndex("dbo.Switches", new[] { "CustomerId" });
             DropIndex("dbo.Switches", new[] { "Id" });
+            DropIndex("dbo.Lans", new[] { "CustomerId" });
+            DropIndex("dbo.Firewalls", new[] { "CustomerId" });
             DropIndex("dbo.Users", new[] { "IsContactForCustomer_Id" });
             DropIndex("dbo.Changelogs", new[] { "AssetId" });
             DropIndex("dbo.Changelogs", new[] { "UserId" });
@@ -228,6 +258,8 @@ namespace DAL.Migrations
             DropTable("dbo.Files");
             DropTable("dbo.Ports");
             DropTable("dbo.Switches");
+            DropTable("dbo.Lans");
+            DropTable("dbo.Firewalls");
             DropTable("dbo.Customers");
             DropTable("dbo.Users");
             DropTable("dbo.Changelogs");

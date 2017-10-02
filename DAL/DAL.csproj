@@ -80,25 +80,9 @@
     <Compile Include="DB\CADBContext.cs" />
     <Compile Include="DB\CADBinitializer.cs" />
     <Compile Include="Facade.cs" />
-    <Compile Include="Migrations\201709201231478_Initial.cs" />
-    <Compile Include="Migrations\201709201231478_Initial.Designer.cs">
-      <DependentUpon>201709201231478_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201709211043563_lan and firewall added.cs" />
-    <Compile Include="Migrations\201709211043563_lan and firewall added.Designer.cs">
-      <DependentUpon>201709211043563_lan and firewall added.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201709211050404_updated lan and firewall with customer.cs" />
-    <Compile Include="Migrations\201709211050404_updated lan and firewall with customer.Designer.cs">
-      <DependentUpon>201709211050404_updated lan and firewall with customer.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201709260942366_Removed cascade delete.cs" />
-    <Compile Include="Migrations\201709260942366_Removed cascade delete.Designer.cs">
-      <DependentUpon>201709260942366_Removed cascade delete.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201710020855504_Lan name.cs" />
-    <Compile Include="Migrations\201710020855504_Lan name.Designer.cs">
-      <DependentUpon>201710020855504_Lan name.cs</DependentUpon>
+    <Compile Include="Migrations\201710021109158_initial.cs" />
+    <Compile Include="Migrations\201710021109158_initial.Designer.cs">
+      <DependentUpon>201710021109158_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -125,20 +109,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201709201231478_Initial.resx">
-      <DependentUpon>201709201231478_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201709211043563_lan and firewall added.resx">
-      <DependentUpon>201709211043563_lan and firewall added.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201709211050404_updated lan and firewall with customer.resx">
-      <DependentUpon>201709211050404_updated lan and firewall with customer.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201709260942366_Removed cascade delete.resx">
-      <DependentUpon>201709260942366_Removed cascade delete.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201710020855504_Lan name.resx">
-      <DependentUpon>201710020855504_Lan name.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201710021109158_initial.resx">
+      <DependentUpon>201710021109158_initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
