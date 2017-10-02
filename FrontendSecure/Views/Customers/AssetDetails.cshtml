@@ -113,35 +113,46 @@
         <li role="presentation" onclick="TabShift()" id="FilePane">
             <a href="#Files" data-toggle="tab" id="idFile">Filer</a>
         </li>
-        <li role="presentation" onclick="TabShift()" id="Port">
-            <a href="#Ports" data-toggle="tab" id="idPort">Ports</a>
-        </li>
+@if (Model.Asset.Type.Description.ToLower().Equals("switch"))
+{
+    <li role="presentation" onclick="TabShift()" id="Port">
+        <a href="#Ports" data-toggle="tab" id="idPort">Ports</a>
+    </li>
+}
+       
     </ul>
     <div class="tab-content">
         <div class="tab-pane active" id="Changelog" >
             
-            @Html.Action("ChangelogTableExpressPartial", "Changelogs", new {assetid = Model.Asset.Id})
+            <a style="margin-top: 10px;" class="btn btn-default align-right" href="../../Changelogs/Create?assetid=@Model.Asset.Id">
+                    <span class="glyphicon glyphicon-plus"
+                          aria-hidden="true">
+                        <b> Changelog</b>
+                    </span>
+                </a>
 
-        </div>
+                @Html.Action("ChangelogTableExpressPartial", "Changelogs", new { assetid = Model.Asset.Id })
+
+            </div>
         <div id="Files" class="tab-pane" >
-            <a id="addFileBtn" class="btn btn-default align-right" onclick="toggleAddFile()">
+            <a style="margin-top: 10px;" id="addFileBtn" class="btn btn-default align-right" onclick="toggleAddFile()">
                 <span class="glyphicon glyphicon-plus"
                       aria-hidden="true">
                     <b>Fil</b>
                 </span>
             </a>
             <div id="addFilePopup" style=" height: 150px;
-                                      width: 300px;
-                                      position: fixed;
-                                      background-color: lightgray;
-                                      top: 50%;
-                                      left: 50%;
-                                      margin-left: -150px;
-                                      margin-top: -75px;
-                                      border-radius: 5px;
-                                      padding: 20px;
-                                      padding-left: 30px;
-                                      display: none;">
+                                                                                                                                                                                                                           width: 300px;
+                                                                                                                                                                                                                           position: fixed;
+                                                                                                                                                                                                                           background-color: lightgray;
+                                                                                                                                                                                                                           top: 50%;
+                                                                                                                                                                                                                           left: 50%;
+                                                                                                                                                                                                                           margin-left: -150px;
+                                                                                                                                                                                                                           margin-top: -75px;
+                                                                                                                                                                                                                           border-radius: 5px;
+                                                                                                                                                                                                                           padding: 20px;
+                                                                                                                                                                                                                           padding-left: 30px;
+                                                                                                                                                                                                                           display: none;">
                 @using (Html.BeginForm("AddFile", "Assets", FormMethod.Post, new {enctype = "multipart/form-data"}))
                 {
                     <input type="hidden" name="assetId" value="@Model.Asset.Id" />
@@ -160,12 +171,22 @@
             @Html.Action("FileTableExpressPartial", "Changelogs", new { assetid = Model.Asset.Id })
 
         </div>
-        <div id="Ports" class="tab-pane">
+@if (Model.Asset.Type.Description.ToLower().Equals("switch"))
+{
+    <div id="Ports" class="tab-pane">
 
-            @Html.Action("PortListExpressPartial", "Ports", new {assetid = Model.Asset.Id})
+        <a style="margin-top: 10px;" class="btn btn-default align-right" href="../../Ports/CreatePort?assetid=@Model.Asset.Id">
+            <span class="glyphicon glyphicon-plus"
+                  aria-hidden="true">
+                <b> Port</b>
+            </span>
+        </a>
+        @Html.Action("PortListExpressPartial", "Ports", new { assetid = Model.Asset.Id })
 
 
-        </div>
+    </div>
+}
+       
     </div>
 </div>
 <p onclick="showPageLoadingSpinner()" style="display: inline-block; margin-top: 1%">

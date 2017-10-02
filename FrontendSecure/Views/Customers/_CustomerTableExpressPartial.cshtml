@@ -45,9 +45,6 @@
                 });
                 col.SetHeaderTemplateContent(c =>
                 {
-                    ViewContext.Writer.Write(
-                        Html.ActionLink("Ny", "Create", "Customers").ToHtmlString()
-                    );
                 });
                 col.Width = 50;
             });

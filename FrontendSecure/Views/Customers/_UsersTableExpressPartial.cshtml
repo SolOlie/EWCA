@@ -20,9 +20,7 @@
             });
             col.SetHeaderTemplateContent(c =>
             {
-                ViewContext.Writer.Write(
-                    Html.ActionLink("Ny", "Create", "Users", new { CustomerId = Model.CustomerId }, null).ToHtmlString()
-                );
+               
             });
             col.Settings.AllowDragDrop = DefaultBoolean.False;
             col.Settings.AllowSort = DefaultBoolean.False;

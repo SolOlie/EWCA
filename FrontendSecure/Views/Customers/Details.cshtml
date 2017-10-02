@@ -59,29 +59,60 @@
 <div class="container-fluid">
     <div class="tab-content">
         <div class="tab-pane active" id="Asset" >
-        
+            
+            <a style="margin-top: 10px;" class="btn btn-default align-right" href="../CreateAsset/@Model.Customer.Id">
+                <span class="glyphicon glyphicon-plus"
+                      aria-hidden="true">
+                    <b> Udstyr</b>
+                </span>
+            </a>
             @Html.Action("AssetTableExpressPartial", "Assets", new {customerid = Model.Customer.Id})
         
         </div>
         <div id="User" class="tab-pane" >
+            
+            <a style="margin-top: 10px;" class="btn btn-default align-right" href="../../Users/Create?CustomerId=@Model.Customer.Id">
+                <span class="glyphicon glyphicon-plus"
+                      aria-hidden="true">
+                    <b> Bruger</b>
+                </span>
+            </a>
 
             @Html.Action("UsersTableExpressPartial", "Users", new {customerId = Model.Customer.Id})
 
         </div>
         <div id="Switch" class="tab-pane">
-
+            
+            <a style="margin-top: 10px;" class="btn btn-default align-right" href="../CreateAsset/@Model.Customer.Id">
+                <span class="glyphicon glyphicon-plus"
+                      aria-hidden="true">
+                    <b> Switch</b>
+                </span>
+            </a>
 
             @Html.Action("SwitchTableExpressPartial", "Switch", new {customerid = Model.Customer.Id})
             
         </div>
         <div id="Firewall" class="tab-pane"  >
-
+            
+            <a style="margin-top: 10px;" class="btn btn-default align-right" href="../../Firewall/Create?CustomerId=@Model.Customer.Id">
+                <span class="glyphicon glyphicon-plus"
+                      aria-hidden="true">
+                    <b> Firewall</b>
+                </span>
+            </a>
 
             @Html.Action("FirewallTableExpressPartial", "Firewall", new { Customerid = Model.Customer.Id })
             
         </div>
         <div id="Lan" class="tab-pane">
-
+            
+            <a style="margin-top: 10px;" class="btn btn-default align-right" href="../../Lan/Create?CustomerId=@Model.Customer.Id">
+                <span class="glyphicon glyphicon-plus"
+                      aria-hidden="true">
+                    <b> Lan</b>
+                </span>
+            </a>
 
             @Html.Action("LanTableExpressPartial", "Lan", new { Customerid = Model.Customer.Id })
 

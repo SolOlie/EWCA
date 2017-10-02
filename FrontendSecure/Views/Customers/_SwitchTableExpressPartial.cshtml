@@ -21,9 +21,7 @@
 
             col.SetHeaderTemplateContent(c =>
             {
-                ViewContext.Writer.Write(
-                    Html.ActionLink("Ny", "CreateAsset","Customers", new { id = Model.CustomerId }, null).ToHtmlString()
-                );
+               
             });
 
         });

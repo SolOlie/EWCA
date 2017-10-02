@@ -20,7 +20,7 @@
                 });
             col.SetHeaderTemplateContent(c =>
             {
-                ViewContext.Writer.Write(Html.ActionLink("Ny", "CreatePort", "Ports", new { assetid = Model.assetid}, null));
+                
             });
 
         });
@@ -63,7 +63,14 @@
         settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
 
 
-        settings.Columns.Add("PortNumber");
+  
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "PortNumber";
+            c.Caption = "port nr.";
+            c.Width = 50;
+        });
+
         settings.Columns.Add(c =>
         {
             c.FieldName = "Asset.Name";
