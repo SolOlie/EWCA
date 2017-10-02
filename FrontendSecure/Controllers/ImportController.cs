@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Caching;
 using System.Web.Mvc;
+using DevExpress.XtraRichEdit.Model;
 using Entities.Entities;
 using FrontendSecure.Gateways;
 using NPOI.HSSF.UserModel;
@@ -25,6 +26,9 @@ namespace FrontendSecure.Controllers
         private IServiceGateway<AssetType> dbaT = new BllFacade().GetAssetTypeGateway();
         private IServiceGateway<Customer> dbc = new BllFacade().GetCustomerGateway();
         private IServiceGateway<User> dbu = new BllFacade().GetUserGateway();
+        private IServiceGateway<Firewall> dbf = new BllFacade().GetFirewallGateway();
+        private IServiceGateway<Lan> dbl = new BllFacade().GetLanGateway();
+        private IServiceGateway<Port> dbp = new BllFacade().GetPortGateway();
         private enum AuthStates
         {
             NoAuth,
@@ -90,6 +94,10 @@ namespace FrontendSecure.Controllers
             }
             Customer c = dbc.Read(customerId);
             List<Asset> assets = db.ReadAllWithFk(customerId);
+            List<Firewall> firewalls = dbf.ReadAllWithFk(customerId);
+            List<Lan> lans = dbl.ReadAllWithFk(customerId);
+            List<User> users = dbu.ReadAllWithFk(customerId);
+            List<Port> ports = dbp.ReadAllWithFk(customerId);
 
             HSSFWorkbook hssfwb = new HSSFWorkbook();
             ICellStyle style = hssfwb.CreateCellStyle();
@@ -99,7 +107,12 @@ namespace FrontendSecure.Controllers
             font.IsBold = true;
             style.SetFont(font);
             
-            ISheet sheet = hssfwb.CreateSheet("Export");
+            ISheet sheet = hssfwb.CreateSheet("Udstyr");
+            ISheet firewall = hssfwb.CreateSheet("Firewall");
+            ISheet lan = hssfwb.CreateSheet("Lan");
+            ISheet user = hssfwb.CreateSheet("User");
+            ISheet port = hssfwb.CreateSheet("Port");
+            
             IRow row1 = sheet.CreateRow(0);
             row1.CreateCell(0).SetCellValue("Kunde");
             row1.CreateCell(1).SetCellValue("Adresse");
@@ -157,6 +170,122 @@ namespace FrontendSecure.Controllers
                     row1.CreateCell(13).SetCellValue(a.InstallationDate.ToShortDateString());
 
                 }
+
+                IRow firewallRow = firewall.CreateRow(0);
+                firewallRow.CreateCell(0).SetCellValue("Protokol");
+                firewallRow.CreateCell(1).SetCellValue("Tilladt fra");
+                firewallRow.CreateCell(2).SetCellValue("Interface");
+                firewallRow.CreateCell(3).SetCellValue("Destination");
+                try
+                {
+                    for (int i = 0; i < 4; i++)
+                    {
+                        firewallRow.GetCell(i).CellStyle = style;
+                    }
+                    for (int row = 0; row < firewalls.Count; row++)
+                    {
+                        var a = firewalls[row];
+                        int rowtofill = row + 1;
+                        firewallRow = firewall.CreateRow(rowtofill);
+                        firewallRow.CreateCell(0).SetCellValue(a.Protocol);
+                        firewallRow.CreateCell(0).SetCellValue(a.AllowedIps);
+                        firewallRow.CreateCell(0).SetCellValue(a.Interface);
+                        firewallRow.CreateCell(0).SetCellValue(a.Destination);
+                    }
+                }
+                catch (Exception)
+                {
+                    
+                    throw;
+                }
+
+                IRow lanRow = lan.CreateRow(0);
+                lanRow.CreateCell(0).SetCellValue("Navn");
+                lanRow.CreateCell(1).SetCellValue("Netværk");
+                lanRow.CreateCell(2).SetCellValue("DHCP Server");
+                lanRow.CreateCell(3).SetCellValue("DNS");
+                lanRow.CreateCell(4).SetCellValue("VLAN");
+                try
+                {
+                    for (int i = 0; i < 5; i++)
+                    {
+                        lanRow.GetCell(i).CellStyle = style;
+                    }
+                    for (int row = 0; row < lans.Count; row++)
+                    {
+                        var a = lans[row];
+                        int rowtofill = row + 1;
+                        lanRow = lan.CreateRow(rowtofill);
+                        lanRow.CreateCell(0).SetCellValue(a.Name);
+                        lanRow.CreateCell(1).SetCellValue(a.Network);
+                        lanRow.CreateCell(2).SetCellValue(a.DhcpServer);
+                        lanRow.CreateCell(3).SetCellValue(a.Dns);
+                        lanRow.CreateCell(4).SetCellValue(a.VLan);
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+
+                IRow userRow = user.CreateRow(0);
+                userRow.CreateCell(0).SetCellValue("Email");
+                userRow.CreateCell(1).SetCellValue("Fornavn");
+                userRow.CreateCell(2).SetCellValue("Efternavn");
+                userRow.CreateCell(3).SetCellValue("Telefon nr.");
+                userRow.CreateCell(4).SetCellValue("Password");
+                try
+                {
+                    for (int i = 0; i < 5; i++)
+                    {
+                        userRow.GetCell(i).CellStyle = style;
+                    }
+                    for (int row = 0; row < users.Count; row++)
+                    {
+                        var a = users[row];
+                        int rowtofill = row + 1;
+                        userRow = user.CreateRow(rowtofill);
+                        userRow.CreateCell(0).SetCellValue(a.Email);
+                        userRow.CreateCell(1).SetCellValue(a.FirstName);
+                        userRow.CreateCell(2).SetCellValue(a.LastName);
+                        userRow.CreateCell(3).SetCellValue(a.Password);
+                        userRow.CreateCell(4).SetCellValue(a.Password);
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+
+                IRow portRow = port.CreateRow(0);
+                portRow.CreateCell(0).SetCellValue("Port nr.");
+                portRow.CreateCell(1).SetCellValue("Udstyr");
+                portRow.CreateCell(1).SetCellValue("Trunk");
+                portRow.CreateCell(2).SetCellValue("VLAN");
+                portRow.CreateCell(3).SetCellValue("Note");
+                try
+                {
+                    for (int i = 0; i < 4; i++)
+                    {
+                        portRow.GetCell(i).CellStyle = style;
+                    }
+                    for (int row = 0; row < ports.Count; row++)
+                    {
+                        var a = ports[row];
+                        int rowtofill = row + 1;
+                        portRow = port.CreateRow(rowtofill);
+                        portRow.CreateCell(0).SetCellValue(a.PortNumber);
+                        portRow.CreateCell(1).SetCellValue("MV");
+                        portRow.CreateCell(2).SetCellValue(a.Trunk);
+                        portRow.CreateCell(3).SetCellValue(a.VLAN);
+                        portRow.CreateCell(4).SetCellValue(a.Note);
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+
                 for (int i = 0; i <= 13; i++)
                 {
                     sheet.AutoSizeColumn(i);
