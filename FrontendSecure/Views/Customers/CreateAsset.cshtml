@@ -61,7 +61,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Asset.InstallationDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Asset.InstallationDate, new { htmlAttributes = new { @class = "form-control", id = "dateTimeField1" } })
+                @Html.EditorFor(model => model.Asset.InstallationDate, new { htmlAttributes = new { @class = "form-control", id = "dateTimeField1", @value = DateTime.Now } })
                 @Html.ValidationMessageFor(model => model.Asset.InstallationDate, "", new { @class = "text-danger" })
             </div>
         </div>
