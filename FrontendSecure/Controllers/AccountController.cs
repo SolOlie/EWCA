@@ -111,7 +111,18 @@ namespace FrontendSecure.Controllers
                 {
                     if (users.Password == model.Password)
                     {
-                        Session["loggedinUserId"] = users.Id;
+                        HttpCookie myCookie = new HttpCookie("UserCookie");
+                        
+                        //Add key-values in the cookie
+                        myCookie.Values.Add("userid", users.Id.ToString());
+                        myCookie.HttpOnly = true;
+                        //set cookie expiry date-time. Made it to last for next 12 hours.
+                        myCookie.Expires = DateTime.Now.AddHours(12).ToUniversalTime();
+
+                        //Most important, write the cookie to client.
+                        Response.Cookies.Add(myCookie);
+
+                        //Session["loggedinUserId"] = users.Id;
                     }
                     if (users.IsContactForCustomer.Id != 1)
                     {
@@ -139,11 +150,18 @@ namespace FrontendSecure.Controllers
                 var c = new HttpCookie("EWCA.webapi.Auth")
                 {
                     Expires = DateTime.Now.AddDays(-1)
-                    
                 };
                 Response.Cookies.Add(c);
             }
-            Session["loggedInCustomerId"] = null;
+
+            if (Response.Cookies["UserCookie"] != null)
+            {
+                var c = new HttpCookie("UserCookie")
+                {
+                    Expires = DateTime.Now.AddDays(-1)
+                };
+                Response.Cookies.Add(c);
+            }
             return RedirectToAction("SignIn", "Account");
         }
     }

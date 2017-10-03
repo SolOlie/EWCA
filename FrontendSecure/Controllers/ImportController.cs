@@ -39,13 +39,23 @@ namespace FrontendSecure.Controllers
         private AuthStates isAuthorized(int customerId)
         {
             //return AuthStates.ElitewebAuth;
-            var session = Session["loggedinUserId"];
-            if (session == null)
+            HttpCookie myCookie = Request.Cookies["UserCookie"];
+            if (myCookie == null)
             {
                 return AuthStates.NoAuth;
             }
+            int i = 0;
+            //ok - cookie is found.
+            //Gracefully check if the cookie has the key-value as expected.
+            if (!string.IsNullOrEmpty(myCookie.Values["userid"]))
+            {
+                string userId = myCookie.Values["userid"].ToString();
+                int.TryParse(userId, out i);
 
-            int loggedinUserId = (int)session;
+                //Yes userId is found. Mission accomplished.
+            }
+
+            int loggedinUserId = i;
             var loggedInUser = dbu.Read(loggedinUserId);
 
             if (loggedInUser == null)

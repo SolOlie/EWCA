@@ -1,6 +1,7 @@
 ﻿using DevExpress.Web.Mvc;
 using System;
 using System.Net;
+using System.Web;
 using System.Web.Mvc;
 using Entities.Entities;
 using FrontendSecure.Gateways;
@@ -25,14 +26,24 @@ namespace FrontendSecure.Controllers
         };
         private AuthState isAuthorized(int customerId)
         {
-           // return AuthState.ElitewebAuth;
-            var session = Session["loggedinUserId"];
-            if (session == null)
+            // return AuthState.ElitewebAuth;
+            HttpCookie myCookie = Request.Cookies["UserCookie"];
+            if (myCookie == null)
             {
                 return AuthState.NoAuth;
             }
+            int i = 0;
+            //ok - cookie is found.
+            //Gracefully check if the cookie has the key-value as expected.
+            if (!string.IsNullOrEmpty(myCookie.Values["userid"]))
+            {
+                string userId = myCookie.Values["userid"].ToString();
+                int.TryParse(userId, out i);
 
-            int loggedinUserId = (int)session;
+                //Yes userId is found. Mission accomplished.
+            }
+
+            int loggedinUserId = i;
             var loggedInUser = udb.Read(loggedinUserId);
 
             if (loggedInUser == null)
