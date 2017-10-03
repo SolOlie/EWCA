@@ -19,7 +19,7 @@
                 });
             col.SetHeaderTemplateContent(c =>
             {
-               
+
             });
 
         });
@@ -62,7 +62,12 @@
         settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
         settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
 
-        settings.Columns.Add("Protocol");
+      
+        settings.Columns.Add(col =>
+        {
+            col.Caption = "Protokol";
+            col.FieldName = "Protocol";
+        });
         settings.Columns.Add(col =>
         {
             col.Caption = "Tilladt fra";

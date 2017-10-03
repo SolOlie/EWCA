@@ -23,7 +23,7 @@ namespace Entities.Entities
         public List<Changelog> Changelogs { get; set; }
         [SkipTracking]
         public Customer IsContactForCustomer { get; set; }
-
+        [Display(Name = "Admin")]
         public bool IsAdmin { get; set; }
     }
 }

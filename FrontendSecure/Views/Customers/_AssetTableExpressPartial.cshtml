@@ -98,7 +98,12 @@
         settings.Columns.Add("Note");
         settings.Columns.Add("Login");
         settings.Columns.Add("Password");
-        settings.Columns.Add("IpAddress");
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "IpAddress";
+            c.Caption = "IP";
+
+        });
     });
 
     if (ViewData["EditError"] != null){

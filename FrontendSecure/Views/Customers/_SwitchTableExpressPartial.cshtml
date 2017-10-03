@@ -21,7 +21,7 @@
 
             col.SetHeaderTemplateContent(c =>
             {
-               
+
             });
 
         });
@@ -67,7 +67,12 @@
         settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
         settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
 
-        settings.Columns.Add("Name");
+        settings.Columns.Add(x =>
+        {
+            x.FieldName = "Name";
+            x.Caption = "Navn";
+        } );
+
     });
     if (ViewData["EditError"] != null){
         grid.SetEditErrorText((string)ViewData["EditError"]);
