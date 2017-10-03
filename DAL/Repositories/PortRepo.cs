@@ -74,8 +74,8 @@ namespace DAL.Repositories
                     if (PortExists(t.Id, ctx))
                     {
                         ctx.Ports.Attach(t);
-                        ctx.Ports.Remove(t);
-                    }
+                    ctx.Entry(t).State = EntityState.Modified;
+                }
              
                try
                 {
