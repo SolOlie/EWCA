@@ -9,9 +9,6 @@ namespace FrontendSecure.Models
     {
         public long LogId { get; set; }
 
-        /// <summary>
-        /// This is a string now as it can be a composite key. This may be changed to array/collection later.
-        /// </summary>
         public string RecordId { get; set; }
 
         public DateTime Date { get; set; }
