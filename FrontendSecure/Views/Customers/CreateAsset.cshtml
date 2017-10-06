@@ -20,10 +20,24 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Asset.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Asset.Description, htmlAttributes: new {@class = "control-label col-md-2"})
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Asset.Description, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Asset.Description, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Asset.Description, new {htmlAttributes = new {@class = "form-control"}})
+                @Html.ValidationMessageFor(model => model.Asset.Description, "", new {@class = "text-danger"})
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Asset.Model, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Asset.Model, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Asset.Model, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Asset.SerialNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Asset.SerialNumber, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Asset.SerialNumber, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group">
@@ -150,7 +164,30 @@
 
             </div>
         </div>
+        <div class="form-group">
 
+            @Html.LabelFor(model => model.Asset.Manufacturer, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div style="display: inline-block; position: relative;" id="ma">
+                    @Html.DropDownListFor(m => m.Asset.Manufacturer.Id,
+                        Model.Manufacturers.Select(m => new SelectListItem()
+                        {
+                            Value = m.Id.ToString(),
+                            Text = m.manufacturer
+                        }),
+                         new { id = "selectManu" })
+                    <div style="position: absolute; left: 0; right: 0; top: 0; bottom: 0; display: inline-block;" id="clearDropdownManu"></div>
+                </div>
+                <div style="display: inline-block; position: relative;">
+                    <input placeholder="Ny producent" name="atInputManu" id="manufacturerInput" />
+                    <div style="position: absolute; left: 0; right: 0; top: 0; bottom: 0;" id="clearInputManu"></div>
+                </div>
+
+
+
+
+            </div>
+        </div>
         <div style="display: inline-block; margin-bottom: 1%; margin-left: 17%;"id="addPortBtn">
             <label>Tilføj porte til switchen her: </label>
             <a class="btn btn-default"  onclick="showPopup()">
@@ -228,7 +265,7 @@
 
 
             });
-
+    
     $("#clearInput")
         .on('click', function () {
                 $("#select").val(0);
@@ -242,6 +279,32 @@
         .click(function () {
             $("#assetTypeInput").val("");
             $(this).hide().prev("select[disabled]").prop("disabled", false).focus();
+
+            $("#clearInput").show();
+        });
+    $("#selectManu")
+       .on('change',
+           function () {
+               $("#manufacturerInput").val("");
+               $("#manufacturerInput").prop("disabled", true);
+               $("#clearInputManu").show();
+
+
+           });
+
+    $("#clearInputManu")
+        .on('click', function () {
+            $("#selectManu").val(0);
+            $("#selectManu").prop("disabled", true);
+            $(this).hide().prev("input[disabled]").prop("disabled", false).focus();
+            $("#clearDropdownManu").show();
+           
+
+        });
+    $("#clearDropdownManu")
+        .click(function () {
+            $("#manufacturerInput").val("");
+            $(this).hide().prev("selectManu[disabled]").prop("disabled", false).focus();
 
             $("#clearInput").show();
         });

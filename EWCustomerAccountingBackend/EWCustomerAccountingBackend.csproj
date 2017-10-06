@@ -289,6 +289,7 @@
     <Compile Include="Controllers\HistoryBackendController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LansController.cs" />
+    <Compile Include="Controllers\ManufacturersController.cs" />
     <Compile Include="Controllers\PortsController.cs" />
     <Compile Include="Controllers\SwitchesController.cs" />
     <Compile Include="Controllers\UsersBackendController.cs" />

@@ -14,6 +14,9 @@ namespace Entities.Entities
         public int? TypeId { get; set; }
 
         public AssetType Type { get; set; }
+        public int? ManufacturerId { get; set; }
+        [Display(Name = "Producent")]
+        public Manufacturer Manufacturer { get; set; }
        [Display(Name = "Navn")]
         public string Name { get; set; }
         
@@ -54,6 +57,10 @@ namespace Entities.Entities
         public string HDD { get; set; }
         public Switch Switch { get; set; }
         public int SwitchId { get; set; }
+        [Display(Name = "S/N")]
+        public string SerialNumber { get; set; }
+
+        public string Model { get; set; }
 
     }
 }

@@ -14,5 +14,6 @@ namespace FrontendSecure.Models
         public int customerId { get; set; }
         public List<Asset> customerassetlist { get; set; }
         public bool SoftDelete { get; set; }
+        public List<Manufacturer> Manufacturers { get; set; }
     }
 }

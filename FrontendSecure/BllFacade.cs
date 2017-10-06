@@ -51,5 +51,10 @@ namespace FrontendSecure
         {
             return new LanGatewaySecure();
         }
-       }
+        public IServiceGateway<Manufacturer> GetManufacturerGateway()
+        {
+            return new ManufacturerGatewaySecure();
+        }
+
+    }
 }

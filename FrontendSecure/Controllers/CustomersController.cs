@@ -14,12 +14,13 @@ using WebGrease;
 
 namespace FrontendSecure.Controllers
 {
-    [Authorize] 
+    [Authorize]
     public class CustomersController : Controller
     {
         private readonly IServiceGateway<Customer> db = new BllFacade().GetCustomerGateway();
         private readonly IServiceGateway<Asset> dbAsset = new BllFacade().GetAssetGateway();
         private readonly IServiceGateway<AssetType> dbAssetType = new BllFacade().GetAssetTypeGateway();
+        private readonly IServiceGateway<Manufacturer> dbManufacturer = new BllFacade().GetManufacturerGateway();
         private readonly IServiceGateway<Port> dbPort = new BllFacade().GetPortGateway();
         private readonly IServiceGateway<User> dbUser = new BllFacade().GetUserGateway();
         private readonly IServiceGateway<File> dbFile = new BllFacade().GetFileGateway();
@@ -51,9 +52,9 @@ namespace FrontendSecure.Controllers
                 //Yes userId is found. Mission accomplished.
             }
 
-           
-           
-            
+
+
+
             int loggedinUserId = i;
             var loggedInUser = dbUser.Read(loggedinUserId);
 
@@ -192,10 +193,12 @@ namespace FrontendSecure.Controllers
                     return View("NotAuthorized");
                 default:
                     var model = new CreateAssetModel()
-                    {customerassetlist = dbAsset.ReadAllWithFk(id),
+                    {
+                        customerassetlist = dbAsset.ReadAllWithFk(id),
                         Users = dbUser.ReadAllWithFk(id),
                         customerId = id,
                         Customers = new List<Customer>() { db.Read(id) },
+                        Manufacturers = dbManufacturer.ReadAll(),
                         AssetTypes = dbAssetType.ReadAll(),
                         Asset = new Asset()
                         {
@@ -207,7 +210,7 @@ namespace FrontendSecure.Controllers
                     return View(model);
 
             }
-            
+
         }
 
         // POST: Customers/Create
@@ -237,7 +240,7 @@ namespace FrontendSecure.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateAsset(Asset asset, HttpPostedFileBase upload, string atInput)
+        public ActionResult CreateAsset(Asset asset, HttpPostedFileBase upload, string atInput, string atInputManu)
         {
             switch (isAuthorized(asset.Customer.Id))
             {
@@ -245,74 +248,82 @@ namespace FrontendSecure.Controllers
                     return View("NotAuthorized");
                 default:
                     if (ModelState.IsValid)
-            {
-                if (!string.IsNullOrEmpty(atInput))
-                {
-                    var type = dbAssetType.Create(new AssetType
                     {
-                        Description = atInput
+                        if (!string.IsNullOrEmpty(atInput))
+                        {
+                            var type = dbAssetType.Create(new AssetType
+                            {
+                                Description = atInput
 
-                    });
+                            });
+                            var manu = dbManufacturer.Create(new Manufacturer
+                            {
+                                manufacturer = atInputManu
+                            });
+                            asset.Manufacturer = manu;
+                            asset.ManufacturerId = manu.Id;
+                            asset.Type = type;
+                            asset.TypeId = type.Id;
+                        }
+                        else
+                        {
+                            asset.Manufacturer = dbManufacturer.Read(asset.Manufacturer.Id);
+                            asset.ManufacturerId = asset.Manufacturer.Id;
+                            asset.TypeId = asset.Type.Id;
+                            asset.Type = dbAssetType.Read(asset.Type.Id);
+                        }
 
-                    asset.Type = type;
-                    asset.TypeId = type.Id;
-                }
-                else
-                {
-                    asset.TypeId = asset.Type.Id;
-                    asset.Type = dbAssetType.Read(asset.Type.Id);
-                }
+                        var sw = new Switch();
 
-                var sw = new Switch();
-              
-                if (upload != null && upload.ContentLength > 0)
-                {
-                    var attachment = new File()
+                        if (upload != null && upload.ContentLength > 0)
+                        {
+                            var attachment = new File()
+                            {
+                                ContentType = upload.ContentType,
+                                ContentFile = new ContentFile(),
+                                Name = System.IO.Path.GetFileName(upload.FileName),
+                            };
+
+                            using (var reader = new System.IO.BinaryReader(upload.InputStream))
+                            {
+                                attachment.ContentFile.Content = reader.ReadBytes(upload.ContentLength);
+                            }
+                            asset.FileAttachments = new List<File>() { attachment };
+                        }
+
+                        var a = dbAsset.Create(asset);
+
+                        var aa = dbAsset.Read(a.Id);
+
+                        foreach (var port in ports)
+                        {
+                            port.SwitchId = aa.Switch.Id;
+                            port.Switch = null;
+                            port.Asset = null;
+                            dbPort.Create(port);
+                        }
+
+                        ports = new List<Port>();
+
+                        return RedirectToAction("Details", new { id = asset.Customer.Id });
+                    }
+
+
+                    //FAILED
+                    var model = new CreateAssetModel()
                     {
-                        ContentType = upload.ContentType,
-                        ContentFile = new ContentFile(),
-                        Name = System.IO.Path.GetFileName(upload.FileName),
+                        Users = dbUser.ReadAll(),
+                        Customers = new List<Customer>() { db.Read(asset.Customer.Id) },
+                        AssetTypes = dbAssetType.ReadAll(),
+                        Manufacturers = dbManufacturer.ReadAll(),
+                        Asset = asset
                     };
 
-                    using (var reader = new System.IO.BinaryReader(upload.InputStream))
-                    {
-                        attachment.ContentFile.Content = reader.ReadBytes(upload.ContentLength);
-                    }
-                    asset.FileAttachments = new List<File>() { attachment };
-                }
-               
-              var a =  dbAsset.Create(asset);
-              
-                var aa = dbAsset.Read(a.Id);
-                
-                foreach (var port in ports)
-                {
-                    port.SwitchId = aa.Switch.Id;
-                    port.Switch = null;
-                    port.Asset = null;
-                    dbPort.Create(port);
-                }
-            
-                 ports = new List<Port>();
 
-                return RedirectToAction("Details", new { id = asset.Customer.Id });
-            }
-                    
-                    
-            //FAILED
-            var model = new CreateAssetModel()
-            {
-                Users = dbUser.ReadAll(),
-                Customers = new List<Customer>() { db.Read(asset.Customer.Id) },
-                AssetTypes = dbAssetType.ReadAll(),
-                Asset = asset
-            };
-
-
-            return View(model);
+                    return View(model);
 
             }
-            
+
         }
 
         // GET: Customers/Edit/5
@@ -356,7 +367,7 @@ namespace FrontendSecure.Controllers
         [HttpGet]
         public FileResult Download(int Id)
         {
-            
+
             var file = dbFile.Read(Id);
             return File(file.ContentFile.Content, file.ContentType, file.Name);
         }
@@ -401,7 +412,7 @@ namespace FrontendSecure.Controllers
                         Id = id
                     };
                     db.Delete(c);
-                    
+
                 }
                 catch (Exception e)
                 {
@@ -419,7 +430,7 @@ namespace FrontendSecure.Controllers
 
                     ViewData["EditError"] = e.Message;
                 }
-               
+
             }
             model = db.ReadAll();
             return PartialView("_CustomerTableExpressPartial", model);
@@ -444,6 +455,6 @@ namespace FrontendSecure.Controllers
             return PartialView("PortListPartialView", ports);
         }
 
-        
+
     }
 }

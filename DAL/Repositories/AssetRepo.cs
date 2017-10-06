@@ -38,7 +38,7 @@ namespace DAL.Repositories
         {
             using (var ctx = new CADBContext())
             {
-                var a = ctx.Assets.Include(y => y.Customer).Include(y => y.Changelogs.Select(u => u.User)).Include(y => y.Type).Include(y=> y.FileAttachments).Include(y=>y.Switch).FirstOrDefault(x => x.Id == id);
+                var a = ctx.Assets.Include(y => y.Customer).Include(y => y.Changelogs.Select(u => u.User)).Include(y => y.Type).Include(y=> y.FileAttachments).Include(y=>y.Switch).Include(m => m.Manufacturer).FirstOrDefault(x => x.Id == id);
                 if(a!=null && a.Password?.Length >0)
                 a.Password = new Crypto().Decrypt(a.Password);
                 return a;

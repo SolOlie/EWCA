@@ -41,6 +41,7 @@ namespace DAL.DB
         public DbSet<Port> Ports { get; set; }
         public DbSet<Firewall> Firewalls { get; set; }
         public DbSet<Lan> Lans { get; set; }
+        public DbSet<Manufacturer> Manufacturers { get; set; }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -61,6 +62,7 @@ namespace DAL.DB
             modelBuilder.Entity<Asset>().HasRequired(a => a.Customer).WithMany(c => c.Assets).WillCascadeOnDelete(true);
             modelBuilder.Entity<Asset>().HasMany(a => a.Changelogs).WithRequired(a => a.Asset);
             modelBuilder.Entity<Asset>().HasOptional(a => a.Type).WithMany(a => a.Assets);
+            modelBuilder.Entity<Asset>().HasOptional(m => m.Manufacturer).WithMany(a => a.Assets);
             modelBuilder.Entity<Asset>().HasMany(x => x.FileAttachments).WithRequired(x => x.Asset);
             modelBuilder.Entity<Asset>().HasOptional(s => s.Switch).WithRequired(p => p.Asset);
             modelBuilder.Entity<Port>().Property(t => t.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);

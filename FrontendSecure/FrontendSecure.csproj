@@ -554,6 +554,7 @@
     <Compile Include="Gateways\SecureGateways\FirewallGatewaySecure.cs" />
     <Compile Include="Gateways\SecureGateways\HistorySecureGateway.cs" />
     <Compile Include="Gateways\SecureGateways\LanGatewaySecure.cs" />
+    <Compile Include="Gateways\SecureGateways\ManufacturerGatewaySecure.cs" />
     <Compile Include="Gateways\SecureGateways\PortGatewaySecure.cs" />
     <Compile Include="Gateways\SecureGateways\SwitchGatewaySecure.cs" />
     <Compile Include="Gateways\UnsecureGateways\AssetGateway.cs" />

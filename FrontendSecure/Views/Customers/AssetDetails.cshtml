@@ -32,6 +32,20 @@
         <dd>
             @Html.DisplayFor(model => model.Asset.Description)
         </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Asset.Model)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Asset.Model)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Asset.SerialNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Asset.SerialNumber)
+        </dd>
 
         <dt>
             @Html.DisplayNameFor(model => model.Asset.Usedby)
@@ -101,6 +115,13 @@
 
         <dd>
             @Html.DisplayFor(model => model.Asset.HDD)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Asset.Manufacturer)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Asset.Manufacturer.manufacturer)
         </dd>
 
 

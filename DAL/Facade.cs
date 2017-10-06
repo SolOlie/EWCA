@@ -42,6 +42,11 @@ namespace DAL
             return new AssetTypeRepo();
         }
 
+        public IRepository<Manufacturer> GetManufacturerRepo()
+        {
+            return new ManufacturerRepo();
+        }
+
         public IRepository<File> GetFileRepo()
         {
             return new FileRepo();
