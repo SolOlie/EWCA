@@ -88,6 +88,10 @@
     <Compile Include="Migrations\201710060837582_Added a manufacturer to the entity.Designer.cs">
       <DependentUpon>201710060837582_Added a manufacturer to the entity.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201710061000103_Added alias to a user.cs" />
+    <Compile Include="Migrations\201710061000103_Added alias to a user.Designer.cs">
+      <DependentUpon>201710061000103_Added alias to a user.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AssetRepo.cs" />
@@ -119,6 +123,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201710060837582_Added a manufacturer to the entity.resx">
       <DependentUpon>201710060837582_Added a manufacturer to the entity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710061000103_Added alias to a user.resx">
+      <DependentUpon>201710061000103_Added alias to a user.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

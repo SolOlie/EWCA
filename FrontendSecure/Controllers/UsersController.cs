@@ -175,7 +175,7 @@ namespace FrontendSecure.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Email,FirstName,LastName,Password, PhoneNumber, IsAdmin")] User user)
+        public ActionResult Edit([Bind(Include = "Id,Email, Emailalias,FirstName,LastName,Password, PhoneNumber, IsAdmin")] User user)
         {
             User u = db.Read(user.Id);
             if (isAuthorized(u.IsContactForCustomer.Id) == AuthStates.UserAuth || isAuthorized(u.IsContactForCustomer.Id) == AuthStates.NoAuth)
