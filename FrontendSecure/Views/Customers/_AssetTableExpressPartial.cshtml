@@ -29,7 +29,7 @@
                 col.Width = 50;
                 col.SetHeaderTemplateContent(c =>
                 {
-                   
+
                 });
 
             });
@@ -64,14 +64,16 @@
         settings.KeyFieldName = "Id";
 
         settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+
         settings.SettingsPager.Visible = true;
         settings.Settings.ShowGroupPanel = true;
-        settings.Settings.ShowFilterRow = false;
+        settings.Settings.ShowHeaderFilterButton = true;
         settings.SettingsSearchPanel.Visible = true;
+
         settings.SettingsSearchPanel.ShowApplyButton = false;
 
         settings.SettingsBehavior.AllowSelectByRowClick = true;
-        settings.Settings.ShowHeaderFilterButton = true;
+        settings.Settings.ShowFilterRow = false;
         settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
         settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
         settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
