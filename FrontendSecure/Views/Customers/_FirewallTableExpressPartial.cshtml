@@ -65,15 +65,25 @@
       
         settings.Columns.Add(col =>
         {
-            col.Caption = "Protokol";
+            col.Caption = "Services";
             col.FieldName = "Protocol";
         });
         settings.Columns.Add(col =>
         {
-            col.Caption = "Tilladt fra";
+            col.Caption = "Source";
             col.FieldName = "AllowedIps";
         });
-        settings.Columns.Add("Interface");
+        settings.Columns.Add(col =>
+        {
+            col.Caption = "Udgående interface";
+            col.FieldName = "InterfaceO";
+        });
+        settings.Columns.Add(col =>
+        {
+            col.Caption = "Ingående interface";
+            col.FieldName = "Interface";
+        });
+        
         settings.Columns.Add("Destination");
     });
     if (ViewData["EditError"] != null){
