@@ -85,7 +85,7 @@ namespace FrontendSecure.Controllers
                 return PartialView("NotAuthorizedPartical");
             }
             var model = new ChangelogsListPartialModel();
-            model.Changelogs = adb.Read(assetid).Changelogs;
+            model.Changelogs =db.ReadAllWithFk(assetid);
             model.assetid = assetid;
             return PartialView("~/Views/Customers/_ChangelogTableExpressPartial.cshtml", model);
         }

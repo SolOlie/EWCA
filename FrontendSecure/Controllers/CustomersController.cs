@@ -249,28 +249,36 @@ namespace FrontendSecure.Controllers
                 default:
                     if (ModelState.IsValid)
                     {
-                        if (!string.IsNullOrEmpty(atInput))
+                        if (!string.IsNullOrEmpty(atInput) )
                         {
                             var type = dbAssetType.Create(new AssetType
                             {
                                 Description = atInput
 
                             });
+                          
+                            asset.Type = type;
+                            asset.TypeId = type.Id;
+                        }
+                        else
+                        {
+                           
+                            asset.TypeId = asset.Type.Id;
+                            asset.Type = dbAssetType.Read(asset.Type.Id);
+                        }
+                        if (!string.IsNullOrEmpty(atInputManu))
+                        {
                             var manu = dbManufacturer.Create(new Manufacturer
                             {
                                 manufacturer = atInputManu
                             });
                             asset.Manufacturer = manu;
                             asset.ManufacturerId = manu.Id;
-                            asset.Type = type;
-                            asset.TypeId = type.Id;
                         }
                         else
                         {
                             asset.Manufacturer = dbManufacturer.Read(asset.Manufacturer.Id);
                             asset.ManufacturerId = asset.Manufacturer.Id;
-                            asset.TypeId = asset.Type.Id;
-                            asset.Type = dbAssetType.Read(asset.Type.Id);
                         }
 
                         var sw = new Switch();
