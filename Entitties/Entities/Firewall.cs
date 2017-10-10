@@ -10,13 +10,20 @@ namespace Entities.Entities
     public class Firewall
     {
         public int Id { get; set; }
-        [Display(Name = "Port/Protokol")]
+
+        [Display(Name = "Services")]
         public string Protocol { get; set; }
-        [Display(Name = "Tilladt fra")]
+
+        [Display(Name = "Source")]
         public string AllowedIps { get; set; }
 
+        [Display(Name = "Udgående interface")]
+        public string  InterfaceO { get; set; }
+        [Display(Name = "Indgående interface")]
         public string  Interface { get; set; }
+
         public string Destination { get; set; }
+
         public int CustomerId { get; set; }
         public Customer Customer { get; set; }
     }
