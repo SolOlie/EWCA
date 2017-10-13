@@ -327,8 +327,8 @@ namespace FrontendSecure.Controllers
             //read customer
             Customer customer = new Customer();
 
-            customer.Firm = sheet.GetRow(2).GetCell(0).StringCellValue;
-            customer.Address = sheet.GetRow(2).GetCell(1).StringCellValue;
+            customer.Firm = sheet.GetRow(2).GetCell(0)?.StringCellValue;
+            customer.Address = sheet.GetRow(2).GetCell(1)?.StringCellValue;
             if (sheet.GetRow(2).GetCell(2) == null)
             {
                 customer.Date = DateTime.Now;
@@ -346,21 +346,25 @@ namespace FrontendSecure.Controllers
             for (int row = 7; row < sheet.LastRowNum + 1; row++)
             {
                 Asset p = new Asset();
-
-
-                p.Name = sheet.GetRow(row).GetCell(0).StringCellValue;
-                p.Address = sheet.GetRow(row).GetCell(2).StringCellValue;
-                p.Description = sheet.GetRow(row).GetCell(1).StringCellValue;
-                p.HDD = sheet.GetRow(row).GetCell(8).StringCellValue;
-                p.RAM = sheet.GetRow(row).GetCell(7).StringCellValue;
-                p.IpAddress = sheet.GetRow(row).GetCell(11).StringCellValue;
-                p.Location = sheet.GetRow(row).GetCell(3).StringCellValue;
-                p.Login = sheet.GetRow(row).GetCell(4).StringCellValue;
-                p.Usedby = sheet.GetRow(row).GetCell(10).StringCellValue;
-                p.Password = sheet.GetRow(row).GetCell(5).StringCellValue;
-                p.Note = sheet.GetRow(row).GetCell(6).StringCellValue;
-                p.OS = sheet.GetRow(row).GetCell(12).StringCellValue;
-                string type = sheet.GetRow(row).GetCell(9).StringCellValue;
+                for (int c = 0; c < 13; c++)
+                {
+                    var cell = sheet.GetRow(row).GetCell(c);
+                    cell?.SetCellType(CellType.String);
+                }
+              
+                p.Name = sheet.GetRow(row).GetCell(0)?.StringCellValue;
+                p.Address = sheet.GetRow(row).GetCell(2)?.StringCellValue;
+                p.Description = sheet.GetRow(row).GetCell(1)?.StringCellValue;
+                p.HDD = sheet.GetRow(row).GetCell(8)?.StringCellValue;
+                p.RAM = sheet.GetRow(row).GetCell(7)?.StringCellValue;
+                p.IpAddress = sheet.GetRow(row).GetCell(11)?.StringCellValue;
+                p.Location = sheet.GetRow(row).GetCell(3)?.StringCellValue;
+                p.Login = sheet.GetRow(row).GetCell(4)?.StringCellValue;
+                p.Usedby = sheet.GetRow(row).GetCell(10)?.StringCellValue;
+                p.Password = sheet.GetRow(row).GetCell(5)?.StringCellValue;
+                p.Note = sheet.GetRow(row).GetCell(6)?.StringCellValue;
+                p.OS = sheet.GetRow(row).GetCell(12)?.StringCellValue;
+                string type = sheet.GetRow(row).GetCell(9)?.StringCellValue;
 
 
                 // date
@@ -379,7 +383,10 @@ namespace FrontendSecure.Controllers
                 
             
                 // date end
-
+                if (type == null)
+                {
+                    type = " ";
+                }
                 // type
                 if (assetTypes.Count(x => x.Description.ToLower().Equals(type.ToLower())) < 1)
                 {
