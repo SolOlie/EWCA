@@ -57,6 +57,8 @@
     <Compile Include="Entities\Changelog.cs" />
     <Compile Include="Entities\ContentFile.cs" />
     <Compile Include="Entities\Customer.cs" />
+    <Compile Include="Entities\CustomerContentType.cs" />
+    <Compile Include="Entities\CustomerFile.cs" />
     <Compile Include="Entities\File.cs" />
     <Compile Include="Entities\Firewall.cs" />
     <Compile Include="Entities\ISoftDelete.cs" />

@@ -24,7 +24,7 @@ namespace Entities.Entities
 
         public List<Lan> Lans { get; set; }
         public List<Firewall> Firewalls { get; set; }
-
+        public List<CustomerFile> CustomerFiles { get; set; }
 
     }
 }

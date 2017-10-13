@@ -542,6 +542,7 @@
     <Compile Include="Controllers\ApiController.cs" />
     <Compile Include="Controllers\AssetsController.cs" />
     <Compile Include="Controllers\ChangelogsController.cs" />
+    <Compile Include="Controllers\CustomerFileController.cs" />
     <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\FirewallController.cs" />
     <Compile Include="Controllers\HistoryController.cs" />
@@ -551,6 +552,7 @@
     <Compile Include="Controllers\SwitchController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Gateways\AServiceGateway.cs" />
+    <Compile Include="Gateways\SecureGateways\CustomerFileGatewaySecure.cs" />
     <Compile Include="Gateways\SecureGateways\FirewallGatewaySecure.cs" />
     <Compile Include="Gateways\SecureGateways\HistorySecureGateway.cs" />
     <Compile Include="Gateways\SecureGateways\LanGatewaySecure.cs" />
@@ -797,6 +799,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\CustomerFile\" />
     <Folder Include="Views\Switch\" />
   </ItemGroup>
   <ItemGroup>

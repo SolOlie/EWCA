@@ -56,5 +56,10 @@ namespace FrontendSecure
             return new ManufacturerGatewaySecure();
         }
 
+        public IServiceGateway<CustomerFile> GetCustomerFileGateway()
+        {
+            return new CustomerFileGatewaySecure();
+        }
+
     }
 }

@@ -283,6 +283,7 @@
     <Compile Include="Controllers\AssetTypesController.cs" />
     <Compile Include="Controllers\ChangelogsController.cs" />
     <Compile Include="Controllers\ApiCustomersController.cs" />
+    <Compile Include="Controllers\CustomerFilesController.cs" />
     <Compile Include="Controllers\FilesController.cs" />
     <Compile Include="Controllers\FirewallsController.cs" />
     <Compile Include="Controllers\HelperController.cs" />

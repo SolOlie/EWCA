@@ -42,6 +42,7 @@ namespace DAL.DB
         public DbSet<Firewall> Firewalls { get; set; }
         public DbSet<Lan> Lans { get; set; }
         public DbSet<Manufacturer> Manufacturers { get; set; }
+        public DbSet<CustomerFile> CustomerFiles { get; set; }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -58,6 +59,7 @@ namespace DAL.DB
             modelBuilder.Entity<Customer>().HasMany(x => x.Firewalls).WithRequired(y => y.Customer); 
             modelBuilder.Entity<Customer>().HasMany(x => x.ContactPersons).WithOptional(x => x.IsContactForCustomer);
             modelBuilder.Entity<Customer>().HasMany(s => s.Switches).WithRequired(s => s.Customer);
+            modelBuilder.Entity<Customer>().HasMany(c => c.CustomerFiles).WithRequired(s => s.Customer);
 
             modelBuilder.Entity<Asset>().HasRequired(a => a.Customer).WithMany(c => c.Assets).WillCascadeOnDelete(true);
             modelBuilder.Entity<Asset>().HasMany(a => a.Changelogs).WithRequired(a => a.Asset);
@@ -68,7 +70,8 @@ namespace DAL.DB
             modelBuilder.Entity<Port>().Property(t => t.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
 
             modelBuilder.Entity<File>().HasOptional(x => x.ContentFile).WithRequired(x => x.File);
-           
+
+            modelBuilder.Entity<CustomerFile>().HasOptional(c => c.CustomerContentType).WithRequired(f => f.CustomerFile);
             modelBuilder.Entity<Switch>().HasMany(p => p.Ports).WithRequired(s => s.Switch);
             
             
@@ -78,5 +81,7 @@ namespace DAL.DB
             modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
             base.OnModelCreating(modelBuilder);
         }
+
+        public System.Data.Entity.DbSet<Entities.Entities.CustomerContentType> CustomerContentTypes { get; set; }
     }
 }

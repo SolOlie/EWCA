@@ -96,11 +96,16 @@
     <Compile Include="Migrations\201710101143294_Added new property to an entity.Designer.cs">
       <DependentUpon>201710101143294_Added new property to an entity.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201710130716251_File to a customer.cs" />
+    <Compile Include="Migrations\201710130716251_File to a customer.Designer.cs">
+      <DependentUpon>201710130716251_File to a customer.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AssetRepo.cs" />
     <Compile Include="Repositories\AssetTypeRepo.cs" />
     <Compile Include="Repositories\ChangelogRepo.cs" />
+    <Compile Include="Repositories\CustomerFileRepo.cs" />
     <Compile Include="Repositories\CustomerRepo.cs" />
     <Compile Include="Repositories\FileRepo.cs" />
     <Compile Include="Repositories\FirewallRepo.cs" />
@@ -133,6 +138,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201710101143294_Added new property to an entity.resx">
       <DependentUpon>201710101143294_Added new property to an entity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710130716251_File to a customer.resx">
+      <DependentUpon>201710130716251_File to a customer.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
