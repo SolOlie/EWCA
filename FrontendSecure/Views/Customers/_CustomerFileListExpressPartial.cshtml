@@ -1,12 +1,24 @@
 @model FrontendSecure.Models.CustomerFileList
 @{
-        var grid = Html.DevExpress().GridView(settings => {
-            settings.Name = "CustomerFileListExpress";
-            settings.CallbackRouteValues = new { Controller = "CustomerFile", Action = "CustomerFileListExpressPartial", customerid = Model.CustomerId  };
+    var grid = Html.DevExpress().GridView(settings => {
+        settings.Name = "CustomerFileListExpress";
+        settings.CallbackRouteValues = new { Controller = "CustomerFile", Action = "CustomerFileListExpressPartial", customerid = Model.CustomerId  };
 
-       
+
         settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "CustomerFile", Action = "CustomerFileListExpressPartialDelete" };
         settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+        settings.Columns.Add(col =>
+        {
+            col.Caption = "";
+            col.SetDataItemTemplateContent(c =>
+            {
+                ViewContext.Writer.Write(Html.ActionLink("Download", "Download", "CustomerFile", new { id = DataBinder.Eval(c.DataItem, "Id") }, null));
+            });
+            col.Settings.AllowDragDrop = DefaultBoolean.False;
+            col.Settings.AllowSort = DefaultBoolean.False;
+            col.Width = 50;
+
+        });
         settings.SettingsBehavior.ConfirmDelete = true;
 
         settings.CommandColumn.Width = 50;
