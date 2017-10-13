@@ -17,8 +17,8 @@ namespace DAL.Repositories
             using (var ctx = new CADBContext())
             {
                 ctx.Entry(t.Customer).State = EntityState.Unchanged;
-                CustomerFile a = ctx.CustomerFile.Add(t);
-
+                CustomerFile a = ctx.CustomerFiles.Add(t);
+                
                 ctx.SaveChanges();
                 return a;
             }
@@ -28,7 +28,7 @@ namespace DAL.Repositories
         {
             using (var ctx = new CADBContext())
             {
-                return ctx.CustomerFile.Include(m => m.CustomerContentType).FirstOrDefault(x => x.Id == id);
+                return ctx.CustomerFiles.Include(m => m.CustomerContentType).FirstOrDefault(x => x.Id == id);
             }
         }
 
@@ -36,7 +36,7 @@ namespace DAL.Repositories
         {
             using (var ctx = new CADBContext())
             {
-                var c = ctx.CustomerFile.Include(m => m.Customer).ToList();
+                var c = ctx.CustomerFiles.Include(m => m.Customer).ToList();
                 return c;
             }
         }
@@ -47,8 +47,8 @@ namespace DAL.Repositories
             {
                 if (FileExists(t.Id, ctx))
                 {
-                    ctx.CustomerFile.Attach(t);
-                    ctx.CustomerFile.Remove(t);
+                    ctx.CustomerFiles.Attach(t);
+                    ctx.CustomerFiles.Remove(t);
                     ctx.SaveChanges();
                     return true;
                 }
@@ -59,7 +59,7 @@ namespace DAL.Repositories
         }
         private bool FileExists(int tId, CADBContext ctx)
         {
-            if (ctx.CustomerFile.Count(a => a.Id == tId) > 0)
+            if (ctx.CustomerFiles.Count(a => a.Id == tId) > 0)
             {
                 return true;
             }
@@ -94,7 +94,7 @@ namespace DAL.Repositories
         {
             using (var ctx = new CADBContext())
             {
-                var c = ctx.CustomerFile.Include(m => m.Customer).Where(x => x.Customer.Id == id).ToList();
+                var c = ctx.CustomerFiles.Include(m => m.Customer).Where(x => x.Customer.Id == id).ToList();
                 return c;
             }
         }
