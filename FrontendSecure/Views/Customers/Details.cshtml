@@ -54,6 +54,9 @@
         <li role="presentation" onclick="TabShift()" id="LanPane">
             <a href="#Lan" data-toggle="tab" id="idLan">Lans</a>
         </li>
+        <li role="presentation" onclick="TabShift()" id="CustomerFilePane">
+            <a href="#CustomerFile" data-toggle="tab" id="idCustomerFile">Filer</a>
+        </li>
     </ul>
 </div>
 <div class="container-fluid">
@@ -106,7 +109,7 @@
             
         </div>
         <div id="Lan" class="tab-pane">
-            
+
             <a style="margin-top: 10px;" class="btn btn-default align-right" href="../../Lan/Create?CustomerId=@Model.Customer.Id">
                 <span class="glyphicon glyphicon-plus"
                       aria-hidden="true">
@@ -114,7 +117,12 @@
                 </span>
             </a>
 
-            @Html.Action("LanTableExpressPartial", "Lan", new { Customerid = Model.Customer.Id })
+            @Html.Action("LanTableExpressPartial", "Lan", new {Customerid = Model.Customer.Id})
+
+        </div>
+        <div id="CustomerFile" class="tab-pane">
+
+            
 
         </div>
         </div>

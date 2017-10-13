@@ -4,7 +4,7 @@
 
 @{
     ViewBag.Title = "AssetDetails";
-   @Html.DevExpress().GetStyleSheets(
+    @Html.DevExpress().GetStyleSheets(
         new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
         new StyleSheet { ExtensionSuite = ExtensionSuite.Editors },
         new StyleSheet { ExtensionSuite = ExtensionSuite.GridView }
@@ -134,47 +134,45 @@
         <li role="presentation" onclick="TabShift()" id="FilePane">
             <a href="#Files" data-toggle="tab" id="idFile">Filer</a>
         </li>
-@if (Model.Asset.Type.Description.ToLower().Equals("switch"))
-{
-    <li role="presentation" onclick="TabShift()" id="Port">
-        <a href="#Ports" data-toggle="tab" id="idPort">Ports</a>
-    </li>
-}
-       
+        @if (Model.Asset.Type.Description.ToLower().Equals("switch"))
+        {
+            <li role="presentation" onclick="TabShift()" id="Port">
+                <a href="#Ports" data-toggle="tab" id="idPort">Ports</a>
+            </li>
+        }
+
     </ul>
     <div class="tab-content">
-        <div class="tab-pane active" id="Changelog" >
-            
+        <div class="tab-pane active" id="Changelog">
+
             <a style="margin-top: 10px;" class="btn btn-default align-right" href="../../Changelogs/Create?assetid=@Model.Asset.Id">
-                    <span class="glyphicon glyphicon-plus"
-                          aria-hidden="true">
-                        <b> Changelog</b>
-                    </span>
-                </a>
+                <span class="glyphicon glyphicon-plus"
+                      aria-hidden="true">
+                    <b> Changelog</b>
+                </span>
+            </a>
 
-                @Html.Action("ChangelogTableExpressPartial", "Changelogs", new { assetid = Model.Asset.Id })
+            @Html.Action("ChangelogTableExpressPartial", "Changelogs", new { assetid = Model.Asset.Id })
 
-            </div>
-        <div id="Files" class="tab-pane" >
+        </div>
+        <div id="Files" class="tab-pane">
             <a style="margin-top: 10px;" id="addFileBtn" class="btn btn-default align-right" onclick="toggleAddFile()">
                 <span class="glyphicon glyphicon-plus"
                       aria-hidden="true">
                     <b> Fil</b>
                 </span>
             </a>
-            <div id="addFilePopup" style=" height: 150px;
-                                                                                                                                                                                                                           width: 300px;
-                                                                                                                                                                                                                           position: fixed;
-                                                                                                                                                                                                                           background-color: lightgray;
-                                                                                                                                                                                                                           top: 50%;
-                                                                                                                                                                                                                           left: 50%;
-                                                                                                                                                                                                                           margin-left: -150px;
-                                                                                                                                                                                                                           margin-top: -75px;
-                                                                                                                                                                                                                           border-radius: 5px;
-                                                                                                                                                                                                                           padding: 20px;
-                                                                                                                                                                                                                           padding-left: 30px;
-                                                                                                                                                                                                                           display: none;">
-                @using (Html.BeginForm("AddFile", "Assets", FormMethod.Post, new {enctype = "multipart/form-data"}))
+            <div id="addFilePopup" style=" height: 150px; width: 300px;
+                 position: fixed; background-color: lightgray;
+                 top: 50%;
+                 left: 50%;
+                 margin-left: -150px;
+                 margin-top: -75px;
+                 border-radius: 5px;
+                 padding: 20px;
+                 padding-left: 30px;
+                 display: none;">
+                @using (Html.BeginForm("AddFile", "Assets", FormMethod.Post, new { enctype = "multipart/form-data" }))
                 {
                     <input type="hidden" name="assetId" value="@Model.Asset.Id" />
                     <input type="File" id="fileUpload" name="Upload" />
@@ -188,26 +186,26 @@
                 }
 
             </div>
-          
+
             @Html.Action("FileTableExpressPartial", "Changelogs", new { assetid = Model.Asset.Id })
 
         </div>
-@if (Model.Asset.Type.Description.ToLower().Equals("switch"))
-{
-    <div id="Ports" class="tab-pane">
+        @if (Model.Asset.Type.Description.ToLower().Equals("switch"))
+        {
+            <div id="Ports" class="tab-pane">
 
-        <a style="margin-top: 10px;" class="btn btn-default align-right" href="../../Ports/CreatePort?assetid=@Model.Asset.Id">
-            <span class="glyphicon glyphicon-plus"
-                  aria-hidden="true">
-                <b> Port</b>
-            </span>
-        </a>
-        @Html.Action("PortListExpressPartial", "Ports", new { assetid = Model.Asset.Id })
+                <a style="margin-top: 10px;" class="btn btn-default align-right" href="../../Ports/CreatePort?assetid=@Model.Asset.Id">
+                    <span class="glyphicon glyphicon-plus"
+                          aria-hidden="true">
+                        <b> Port</b>
+                    </span>
+                </a>
+                @Html.Action("PortListExpressPartial", "Ports", new { assetid = Model.Asset.Id })
 
 
-    </div>
-}
-       
+            </div>
+        }
+
     </div>
 </div>
 <p onclick="showPageLoadingSpinner()" style="display: inline-block; margin-top: 1%">
@@ -215,38 +213,38 @@
 </p>
 @section scripts
 {
-<script>
-  function TabShift() {
-        setTimeout(function() {
-            localStorage.setItem("paneactive", $("ul.nav-tabs li.active ").attr("id"));
-            var element = document.querySelector(".tab-content .active");
-            localStorage.setItem("contentactive", $(element).attr("id"));
-            console.log(localStorage.getItem("contentactive"));
-        },400);
-    }
-    $(document)
-        .ready(function () {
-            var id = localStorage.getItem("paneactive");
-            var element = document.getElementById(id);
-            $(element).addClass('active').siblings().removeClass('active');
+    <script>
+        function TabShift() {
+            setTimeout(function () {
+                localStorage.setItem("paneactive", $("ul.nav-tabs li.active ").attr("id"));
+                var element = document.querySelector(".tab-content .active");
+                localStorage.setItem("contentactive", $(element).attr("id"));
+                console.log(localStorage.getItem("contentactive"));
+            }, 400);
+        }
+        $(document)
+            .ready(function () {
+                var id = localStorage.getItem("paneactive");
+                var element = document.getElementById(id);
+                $(element).addClass('active').siblings().removeClass('active');
 
-            var id2 = localStorage.getItem("contentactive");
-            var element2 = document.getElementById(id2);
-            $(element2).addClass('active').siblings().removeClass('active');
+                var id2 = localStorage.getItem("contentactive");
+                var element2 = document.getElementById(id2);
+                $(element2).addClass('active').siblings().removeClass('active');
 
 
-        });
-    function toggleAddFile() {
-        $("#addFilePopup")
-            .toggle('fast',
-                function() {
+            });
+        function toggleAddFile() {
+            $("#addFilePopup")
+                .toggle('fast',
+                    function () {
 
-                });
-    }
-    function fileSubmitted() {
-        showPageLoadingSpinner();
-        toggleAddFile();
-    }
-   
-</script>
+                    });
+        }
+        function fileSubmitted() {
+            showPageLoadingSpinner();
+            toggleAddFile();
+        }
+
+    </script>
 }
