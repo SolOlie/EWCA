@@ -112,10 +112,11 @@ namespace FrontendSecure.Controllers
         [ValidateInput(false)]
         public ActionResult CustomerFileListExpressPartial(int? customerid)
         {
+            
             var model = new CustomerFileList();
             if (customerid.HasValue)
             {
-                if (isAuthorized(1) != AuthState.ElitewebAuth)
+                if (isAuthorized(customerid.Value) == AuthState.NoAuth)
                 {
                     return PartialView("NotAuthorized");
                 }
