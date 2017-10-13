@@ -8,112 +8,87 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
+using DAL;
 using DAL.DB;
+using DAL.Repositories;
 using Entities.Entities;
 
 namespace EWCustomerAccountingBackend.Controllers
 {
     public class CustomerFilesController : ApiController
     {
-        private CADBContext db = new CADBContext();
+        private IRepository<CustomerFile> db = new Facade().GetCustomerFileRepo();
+        
 
         // GET: api/CustomerFiles
-        public IQueryable<CustomerFile> GetCustomerFiles()
+        public List<CustomerFile> GetCustomerFiles()
         {
-            return db.CustomerFiles;
+            return db.ReadAll();
         }
 
         // GET: api/CustomerFiles/5
         [ResponseType(typeof(CustomerFile))]
         public IHttpActionResult GetCustomerFile(int id)
         {
-            CustomerFile customerFile = db.CustomerFiles.Find(id);
-            if (customerFile == null)
+            CustomerFile asset = db.Read(id);
+            if (asset == null)
             {
                 return NotFound();
             }
 
-            return Ok(customerFile);
+            return Ok(asset);
         }
 
         // PUT: api/CustomerFiles/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutCustomerFile(int id, CustomerFile customerFile)
+        public IHttpActionResult PutCustomerFile(int id, CustomerFile asset)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != customerFile.Id)
+            if (id != asset.Id)
             {
                 return BadRequest();
             }
+            db.Update(asset);
 
-            db.Entry(customerFile).State = EntityState.Modified;
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CustomerFileExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
 
             return StatusCode(HttpStatusCode.NoContent);
         }
 
         // POST: api/CustomerFiles
         [ResponseType(typeof(CustomerFile))]
-        public IHttpActionResult PostCustomerFile(CustomerFile customerFile)
+        public IHttpActionResult PostCustomerFile(CustomerFile file)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
-            db.CustomerFiles.Add(customerFile);
-            db.SaveChanges();
-
-            return CreatedAtRoute("DefaultApi", new { id = customerFile.Id }, customerFile);
+            db.Create(file);
+            return CreatedAtRoute("DefaultApi", new { id = file.Id }, file);
         }
 
         // DELETE: api/CustomerFiles/5
         [ResponseType(typeof(CustomerFile))]
         public IHttpActionResult DeleteCustomerFile(int id)
         {
-            CustomerFile customerFile = db.CustomerFiles.Find(id);
-            if (customerFile == null)
+            CustomerFile file = db.Read(id);
+            if (file == null)
             {
                 return NotFound();
             }
+            db.Delete(file);
 
-            db.CustomerFiles.Remove(customerFile);
-            db.SaveChanges();
-
-            return Ok(customerFile);
+            return Ok(file);
         }
-
-        protected override void Dispose(bool disposing)
+        public List<CustomerFile> GetCustomerFilesWithFk(int id)
         {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+            var a = db.ReadAllWithFk(id);
 
-        private bool CustomerFileExists(int id)
-        {
-            return db.CustomerFiles.Count(e => e.Id == id) > 0;
+            return a;
         }
+       
     }
 }

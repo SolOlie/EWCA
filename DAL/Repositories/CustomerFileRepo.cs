@@ -28,7 +28,7 @@ namespace DAL.Repositories
         {
             using (var ctx = new CADBContext())
             {
-                return ctx.CustomerFiles.Include(m => m.CustomerContentType).FirstOrDefault(x => x.Id == id);
+                return ctx.CustomerFiles.Include(m => m.CustomerContentType).Include(c=> c.Customer).FirstOrDefault(x => x.Id == id);
             }
         }
 

@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using Entities.Entities;
 using FrontendSecure.Gateways;
+using FrontendSecure.Models;
 
 namespace FrontendSecure.Controllers
 {
@@ -73,9 +74,9 @@ namespace FrontendSecure.Controllers
         // GET: CustomerFile
       
         [HttpPost]
-        public ActionResult AddFile(int CustomerId, HttpPostedFileBase upload)
+        public ActionResult AddFile(int customerId, HttpPostedFileBase upload)
         {
-            var customer = db.Read(CustomerId);
+            var customer = db.Read(customerId);
             if (isAuthorized(customer.Id) == AuthState.NoAuth)
             {
                 return View("NotAuthorized");
@@ -93,9 +94,9 @@ namespace FrontendSecure.Controllers
                 {
                     attachment.CustomerContentType.Content = reader.ReadBytes(upload.ContentLength);
                 }
-                attachment.CustomerId = CustomerId;
+                attachment.CustomerId = customerId;
                 attachment.Customer = new Customer();
-                attachment.Customer.Id = CustomerId;
+                attachment.Customer.Id = customerId;
                 dbFile.Create(attachment);
             }
             return Redirect(Request.UrlReferrer.ToString());
@@ -107,6 +108,49 @@ namespace FrontendSecure.Controllers
 
             var file = dbFile.Read(Id);
             return File(file.CustomerContentType.Content, file.ContentType, file.Name);
+        }
+        [ValidateInput(false)]
+        public ActionResult CustomerFileListExpressPartial(int? customerid)
+        {
+            var model = new CustomerFileList();
+            if (customerid.HasValue)
+            {
+                if (isAuthorized(1) != AuthState.ElitewebAuth)
+                {
+                    return PartialView("NotAuthorized");
+                }
+                model.CustomerFiles = dbFile.ReadAllWithFk(customerid.Value);
+                model.CustomerId = customerid.Value;
+            }
+            return PartialView("~/Views/Customers/_CustomerFileListExpressPartial.cshtml", model);
+
+        }
+        [HttpPost, ValidateInput(false)]
+        public ActionResult CustomerFileListExpressPartialDelete(string Id)
+        {
+            Id = Id.Replace("\"", "");
+            if (string.IsNullOrEmpty(Id))
+            {
+                Id = "0";
+            }
+            int id = Int32.Parse(Id);
+            var model = new CustomerFileList();
+            if (id > 0)
+            {
+                try
+                {
+                    var d = dbFile.Read(id);
+                    
+                    dbFile.Delete(d);
+                    model.CustomerId = d.Customer.Id;
+                    model.CustomerFiles = dbFile.ReadAllWithFk(d.Customer.Id);
+                }
+                catch (Exception e)
+                {
+                    ViewData["EditError"] = e.Message;
+                }
+            }
+            return PartialView("~/Views/Customers/_CustomerFileListExpressPartial.cshtml", model);
         }
     }
 }

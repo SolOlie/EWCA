@@ -577,6 +577,7 @@
     <Compile Include="Models\ChangelogsListPartialModel.cs" />
     <Compile Include="Models\CreatePortModel.cs" />
     <Compile Include="Models\CreateSwitchModel.cs" />
+    <Compile Include="Models\CustomerFileList.cs" />
     <Compile Include="Models\FileListPartialModel.cs" />
     <Compile Include="Models\FirewallListPartialModel.cs" />
     <Compile Include="Models\ImportFileModel.cs" />

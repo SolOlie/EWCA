@@ -61,6 +61,11 @@ namespace DAL
         {
             return new PortRepo();
         }
+
+        public IRepository<CustomerFile> GetCustomerFileRepo()
+        {
+            return new CustomerFileRepo();
+        }
        
     }
 }

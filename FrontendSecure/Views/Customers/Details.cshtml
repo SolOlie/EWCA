@@ -120,10 +120,39 @@
             @Html.Action("LanTableExpressPartial", "Lan", new {Customerid = Model.Customer.Id})
 
         </div>
+
         <div id="CustomerFile" class="tab-pane">
+            <a style="margin-top: 10px;" id="addFileBtn" class="btn btn-default align-right" onclick="toggleAddFile()">
+                <span class="glyphicon glyphicon-plus"
+                      aria-hidden="true">
+                    <b> Fil</b>
+                </span>
+            </a>
+            <div id="addFilePopup" style="height: 150px; width: 300px;
+                 position: fixed; background-color: lightgray;
+                 top: 50%;
+                 left: 50%;
+                 margin-left: -150px;
+                 margin-top: -75px;
+                 border-radius: 5px;
+                 padding: 20px;
+                 padding-left: 30px;
+                 display: none;">
+                @using (Html.BeginForm("AddFile", "CustomerFile", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <input type="hidden" name="customerId" value="@Model.Customer.Id" />
+                    <input type="File" id="fileUpload" name="Upload" />
+                    <div class="form-group" id="buttons">
+                        <input type="submit" class="btn btn-success" value="submit" onclick="fileSubmitted()" />
+                        <a class="btn btn-danger" id="cancelBtn" onclick="toggleAddFile()">
+                            Cancel
+                        </a>
+                    </div>
 
+                }
 
-            @Html.Action("CustomerFileListExpressPartial")
+            </div>
+            @Html.Action("CustomerFileListExpressPartial", "CustomerFile", new {Customerid = Model.Customer.Id})
 
 
         </div>
@@ -156,6 +185,16 @@
 
 
         });
+    function toggleAddFile() {
+        $("#addFilePopup")
+            .toggle('fast',
+                function () {
 
+                });
+    }
+    function fileSubmitted() {
+        showPageLoadingSpinner();
+        toggleAddFile();
+    }
 </script>
 }

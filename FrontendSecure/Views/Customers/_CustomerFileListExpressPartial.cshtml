@@ -1,37 +1,50 @@
+@model FrontendSecure.Models.CustomerFileList
 @{
-	var grid = Html.DevExpress().GridView(settings => {
-        settings.Name = "CustomerFileListExpress";
-        settings.CallbackRouteValues = new { Controller = "Customers", Action = "CustomerFileListExpressPartial" };
+        var grid = Html.DevExpress().GridView(settings => {
+            settings.Name = "CustomerFileListExpress";
+            settings.CallbackRouteValues = new { Controller = "CustomerFile", Action = "CustomerFileListExpressPartial", customerid = Model.CustomerId  };
 
-				settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Customers", Action = "CustomerFileListExpressPartialAddNew" };
-        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Customers", Action = "CustomerFileListExpressPartialUpdate" };
-        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Customers", Action = "CustomerFileListExpressPartialDelete" };
+       
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "CustomerFile", Action = "CustomerFileListExpressPartialDelete" };
         settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
         settings.SettingsBehavior.ConfirmDelete = true;
 
-		settings.CommandColumn.Visible = true;
-        settings.CommandColumn.ShowNewButton = true;
+        settings.CommandColumn.Width = 50;
+        settings.CommandColumn.Caption = " ";
+        settings.SettingsText.CommandDelete = "Slet";
+
+        settings.SettingsBehavior.ConfirmDelete = true;
+
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowNewButton = false;
         settings.CommandColumn.ShowDeleteButton = true;
-        settings.CommandColumn.ShowEditButton = true;
+        settings.CommandColumn.ShowEditButton = false;
 
-		settings.KeyFieldName = "Id";
+        settings.KeyFieldName = "Id";
 
-		settings.SettingsPager.Visible = true;
-		settings.Settings.ShowGroupPanel = true;
-		settings.Settings.ShowFilterRow = true;
-		settings.SettingsBehavior.AllowSelectByRowClick = true;
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
 
-		settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
-		settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
-		settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
-		settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
-		settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = true;
+        settings.Settings.ShowHeaderFilterButton = true;
+        settings.SettingsSearchPanel.Visible = true;
 
-				settings.Columns.Add("Name");
-				settings.Columns.Add("ContentType");
-			});
-		if (ViewData["EditError"] != null){
+        settings.SettingsSearchPanel.ShowApplyButton = false;
+
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+        settings.Settings.ShowFilterRow = false;
+
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+
+        settings.Columns.Add("Name");
+        settings.Columns.Add("ContentType");
+    });
+    if (ViewData["EditError"] != null){
         grid.SetEditErrorText((string)ViewData["EditError"]);
     }
 }
-@grid.Bind(Model).GetHtml()
+@grid.Bind(Model.CustomerFiles).GetHtml()

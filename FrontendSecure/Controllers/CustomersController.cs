@@ -465,67 +465,6 @@ namespace FrontendSecure.Controllers
 
 
 
-        [ValidateInput(false)]
-        public ActionResult CustomerFileListExpressPartial()
-        {
-            var model = new object[0];
-            return PartialView("_CustomerFileListExpressPartial", model);
-        }
-
-        [HttpPost, ValidateInput(false)]
-        public ActionResult CustomerFileListExpressPartialAddNew([ModelBinder(typeof(DevExpressEditorsBinder))] Entities.Entities.CustomerFile item)
-        {
-            var model = new object[0];
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    // Insert here a code to insert the new item in your model
-                }
-                catch (Exception e)
-                {
-                    ViewData["EditError"] = e.Message;
-                }
-            }
-            else
-                ViewData["EditError"] = "Please, correct all errors.";
-            return PartialView("_CustomerFileListExpressPartial", model);
-        }
-        [HttpPost, ValidateInput(false)]
-        public ActionResult CustomerFileListExpressPartialUpdate([ModelBinder(typeof(DevExpressEditorsBinder))] Entities.Entities.CustomerFile item)
-        {
-            var model = new object[0];
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    // Insert here a code to update the item in your model
-                }
-                catch (Exception e)
-                {
-                    ViewData["EditError"] = e.Message;
-                }
-            }
-            else
-                ViewData["EditError"] = "Please, correct all errors.";
-            return PartialView("_CustomerFileListExpressPartial", model);
-        }
-        [HttpPost, ValidateInput(false)]
-        public ActionResult CustomerFileListExpressPartialDelete(System.Int32 Id)
-        {
-            var model = new object[0];
-            if (Id >= 0)
-            {
-                try
-                {
-                    // Insert here a code to delete the item from your model
-                }
-                catch (Exception e)
-                {
-                    ViewData["EditError"] = e.Message;
-                }
-            }
-            return PartialView("_CustomerFileListExpressPartial", model);
-        }
+        
     }
 }
